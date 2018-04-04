@@ -1,0 +1,16 @@
+{
+  "name": "w3schoolsNodeJS",
+  "version": "1.0.0",
+  "description": "Preliminary directories for Trophy Tracks",
+  "main": "index.js",
+  "scripts": {
+    "start": "http-server"
+  },
+  "keywords": [
+  ],
+  "author": "Cat Haverback",
+  "license": "ISC",
+  "devDependencies": {
+    "http-server": "^0.10.0"
+  }
+}
