@@ -1,9 +1,10 @@
-var createPostArea = document.querySelector('#create-post');
-function openCreatePostModal() { createPostArea.style.display = 'block'; }
-function closeCreatePostModal() { createPostArea.style.display = 'none'; }
+//newPostFormArea is displayed/hidden by button clicks 
+var newPostFormArea = document.querySelector('#create-post');
 
-var shareImageButton = document.querySelector('#share-image-button');
-shareImageButton.addEventListener('click', openCreatePostModal);
+function makeNewPost() { newPostFormArea.style.display = 'block'; }
+var newPostButton = document.querySelector('#share-image-button');
+newPostButton.addEventListener('click', makeNewPost);
 
-var closeCreatePostModalButton = document.querySelector('#close-create-post-modal-btn');
-closeCreatePostModalButton.addEventListener('click', closeCreatePostModal);
+function cancelNewPost() { newPostFormArea.style.display = 'none'; }
+var cancelNewPostButton = document.querySelector('#close-create-post-modal-btn');
+cancelNewPostButton.addEventListener('click', cancelNewPost);

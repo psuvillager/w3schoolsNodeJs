@@ -1,11 +1,17 @@
 <!doctype html>
 <html lang="en">
+
 <head>
+  <!-- basics -->
   <meta charset="UTF-8">
   <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  
+  <!-- title -->
   <title>Test</title>
+  
+  <!-- styles & manifest-->
   <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet"
@@ -13,6 +19,8 @@
   <link rel="stylesheet" href="/src/css/app.css">
   <link rel="stylesheet" href="/src/css/feed.css">
   <link rel="manifest" href="/manifest.json">
+  
+  <!-- friggin apple -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-mobile-web-app-title" content="PWAGram">
@@ -25,22 +33,26 @@
   <link rel="apple-touch-icon" href="/src/images/icons/apple-icon-144x144.png" sizes="144x144">
   <link rel="apple-touch-icon" href="/src/images/icons/apple-icon-152x152.png" sizes="152x152">
   <link rel="apple-touch-icon" href="/src/images/icons/apple-icon-180x180.png" sizes="180x180">
+
+  <!-- icons and colors -->
   <meta name="msapplication-TileImage" content="/src/images/icons/app-icon-144x144.png">
   <meta name="msapplication-TileColor" content="#fff">
   <meta name="theme-color" content="#3f51b5">
 </head>
 
+
 <body>
   <div id="app">
-    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+
+    <!-- title/navbar -->
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">  
       
       <header class="mdl-layout__header">
         <div class="mdl-layout__header-row">
-          <!-- Title -->
-          <span class="mdl-layout-title">Test app</span>
-          <!-- Add spacer, to align navigation to the right -->
-          <div class="mdl-layout-spacer"></div>
-          <!-- Navigation. We hide it in small screens. -->
+          <span class="mdl-layout-title">Test app</span><!-- Title -->
+          <div class="mdl-layout-spacer"></div><!-- To right-align navigation -->
+          
+          <!-- large-screen nav controls -->
           <nav class="mdl-navigation mdl-layout--large-screen-only">
             <a class="mdl-navigation__link" href="/">Feed</a>
             <a class="mdl-navigation__link" href="/help">Help</a>
@@ -50,9 +62,11 @@
               </button>
             </div>
           </nav>
+        
         </div>
       </header>
       
+      <!-- collapsed nav drawer -->
       <div class="mdl-layout__drawer">
         <span class="mdl-layout-title">Test</span>
         <nav class="mdl-navigation">
@@ -66,29 +80,31 @@
         </nav>
       </div>
       
-      <main class="mdl-layout__content mat-typography">
+      <!-- main content (sometimes: newPost form; image; openNewPostForm button; sometimes snackbar-->
+      <main class="mdl-layout__content mat-typography">        
         
+        <!-- hidden 'New Post' form -->
         <div id="create-post">
-          <form>
-            
+          <form>            
+            <!-- title input -->
             <div class="input-section mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
               <input class="mdl-textfield__input" type="text" id="title">
               <label class="mdl-textfield__label" for="title" name="title">Title</label>
             </div>
-            
+            <!-- location input -->
             <div class="input-section mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="manual-location">
               <input class="mdl-textfield__input" type="text" id="location">
               <label class="mdl-textfield__label" for="location" name="location">Location</label>
             </div>
             <br>
-            
+            <!-- submit-new-post button -->
             <div>
               <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-color--accent"
-                      type="submit" id="post-btn">Post!
+                      type="submit" id="post-btn">Post
               </button>
             </div>
             <br>
-            
+            <!-- cancel-new-post button -->
             <div>
               <button class="mdl-button mdl-js-button mdl-button--fab" id="close-create-post-modal-btn" type="button">
                 <i class="material-icons">close</i>
@@ -97,7 +113,8 @@
 
           </form>
         </div>
-        
+
+        <!-- image -->
         <img src="/src/images/main-image.jpg"
              alt="Explore the City"
              class="main-image">
@@ -107,6 +124,7 @@
           <div id="shared-moments"></div>
         </div>
         
+        <!-- open-new-post button -->
         <div class="floating-button">
           <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored"
                   id="share-image-button">
@@ -114,6 +132,7 @@
           </button>
         </div>
         
+        <!-- snackbar -->
         <div id="confirmation-toast" aria-live="assertive" aria-atomic="true" aria-relevant="text" class="mdl-snackbar mdl-js-snackbar">
           <div class="mdl-snackbar__text"></div>
           <button type="button" class="mdl-snackbar__action"></button>
@@ -121,7 +140,7 @@
         
       </main>
 
-    </div>
+    </div><!-- /layout -->
   </div>
   <script defer src="/src/js/material.min.js"></script>
   <script src="/src/js/promise.js"></script>
