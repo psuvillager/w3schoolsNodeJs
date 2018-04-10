@@ -9,7 +9,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   
   <!-- title -->
-  <title>Test</title>
+  <title>Login</title>
   
   <!-- styles & manifest-->
   <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
@@ -17,7 +17,7 @@
   <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.3.0/material.indigo-pink.min.css">
   <link rel="stylesheet" href="/src/css/app.css">
-  <link rel="stylesheet" href="/src/css/feed.css">
+  <link rel="stylesheet" href="/src/css/login.css">
   <link rel="manifest" href="/manifest.json">
   
   <!-- friggin apple -->
@@ -47,44 +47,26 @@
     <!-- title/navbar -->
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">  
       
-      <header class="mdl-layout__header">
+      <header class="mdl-layout__header"><!-- provides hamburger w/ siblng-drawer access -->
         <div class="mdl-layout__header-row">
-          <span class="mdl-layout-title">Test app</span><!-- Title -->
-          <div class="mdl-layout-spacer"></div><!-- To right-align navigation -->
-          
-          <!-- large-screen nav controls -->
-          <nav class="mdl-navigation mdl-layout--large-screen-only">
-            <a class="mdl-navigation__link" href="/">Feed</a>
-            <a class="mdl-navigation__link" href="/help">Help</a>
-            <div class="drawer-option">
-              <button class="enable-notifications mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-color--accent">
-                Enable Notifications
-              </button>
-            </div>
-          </nav>
-        
+          <span class="mdl-layout-title">Trophy Tracks</span><!-- Title -->
         </div>
       </header>
       
       <!-- collapsed nav drawer -->
       <div class="mdl-layout__drawer">
-        <span class="mdl-layout-title">Test</span>
+        <span class="mdl-layout-title">Trophy Tracks</span>
         <nav class="mdl-navigation">
-          <a class="mdl-navigation__link" href="/">Feed</a>
+          <a class="mdl-navigation__link" href="/">Login</a>
           <a class="mdl-navigation__link" href="/help">Help</a>
-          <div class="drawer-option">
-            <button class="enable-notifications mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-color--accent">
-              Enable Notifications
-            </button>
-          </div>
         </nav>
       </div>
       
-      <!-- main content (sometimes: newPost form; image; openNewPostForm button; sometimes snackbar-->
+
+      <!-- main content (page-content and snackbar) -->
       <main class="mdl-layout__content mat-typography">        
         
-        <!-- hidden 'New Post' form -->
-        <div id="create-post">
+        <div class="page-content">
           <form>            
             <!-- title input -->
             <div class="input-section mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
@@ -112,25 +94,7 @@
             </div>
 
           </form>
-        </div>
-
-        <!-- image -->
-        <img src="/src/images/main-image.jpg"
-             alt="Happy hunter"
-             class="main-image">
-        
-        <div class="page-content">
-          <h5 class="text-center mdl-color-text--primary">Share...</h5>
-          <div id="shared-moments"></div>
-        </div>
-        
-        <!-- open-new-post button -->
-        <div class="floating-button">
-          <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored"
-                  id="share-image-button">
-            <i class="material-icons">add</i>
-          </button>
-        </div>
+        </div>        
         
         <!-- snackbar -->
         <div id="confirmation-toast" aria-live="assertive" aria-atomic="true" aria-relevant="text" class="mdl-snackbar mdl-js-snackbar">
@@ -146,6 +110,6 @@
   <script src="/src/js/promise.js"></script>
   <script src="/src/js/fetch.js"></script>
   <script src="/src/js/app.js"></script>
-  <script src="/src/js/feed.js"></script>
+  <script src="/src/js/login.js"></script>
 </body>
 </html>
