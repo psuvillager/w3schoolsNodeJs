@@ -1,0 +1,1 @@
+A  __ Promise __  is an object which represents an asynchronous task that will eventually finish. (https://medium.com/@rafaelvidaurre/truly-understanding-async-await-491dd580500e)
