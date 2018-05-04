@@ -10,21 +10,6 @@ if ('serviceWorker' in navigator) {
     .catch(function(err) { console.log(err); });
 }
 
-let loadView = function(view){
-  //$('.page-content').load('/src/views/' + view + '.html');
-  //$('.page-content').load('/src/views/portal.html');
-  //alert('woo');
-  
 
 
-  //using jquery here fails
-  document.getElementById('test').innerHTML = "Hi"; 
-
-
-
-};
-
-document.getElementById('loadRoutingViewButton').addEventListener('click', function(){
-  loadView('routing');
-});
 
