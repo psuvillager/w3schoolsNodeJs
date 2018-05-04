@@ -10,13 +10,6 @@ if ('serviceWorker' in navigator) {
     .catch(function(err) { console.log(err); });
 }
 
-//chrome provides a prompt to install the app, which we can customize if we preventDefault
-var deferredPrompt;
-window.addEventListener('beforeinstallprompt', function(event) {
-  console.log('beforeinstallprompt fired');
-  event.preventDefault();
-  deferredPrompt = event;
-  return false;
-});
+
 
 

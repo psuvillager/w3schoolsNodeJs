@@ -4,6 +4,9 @@
  * Released under the MIT license
  * github.com/Octane/setImmediate
  */
+
+// Note to self: A Promise is an object which represents an asynchronous task that will eventually finish.
+
 window.setImmediate || function () {'use strict';
 
   var uid = 0;

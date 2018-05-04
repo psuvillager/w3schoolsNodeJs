@@ -1,6 +1,5 @@
-//newPostFormArea is displayed/hidden by button clicks 
-var newPostFormArea = document.querySelector('#create-post');
 
+//outdated code
 function makeNewPost() { newPostFormArea.style.display = 'block'; }
 var newPostButton = document.querySelector('#share-image-button');
 newPostButton.addEventListener('click', makeNewPost);
