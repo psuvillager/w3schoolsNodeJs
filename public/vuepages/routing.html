@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+</head>
+<body>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+<div id="app">...</div>
+
+<script>
+
+// Requires a server to resolve currentRoute (http: protocol vs file: protocol)
+
+const NotFound = { template: '<p>Page not found</p>' }
+const Home = { template: '<p>components demo goes here</p>' }
+const About = { template: '<p>routing demo goes here</p>' }
+
+const routes = {
+  '/vuepages/': home,
+  '/vuepages/routing.html': routing
+}
+
+new Vue({
+  el: '#app',
+  data: {
+    currentRoute: window.location.pathname
+  },
+  computed: {
+    ViewComponent () {
+      return routes[this.currentRoute] || NotFound
+    }
+  },
+  //same as: "render (h){ return h(this.ViewComponent); }"
+  render: function(createElement){ return createElement(this.ViewComponent) }
+})
+</script>
+
+</body>
+</html>
