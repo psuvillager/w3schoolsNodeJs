@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Vue Components Example</title>
+</head>
+<body>
+
+<!-- Include Vue via cdn -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+<div id="app"> <!-- The Vue instance controls this element -->
+  <!-- The button-counter component is used more than once --> 
+  <button-counter></button-counter>
+  <button-counter></button-counter> 
+
+  <!-- The blog-post component is included multiple times with a v-for directive.
+    The posts array, defined in the controlling Vue instance, provides property values. -->
+  <blog-post
+    v-for="post in posts"
+    v-bind:key="post.id"
+    v-bind:title="post.title"
+    v-bind:content="post.content"
+  ></blog-post>
+</div>
+
+
+<script>
+
+//
+// Components
+//
+
+// A reusable button component that counts how many times it is clicked
+Vue.component('button-counter', {
+  data: 
+    // Data in components must be functions; otherwise all instances are bound to the same data
+    function () { return { count: 0 } 
+  },
+  // This component's template includes a v-on directive, allowing each
+  // component instance to be updated dynamically
+  template: '<button v-on:click="count++">You clicked me {{ count }} times.</button>'
+})
+
+// A blog-post component
+Vue.component('blog-post', {
+  // The props option allows passing values in to each instance of the component 
+  props: ['title', 'content'],
+  // These templates are not pretty. There's supposed to be a way to use multi-line 'template literals'.
+  template: '<div><h3>{{ title }}</h3><div>{{ content }}</div></div>'
+})
+
+
+//
+//Main Vue instance controls what is rendered in the #app div
+//
+
+new Vue({
+  el: '#app',
+  data: {
+    posts: [
+      { id: 1, title: 'A Blog Post', content: 'some text' },
+      { id: 2, title: 'Another Post', content: 'some text' },
+    ]
+  }
+})
+
+</script>
+
+</body>
+</html>
