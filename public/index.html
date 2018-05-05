@@ -53,7 +53,7 @@
       <main class="mdl-layout__content mat-typography">        
         
         <!-- page-content gets loaded dynamically below -->
-        <div class="page-content"></div>
+        <div id="portal"></div>
         
       </main>
 
@@ -83,7 +83,7 @@
   Or just include all the views from the gate (either in the html or in the script called below) and show only the one the user is supposed to see. (So either use a data-attribute on .page-content to control which content is visible or remove page-content altogether and hide/show the views manually in listeners.)
 
   -->  
-<script src="/src/js/portal.js"></script>
+<script src="/src/js/load-content.js"></script>
 
 </body>
 </html>

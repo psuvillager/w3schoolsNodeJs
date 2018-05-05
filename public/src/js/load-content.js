@@ -1,0 +1,1 @@
+$('#portal').load('/src/views/portal.html');
