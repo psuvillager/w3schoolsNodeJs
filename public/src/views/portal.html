@@ -17,6 +17,16 @@
         if (event.target == btn){
           //alert("Hello " + btn.id);
           showView(btn.data-view)
+          
+          var view = btn.getAttribute('data-view');
+          alert(view);
+//          changeView(view);
+
+
+            //changeView() isn't working at all...
+
+
+
         }
       }
       e.stopPropagation(); //don't bother bubbling the event up any further
