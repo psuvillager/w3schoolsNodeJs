@@ -29,6 +29,11 @@ let loadView = function(view){
   //jquery is working now!
   $('#test').html("Hi"); 
 
+function changeView(viewName){
+//this should generally happen client-side, though
+  alert('woo from app.js changeView()');
+  $('.viewContainer').not(document.getElementById(viewName)).css("display","none");
+  document.getElementById(viewName).css("display","block");
 };
 
 document.getElementById('loadRoutingViewButton').addEventListener('click', function(){
@@ -40,6 +45,8 @@ document.getElementById('loadRoutingViewButton').addEventListener('click', funct
 //
 // Helper functions  
 //
+
+function test(){ alert "woo from app.js test()"; }
 
 //create element in parent (works for elements that are not self-closing and can contain text)
 function appendElement(parentId, tag, id, text){
