@@ -1,11 +1,33 @@
-<html>
-  <p>
-    <a href="#">Start Hunt</a>
-  </p>
-  <p>
-    <a href="#">View Hunts</a>
-  </p>
-  <p>
-    <a href="#">Predictify</a>
-  </p>
-</html>
+  <div id="portalDiv" class="centered">
+    <p><button id="startHuntBtn" class="navBtn" data-view="new-hunt">Start Hunt</button></p>
+    <p><button id="viewHuntsBtn" class="navBtn" data-view="hunts-list">View Hunts</button></p>
+    <p><button id="predictionBtn" class="navBtn" data-view="predictions">Predictify</button></p>
+  </div>
+
+  <script type="text/javascript">
+
+    var portalDiv = document.getElementById("portalDiv");
+    portalDiv.addEventListener("click", chooseView, false);
+    
+
+    function chooseAndShowView(event) {
+      //would be good to generalize this function for use elsewhere
+      var navBtns = document.querySelectorAll("#portalDiv .navBtn");
+      for (var btn of navBtns){
+        if (event.target == btn){
+          //alert("Hello " + btn.id);
+          showView(btn.data-view)
+        }
+      }
+      e.stopPropagation(); //don't bother bubbling the event up any further
+    }
+
+    function showView(view){
+      //select all the viewContainer elements
+      //for each of them, set its display to block if its id matches the passed argument
+      //  otherwise, hide it
+      //
+      //mini-views will be treated differently (always shown if their associated mjor view is shown)
+    }
+
+  </script>
