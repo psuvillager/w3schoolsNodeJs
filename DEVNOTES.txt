@@ -1,2 +1,25 @@
-5/6/18  - working on index.html & portal.html (and app.js)
-5/7/18  - got changeView function working for initial rendering of portal
+5/7/18  - Routing works
+
+To do:
+
+- Merge Routing into Dev and start an new branch for whatever's next
+
+- Make New-Hunt form (w/submit & cancel buttons)
+- Make Hunt Overview (w/ buttons for Field Notes, Harvest, Take Photo, Animal List, Map, Weather)
+- Make Field Notes with hunt-scoped animal list (w/ increment buttons, etc.)
+
+- Make Hunts List (w/ select details about hunts)
+- Handle creation and display (on Hunt Overview) of Field Notes, Photos, and Harvests
+- Make Animal-List view (and grab its data in each FieldNotes instance) 
+
+- Handle database connection and storage
+- Handle retrieval of Weather and Map in their respective views
+- Make Signup and Login forms and handle auth/auth
+
+- Build  the client-side architecture and coordinate with server
+
+- Populate 'drawer'
+- (Recreate hamburger and drawer without MDL library)
+- Handle predictions and other longer-term features (see site plan)
+
+
