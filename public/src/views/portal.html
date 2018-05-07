@@ -7,7 +7,7 @@
   <script type="text/javascript">
 
     var portalDiv = document.getElementById("portalDiv");
-    portalDiv.addEventListener("click", chooseView, false);
+    portalDiv.addEventListener("click", chooseAndShowView, false);
     
 
     function chooseAndShowView(event) {
@@ -15,8 +15,6 @@
       var navBtns = document.querySelectorAll("#portalDiv .navBtn");
       for (var btn of navBtns){
         if (event.target == btn){
-          //alert("Hello " + btn.id);
-          showView(btn.data-view)
           
           var view = btn.getAttribute('data-view');
           alert(view);
@@ -29,15 +27,6 @@
 
         }
       }
-      e.stopPropagation(); //don't bother bubbling the event up any further
+      event.stopPropagation(); //don't bother bubbling the event up any further
     }
-
-    function showView(view){
-      //select all the viewContainer elements
-      //for each of them, set its display to block if its id matches the passed argument
-      //  otherwise, hide it
-      //
-      //mini-views will be treated differently (always shown if their associated mjor view is shown)
-    }
-
   </script>

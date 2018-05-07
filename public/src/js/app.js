@@ -20,14 +20,6 @@ if ('serviceWorker' in navigator) {
 // Routing stuff
 //
 
-let loadView = function(view){
-  $('.page-content').load('/src/views/' + view + '.html');
-  //$('.page-content').load('/src/views/portal.html');
-  //alert('woo');
-  
-
-  //jquery is working now!
-  $('#test').html("Hi"); 
 
 function changeView(viewName){
 //this should generally happen client-side, though
@@ -36,14 +28,10 @@ function changeView(viewName){
   document.getElementById(viewName).css("display","block");
 };
 
-document.getElementById('loadRoutingViewButton').addEventListener('click', function(){
-  loadView('routing');
-});
-
 
 
 //
-// Helper functions  
+// Misc helper functions  
 //
 
 function test(){ alert "woo from app.js test()"; }
