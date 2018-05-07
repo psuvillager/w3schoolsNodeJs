@@ -17,13 +17,20 @@ if ('serviceWorker' in navigator) {
 
 
 //
-// Routing stuff
+// Routing
 //
 
 function changeView(viewName){
 //this should generally happen client-side, though
-  $('.viewContainer').not(document.getElementById(viewName)).css("display","none");
-  document.getElementById(viewName).css("display","block");
+  var viewContainers = document.querySelectorAll(".viewContainer");
+  for (viewContainer of viewContainers){
+    if(viewContainer.id == viewName){
+      viewContainer.style.display = "block";
+    }
+    else{
+      viewContainer.style.display = "none";
+    } 
+  }
 };
 
 
