@@ -20,10 +20,8 @@ if ('serviceWorker' in navigator) {
 // Routing stuff
 //
 
-
 function changeView(viewName){
 //this should generally happen client-side, though
-  alert('woo from app.js changeView()');
   $('.viewContainer').not(document.getElementById(viewName)).css("display","none");
   document.getElementById(viewName).css("display","block");
 };
@@ -33,8 +31,6 @@ function changeView(viewName){
 //
 // Misc helper functions  
 //
-
-function test(){ alert "woo from app.js test()"; }
 
 //create element in parent (works for elements that are not self-closing and can contain text)
 function appendElement(parentId, tag, id, text){

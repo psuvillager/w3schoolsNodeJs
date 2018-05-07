@@ -1,1 +1,2 @@
-5/6/18 - working on index.html & portal.html (and app.js)
+5/6/18  - working on index.html & portal.html (and app.js)
+5/7/18  - got changeView function working for initial rendering of portal

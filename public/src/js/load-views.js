@@ -18,11 +18,6 @@ $('#weather').load('/src/views/weather.html');
 
 
 
-//changeView() was working here; never worked in portal, but I 
-// suspect I broke it generally before I ever tested it in portal
-
-
-
 //show portal (or load signup & login, and show signup) 
 if (true){ //TODO: expression should indicate whether server can authenticate client 
   changeView('portal');
