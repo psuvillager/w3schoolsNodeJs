@@ -5,22 +5,6 @@
   </div>
 
   <script type="text/javascript">
-
     var portalDiv = document.getElementById("portalDiv");
     portalDiv.addEventListener("click", chooseAndShowView, false);
-    
-
-    function chooseAndShowView(event) {
-      //would be good to generalize this function for use elsewhere
-      var navBtns = document.querySelectorAll("#portalDiv .navBtn");
-      for (var btn of navBtns){
-        if (event.target == btn){
-          
-          var view = btn.getAttribute('data-view');
-//          alert(view);
-          changeView(view);
-        }
-      }
-      event.stopPropagation(); //don't bother bubbling the event up any further
-    }
   </script>

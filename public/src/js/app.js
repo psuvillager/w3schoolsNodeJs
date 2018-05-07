@@ -33,6 +33,17 @@ function changeView(viewName){
   }
 };
 
+function chooseAndShowView(event) {
+  var navBtns = document.querySelectorAll(".navBtn");
+  for (var btn of navBtns){
+    if (event.target == btn){          
+      var chosenView = btn.getAttribute('data-view');
+      changeView(chosenView);
+    }
+  }
+  event.stopPropagation(); //don't bother bubbling the event up any further
+}
+
 
 
 //
