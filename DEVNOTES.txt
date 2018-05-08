@@ -1,16 +1,16 @@
-5/7/18  - Routing works
+5/7/18 - Routing works 
+5/8/18 - New Hunt view structure exists
+
 
 To do:
 
-- Merge Routing into Dev and start a new branch for whatever's next
-
-- Make New-Hunt form (w/submit & cancel buttons)
 - Make Hunt Overview (w/ buttons for Field Notes, Harvest, Take Photo, Animal List, Map, Weather)
-- Make Field Notes with hunt-scoped animal list (w/ increment buttons, etc.)
+- Wire up New-Hunt form to populate the Hunt Overview page
+- Make Field Notes w/animal list (w/ increment buttons, etc.)
 
 - Make Hunts List (w/ select details about hunts)
 - Handle creation and display (on Hunt Overview) of Field Notes, Photos, and Harvests
-- Make Animal-List view (and grab its data in each FieldNotes instance) 
+- Enable editing the animal list from Hunt Overview (and grab list's data in each FieldNotes instance) 
 
 - Handle database connection and storage
 - Handle retrieval of Weather and Map in their respective views
