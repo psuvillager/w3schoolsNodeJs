@@ -1,5 +1,6 @@
 <h5>Start Hunt</h5>
 
+<!-- CSS: move this to a stylesheet -->
 <style type="text/css">
   h5 { margin-bottom: 30px; }
   .formComponent { margin: 15px 0; }
@@ -14,9 +15,10 @@
   #checkboxList label:hover { background-color: #cccccc; }
 </style>
 
+<!-- form -->
+<form id="newHuntForm">
 
-<form>
-
+  <!-- text fields -->
   <div class="formComponent"><label><input type="text" placeholder="Hunt Name"></label></div>
   <div class="formComponent"><label><input type="text" placeholder="Quarry"></label></div>
   <div class="formComponent"><label><input type="text" placeholder="Type (eg 'Stand')"></label></div>
@@ -38,32 +40,16 @@
     </div>
   </div>
 
-  <div class="formComponent"><button type="button" id="goToHunt">Start!</button></div>
+  <!-- buttons -->
+  <div class="formComponent"><button type="button" id="submitNewHuntBtn" class="navBtn" data-view="hunt-overview">Start!</button></div>
+  <div class="formComponent"><button type="button" id="cancelNewHuntBtn" class="navBtn" data-view="portal">Cancel</button></div>
 
 </form>
 
-<script src="/src/js/app.js"></script>
-<script type="text/javascript">
 
-// expand or collapse list of animals
-var expanded = false;
-function toggleChoices() {
-  var checkboxList = document.getElementById("checkboxList");
-  if (!expanded) {
-    checkboxList.style.display = "block";
-    expanded = true;
-  } else {
-    checkboxList.style.display = "none";
-    expanded = false;
-  }
-}
+<!-- scripts -->
+<script src="/src/js/app.js"></script><!--main app script -->
 
-// register event listeners
-document.querySelector('.listExpander').addEventListener("click", toggleChoices);
-
-document.getElementById('goToHunt').addEventListener("click", function(){
-  changeView('hunt-overview')
-});
 <script type="text/javascript">
   // expand or collapse list of animals
   var expanded = false;
@@ -78,5 +64,7 @@ document.getElementById('goToHunt').addEventListener("click", function(){
     }
   }
 
-</script>  document.querySelector('.listExpander').addEventListener("click", toggleChoices);
+  // register event listeners
   document.querySelector('.listExpander').addEventListener("click", toggleChoices);
+  document.getElementById('newHuntForm').addEventListener("click", chooseAndShowView, false);
+</script>
