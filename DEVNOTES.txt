@@ -2,7 +2,7 @@
 
 To do:
 
-- Merge Routing into Dev and start an new branch for whatever's next
+- Merge Routing into Dev and start a new branch for whatever's next
 
 - Make New-Hunt form (w/submit & cancel buttons)
 - Make Hunt Overview (w/ buttons for Field Notes, Harvest, Take Photo, Animal List, Map, Weather)
