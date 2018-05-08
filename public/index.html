@@ -20,9 +20,16 @@
   
   <link rel="manifest" href="/manifest.json">
   <meta name="theme-color" content="#3f51b5"><!-- not sure where/if this gets used -->
-
+  
+  <!-- scripts -->
+  <script defer src="/src/js/material.min.js"></script><!-- material library -->
+  <script src="/src/js/promise.js"></script><!-- polyfill for browsers that don't support promises -->
+  <script src="/src/js/fetch.js"></script><!-- another polyfill (depends on promise.js) -->
+  <script
+    src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script><!-- jquery (included in head for now so it's ready in time) -->
 </head>
-
 
 <body>
   <div id="app">
@@ -30,7 +37,7 @@
     <!-- title/navbar -->
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">  
       
-      <header class="mdl-layout__header"><!-- provides hamburger w/ siblng-drawer access -->
+      <header class="mdl-layout__header"><!-- provides hamburger w/ sibling-drawer access -->
         <div class="mdl-layout__header-row">
           <span class="mdl-layout-title">Trophy Tracks</span><!-- Title -->
         </div>
@@ -45,45 +52,33 @@
         </nav>
       </div>
       
-      <!-- test -->
-      <button id="loadRoutingViewButton">Load 'Routing' View</button>
-      <div id="test">...</div>
-
-      <!-- main content (w/ page-content) -->
+      <!-- main content -->
       <main class="mdl-layout__content mat-typography">        
         
-        <!-- page-content gets loaded dynamically below -->
-        <div class="page-content"></div>
-        
+        <!-- Primary views get loaded in these containers -->
+        <div id="signup" class="viewContainer"></div>
+        <div id="login" class="viewContainer"></div>
+
+        <div id="portal" class="viewContainer"></div>
+        <div id="hunts-list" class="viewContainer"></div>
+        <div id="new-hunt" class="viewContainer"></div>        
+        <div id="predictions" class="viewContainer"></div>
+
+        <div id="hunt-overview" class="viewContainer"></div>
+        <div id="field-notes-entry" class="viewContainer"></div>
+        <div id="new-harvest" class="viewContainer"></div>
+        <div id="new-photo" class="viewContainer"></div>
+        <div id="map" class="viewContainer"></div>
+        <div id="weather" class="viewContainer"></div>
       </main>
 
     </div><!-- /layout -->
   </div><!-- /app -->
-
-  <!-- scripts -->
-  <script defer src="/src/js/material.min.js"></script><!-- material library -->
-  <script src="/src/js/promise.js"></script><!-- polyfill for browsers that don't support promises -->
-  <script src="/src/js/fetch.js"></script><!-- another polyfill (depends on promise.js) -->
-  <script
-    src="https://code.jquery.com/jquery-3.3.1.min.js"
-    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-    crossorigin="anonymous"></script><!-- jquery -->
-  <script src="/src/js/app.js"></script><!-- main app script -->
-
-
-  <!-- The script below is loading the .page-content from the portal.html file (depends on jquery)  
-  
-  We should be able to run a similar ajax call when the user clicks a navigation-ish button to change the relevant element(s). 
-
-  But jquey isn't working in app.js at the moment...
-  I could try using a separate js file (like with portal.js, below) for each view if totally necessary.
-
-  Note: Other dynamic content that changes the rendered views should not cause a problem once the view is rendered (ie added to the DOM.) Just make sure the expected view currently exists and make ajax changes within it.
-
-  Or just include all the views from the gate (either in the html or in the script called below) and show only the one the user is supposed to see. (So either use a data-attribute on .page-content to control which content is visible or remove page-content altogether and hide/show the views manually in listeners.)
-
-  -->  
-<script src="/src/js/portal.js"></script>
+  <script src="/src/js/app.js"></script><!-- main app script --> 
+  <script src="/src/js/load-views.js"></script>
+  <!-- Handle all subsequent 'routing' on the client side (either use a data-attribute on .page-content or hide/show the views manually in listeners.) 
+  Note ('mini-views'): Other dynamic content that changes the rendered views should not cause a problem once the view is rendered (ie added to the DOM.) Just make sure the expected view currently exists and make ajax changes within it, reaching out to the server when necessary.
+  -->
 
 </body>
 </html>

@@ -1,4 +1,8 @@
 
+//
+// Client-side stuff 
+//
+
 //if browser doesn't support promises, use the polyfill (in promise.js)
 if (!window.Promise) { window.Promise = Promise; }
 
@@ -10,21 +14,48 @@ if ('serviceWorker' in navigator) {
     .catch(function(err) { console.log(err); });
 }
 
-let loadView = function(view){
-  //$('.page-content').load('/src/views/' + view + '.html');
-  //$('.page-content').load('/src/views/portal.html');
-  //alert('woo');
-  
 
 
-  //using jquery here fails
-  document.getElementById('test').innerHTML = "Hi"; 
+//
+// Routing
+//
 
-
-
+function changeView(viewName){
+//this should generally happen client-side, though
+  var viewContainers = document.querySelectorAll(".viewContainer");
+  for (viewContainer of viewContainers){
+    if(viewContainer.id == viewName){
+      viewContainer.style.display = "block";
+    }
+    else{
+      viewContainer.style.display = "none";
+    } 
+  }
 };
 
-document.getElementById('loadRoutingViewButton').addEventListener('click', function(){
-  loadView('routing');
-});
+function chooseAndShowView(event) {
+  var navBtns = document.querySelectorAll(".navBtn");
+  for (var btn of navBtns){
+    if (event.target == btn){          
+      var chosenView = btn.getAttribute('data-view');
+      changeView(chosenView);
+    }
+  }
+  event.stopPropagation(); //don't bother bubbling the event up any further
+}
 
+
+
+//
+// Misc helper functions  
+//
+
+//create element in parent (works for elements that are not self-closing and can contain text)
+function appendElement(parentId, tag, id, text){
+  var parent = document.getElementById(parentId);
+  var el = document.createElement(tag);
+  el.setAttribute("id", id);
+  var textNode = document.createTextNode(text);
+  el.appendChild(textNode);
+  parent.appendChild(el);
+}

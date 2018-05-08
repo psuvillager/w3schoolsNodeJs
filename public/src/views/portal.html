@@ -1,11 +1,10 @@
-<html>
-  <p>
-    <a href="#">Start Hunt</a>
-  </p>
-  <p>
-    <a href="#">View Hunts</a>
-  </p>
-  <p>
-    <a href="#">Predictify</a>
-  </p>
-</html>
+  <div id="portalDiv" class="centered">
+    <p><button id="startHuntBtn" class="navBtn" data-view="new-hunt">Start Hunt</button></p>
+    <p><button id="viewHuntsBtn" class="navBtn" data-view="hunts-list">View Hunts</button></p>
+    <p><button id="predictionBtn" class="navBtn" data-view="predictions">Predictify</button></p>
+  </div>
+
+  <script type="text/javascript">
+    var portalDiv = document.getElementById("portalDiv");
+    portalDiv.addEventListener("click", chooseAndShowView, false);
+  </script>
