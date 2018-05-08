@@ -22,6 +22,7 @@
   <div class="formComponent"><label><input type="text" placeholder="Type (eg 'Stand')"></label></div>
   <div class="formComponent"><label><input type="text" placeholder="Stand (if any)"></label></div>
 
+  <!-- animal list -->
   <div>
     <div id="expansionWidget">
       <div class="listExpander">
@@ -29,6 +30,7 @@
         <div class="optionsHider"></div>
       </div>
       <div id="checkboxList" >
+        <!-- I'd like to populate this dynamically from an array (prolly from the database) -->
         <label for="doe"><input type="checkbox" id="doe" />Doe</label>
         <label for="buck"><input type="checkbox" id="buck" />Buck</label>
         <label for="sasquatch"><input type="checkbox" id="sasquatch" />Sasquatch</label>
@@ -62,5 +64,19 @@ document.querySelector('.listExpander').addEventListener("click", toggleChoices)
 document.getElementById('goToHunt').addEventListener("click", function(){
   changeView('hunt-overview')
 });
+<script type="text/javascript">
+  // expand or collapse list of animals
+  var expanded = false;
+  function toggleChoices() {
+    var checkboxList = document.getElementById("checkboxList");
+    if (!expanded) {
+      checkboxList.style.display = "block";
+      expanded = true;
+    } else {
+      checkboxList.style.display = "none";
+      expanded = false;
+    }
+  }
 
-</script>
+</script>  document.querySelector('.listExpander').addEventListener("click", toggleChoices);
+  document.querySelector('.listExpander').addEventListener("click", toggleChoices);
