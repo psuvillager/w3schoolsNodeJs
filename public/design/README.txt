@@ -46,7 +46,7 @@ Login:
 Portal:
   (Shows 'See hunts', 'Start hunt', and 'Get Predictions')
   1 'See hunts' goes to huntList view 
-  2 'Start hunt' shows a _form_ (w/ hunt name, type, etc.)
+  2 'Start hunt' shows a _form_ (w/ hunt name, quarry, type, stand, and watchlist)
       1 Submitting the form:
         - gets time (and location and weather if online)
         - creates a new hunt object and appends it to the huntList

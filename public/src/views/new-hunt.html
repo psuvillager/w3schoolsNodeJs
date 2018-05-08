@@ -1,6 +1,66 @@
 <h5>Start Hunt</h5>
-<input />
-<input />
-<input />
-<button></button>
-<button></button>
+
+<style type="text/css">
+  h5 { margin-bottom: 30px; }
+  .formComponent { margin: 15px 0; }
+  .formComponent button { margin-top: 30px; }
+  #expansionWidget { margin: 0 auto; width: 80%; max-width: 172px; }
+  .listExpander { position: relative; }
+  .listExpander select { width: 100%; font-weight: bold}
+  .optionsHider { position: absolute; left: 0; right: 0; top: 0; bottom: 0; }
+
+  #checkboxList { display: none; }
+  #checkboxList label { display: block; width: 200px;}
+  #checkboxList label:hover { background-color: #cccccc; }
+</style>
+
+
+<form>
+
+  <div class="formComponent"><label><input type="text" placeholder="Hunt Name"></label></div>
+  <div class="formComponent"><label><input type="text" placeholder="Quarry"></label></div>
+  <div class="formComponent"><label><input type="text" placeholder="Type (eg 'Stand')"></label></div>
+  <div class="formComponent"><label><input type="text" placeholder="Stand (if any)"></label></div>
+
+  <div>
+    <div id="expansionWidget">
+      <div class="listExpander">
+        <select><option>Watch List</option></select>    
+        <div class="optionsHider"></div>
+      </div>
+      <div id="checkboxList" >
+        <label for="doe"><input type="checkbox" id="doe" />Doe</label>
+        <label for="buck"><input type="checkbox" id="buck" />Buck</label>
+        <label for="sasquatch"><input type="checkbox" id="sasquatch" />Sasquatch</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="formComponent"><button type="button" id="goToHunt">Start!</button></div>
+
+</form>
+
+<script src="/src/js/app.js"></script>
+<script type="text/javascript">
+
+// expand or collapse list of animals
+var expanded = false;
+function toggleChoices() {
+  var checkboxList = document.getElementById("checkboxList");
+  if (!expanded) {
+    checkboxList.style.display = "block";
+    expanded = true;
+  } else {
+    checkboxList.style.display = "none";
+    expanded = false;
+  }
+}
+
+// register event listeners
+document.querySelector('.listExpander').addEventListener("click", toggleChoices);
+
+document.getElementById('goToHunt').addEventListener("click", function(){
+  changeView('hunt-overview')
+});
+
+</script>
