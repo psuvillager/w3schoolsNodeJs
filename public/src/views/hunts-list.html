@@ -1,5 +1,32 @@
 <h5>Hunts List</h5>
-<div data-hunt="Cool Hunt"><p>Cool Hunt</p></div>
-<div data-hunt="Awesome Hunt"><p>Awesome Hunt</p></div>
-<div data-hunt="Lame Hunt"><p>Lame Hunt</p></div>
-<hr />
+<div id="huntsListDiv" class="centered">
+  <div class="huntSummary" data-view="hunt-overview" data-hunt="cool-hunt"><p>Cool Hunt</p></div>
+  <div class="huntSummary" data-view="hunt-overview" data-hunt="awesome-hunt"><p>Awesome Hunt</p></div>
+  <div class="huntSummary" data-view="hunt-overview" data-hunt="lame-hunt"><p>Lame Hunt</p></div>
+</div>
+
+<script src="/src/js/app.js"></script><!-- main app script -->
+<script type="text/javascript">
+  var huntsListDiv = document.getElementById("huntsListDiv");
+  huntsListDiv.addEventListener("click", chooseHunt, false);
+
+  function chooseHunt(event){
+    // See if one of the huntSummaries was clicked 
+    // If so, return its data-hunt atrribute
+    // If not, return empty string
+    var huntSummaries = document.querySelectorAll(".huntSummary");
+    for (var huntSummary of huntSummaries){
+      // this is a hack because "event.currentTarget == huntSummary" is not working
+      // it's fine if we know the target is not nested more than one level below huntsListDiv
+      // but it's technically wrong and should be modified to respond to all decendants 
+      if (event.target == huntSummary || event.target.parentNode == huntSummary){          
+        //the data-hunt attributes are currently hard-coded and need to be dynamic
+        var chosenHunt = huntSummary.getAttribute("data-hunt");
+        return chosenHunt;
+      }
+    }
+    event.stopPropogation();
+    return "";
+  }
+
+</script>
