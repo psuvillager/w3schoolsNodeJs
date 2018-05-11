@@ -1,1 +1,24 @@
-A  __ Promise __  is an object which represents an asynchronous task that will eventually finish. (https://medium.com/@rafaelvidaurre/truly-understanding-async-await-491dd580500e)
+PROMISES
+A  __ Promise __  is an object which represents an asynchronous task that 
+will eventually finish. (https://medium.com/@rafaelvidaurre/truly-understanding-async-await-491dd580500e)
+
+
+OBJECTS and their PROPERTIES
+A JavaScript __object__ is made up of properties, which each have a name and serveral attributes (value, enumerable, configurable, and writable). You set a property's value like 'person.age = 35'.
+
+  METHODS
+  Methods are functions stored as object properties and are invoked like 'name = person.fullName()'; without parentheses, it will return the function definition.
+
+CLASSES
+Classes are emulated in Javascript with constructor functions like:
+function Person(){
+  this.name = 'Anna';
+  this.age = 35;
+}
+
+THIS
+The 'this' keyword is the object that "owns" the code. When used in an object, 'this' is the object itself.
+In a constructor function 'this' does not have a value; it's a placeholder for any new objects created using the constructor, like person = new Person();
+
+REGEXP
+You can create RegExp object by using pattern literals /()/ instead of new RexExp().
