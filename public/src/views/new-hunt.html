@@ -21,10 +21,10 @@
 <form id="newHuntForm">
 
   <!-- text fields -->
-  <div class="formComponent"><label><input type="text" placeholder="Hunt Name"></label></div>
-  <div class="formComponent"><label><input type="text" placeholder="Quarry"></label></div>
-  <div class="formComponent"><label><input type="text" placeholder="Type (eg 'Stand')"></label></div>
-  <div class="formComponent"><label><input type="text" placeholder="Stand (if any)"></label></div>
+  <div class="formComponent"><label><input id="newHuntName" type="text" placeholder="Hunt Name" /></label></div>
+  <div class="formComponent"><label><input id="newHuntQuarry" type="text" placeholder="Quarry" /></label></div>
+  <div class="formComponent"><label><input id="newHuntType" type="text" placeholder="Type (eg 'Stand')" /></label></div>
+  <div class="formComponent"><label><input id="newHuntStand" type="text" placeholder="Stand (if any)" /></label></div>
 
   <!-- animal list -->
   <div>
@@ -35,9 +35,9 @@
       </div>
       <div id="checkboxList" >
         <!-- I'd like to populate this dynamically from an array (prolly from the database) -->
-        <label for="doe"><input type="checkbox" id="doe" />Doe</label>
-        <label for="buck"><input type="checkbox" id="buck" />Buck</label>
-        <label for="sasquatch"><input type="checkbox" id="sasquatch" />Sasquatch</label>
+        <label for="doe"><input type="checkbox" name="newHuntAnimals" id="doe" value="doe" />Doe</label>
+        <label for="buck"><input type="checkbox" name="newHuntAnimals" id="buck" value="buck" />Buck</label>
+        <label for="sasquatch"><input type="checkbox" name="newHuntAnimals" id="sasquatch" value="sasquatch" />Sasquatch</label>
       </div>
     </div>
   </div>
@@ -66,7 +66,44 @@
     }
   }
 
+
+function Hunt(name, quarry, type, stand, watchlist){
+  // Constructor for Hunt objects
+  this.huntName = name;
+  this.huntId = Date.now();
+  this.quarry = quarry;
+  this.huntType = type;
+  this.stand = stand;
+  this.watchlist = watchlist || []; //cuz otherwise passing an empty array breaks the code
+  this.huntEvents = [];
+}
+
+function makeNewHunt(){
+  let huntName = document.getElementById("newHuntName").value || "";
+  let quarry = document.getElementById("newHuntQuarry").value || "";
+  let huntType = document.getElementById("newHuntType").value || "";
+  let stand = document.getElementById("newHuntStand").value || "";
+
+  let animals = [];
+  let animalOptions = document.getElementsByName("newHuntAnimals");
+  for (let i = 0; i < animalOptions.length; i++){
+    let box = animalOptions[i];
+    if(box.checked === true){
+      animals.push(box.value);
+    }
+  }
+
+  let hunt = new Hunt(huntName, quarry, huntType, stand, animals);
+  alert(hunt.huntName);
+
+//  let str = huntName + " " + quarry + " " + huntType + " " + stand + " ";
+//  for (let a of animals){ str += a + " "; }
+//  alert(str);
+}
+
   // register event listeners
   document.querySelector('.listExpander').addEventListener("click", toggleChoices);
+  document.getElementById('submitNewHuntBtn').addEventListener("click", makeNewHunt, false);
   document.getElementById('newHuntForm').addEventListener("click", chooseAndShowView, false);
+
 </script>
