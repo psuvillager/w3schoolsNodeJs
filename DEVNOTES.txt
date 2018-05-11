@@ -1,12 +1,12 @@
 5/7/18 - Routing works 
 5/8/18 - New Hunt view structure exists
-
+5/10/18 - New Hunt populates Hunt Overview
 
 To do:
 
-- Make Hunt Overview (w/ buttons for Field Notes, Harvest, Take Photo, Animal List, Map, Weather)
-- Wire up New-Hunt form to populate the Hunt Overview page
-- Make Field Notes w/animal list (w/ increment buttons, etc.)
+- Hunts added in New Hunt view should be added to Hunts List view
+- Hunt Overview needs buttons for Field Notes, Harvest, Take Photo, Animal List, Map, Weather
+- Make Field Notes objects and view, w/animal list (w/ increment buttons, etc.)
 
 - Make Hunts List (w/ select details about hunts)
 - Handle creation and display (on Hunt Overview) of Field Notes, Photos, and Harvests

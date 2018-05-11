@@ -1,13 +1,17 @@
 <h5>Hunts List</h5>
-<div id="huntsListDiv" class="centered">
+<div id="huntsListDiv" class="formComponent centered">
   <div class="huntSummary" data-view="hunt-overview" data-hunt="cool-hunt"><p>Cool Hunt</p></div>
   <div class="huntSummary" data-view="hunt-overview" data-hunt="awesome-hunt"><p>Awesome Hunt</p></div>
   <div class="huntSummary" data-view="hunt-overview" data-hunt="lame-hunt"><p>Lame Hunt</p></div>
+  <button type="button" id="backToPortalBtn" class="navBtn" data-view="portal">Back</button>
 </div>
+
 
 <script src="/src/js/app.js"></script><!-- main app script -->
 <script type="text/javascript">
+  //listeners
   var huntsListDiv = document.getElementById("huntsListDiv");
+  document.getElementById("backToPortalBtn").addEventListener("click", chooseAndShowView, false);
   huntsListDiv.addEventListener("click", chooseAndShowHunt, false);
 
   function chooseAndShowHunt(event){
@@ -21,7 +25,14 @@
         var huntName = huntSummary.getAttribute("data-hunt");
         if (huntName){
           changeView("hunt-overview");
-          document.getElementById("huntName").innerText = huntName;
+          document.getElementById("currentHuntName").innerText = huntName;
+          document.getElementById("currentHuntDate").innerText = chosenHunt.huntId; //format this
+          document.getElementById("currentHuntQuarry").innerText = chosenHunt.quarry;
+          document.getElementById("currentHuntType").innerText = chosenHunt.huntType;
+          document.getElementById("currentHuntStand").innerText = chosenHunt.stand;
+//          document.getElementById("currentHuntWatchlist").innerText = chosenHunt.watchlist; //array
+//          document.getElementById("currentHuntEvents").innerText = chosenHunt.events; //object
+           
         }
       }
     }

@@ -1,4 +1,21 @@
 <h5>Hunt Overview</h5>
-<div id="huntDiv">
-  <p id="huntName"></p>
+<div id="currentHuntDiv">
+  <p id="currentHuntName">name</p>
+  <p id="currentHuntDate">date</p>
+  <p id="currentHuntQuarry">quarry</p>
+  <p id="currentHuntType">type</p>
+  <p id="currentHuntStand">stand</p>
+  <div id="currentHuntWatchlist">watchlist</div>
+  <div id="eventListDiv">events</div>
 </div>
+<br />
+<button type="button" id="allHuntsBtn" class="navBtn" data-view="hunts-list">All Hunts</button>
+
+
+
+<script src="/src/js/app.js"></script><!-- main app script -->
+
+<script>
+  // listeners
+  document.getElementById("allHuntsBtn").addEventListener("click", chooseAndShowView);
+</script>
