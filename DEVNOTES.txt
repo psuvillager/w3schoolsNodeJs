@@ -1,13 +1,17 @@
 5/7/18 - Routing works 
 5/8/18 - New Hunt view structure exists
-5/10/18 - New Hunt populates Hunt Overview
+5/10/18 - From New Hunt, makeNewHunt() populates Hunt Overview
+5/14/18   But from Hunts List, chooseAndShowHunt() can't find match for huntID in globalHuntsList
+          Demo data IDs are no longer hard-coded
+
 
 To do:
 
 
 
-  Working on updateHuntsList() and populateHuntOverview() 
-    to make navigation to overview work, from both NewHunt and HuntsList
+  From Hunts List, __chooseAndShowHunt()__ should populate Hunt Overv
+  (Related: updateHuntsList() and populateHuntOverview()) 
+
 
 - Hunt Overview needs buttons for Field Notes, Harvest, Take Photo, Animal List, Map, Weather
 - Make Field Notes objects and view, w/animal list (w/ increment buttons, etc.)

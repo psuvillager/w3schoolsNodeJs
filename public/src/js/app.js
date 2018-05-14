@@ -1,3 +1,23 @@
+
+//
+// Global Hunts List for development
+//
+
+// previously used (in index.html) <script src="/src/js/load-data.js"></script><!-- demo data till persistent storage is up -->
+// it can probably go back there once chooseAndShowHunt() is sorted
+  let globalHuntsList = [];
+
+  //demo data
+  let id1 = Date.now();
+  let sampleHunt1 = new Hunt("Demo Hunt 1", id1, "Bears", "Stand", "Big Bear Stand", ["Bear", "Other Thing"]);
+  globalHuntsList.push(sampleHunt1); 
+  
+  let id2 = id1 + 1;
+  let sampleHunt2 = new Hunt("Demo Hunt 2", id2, "Mushrooms", "Crawling Around", "", ["Mushroom", "UFO"]);
+  globalHuntsList.push(sampleHunt2);
+
+
+
 //
 // Client-side stuff 
 //
@@ -51,10 +71,10 @@ function chooseAndShowView(event) {
 // Hunts
 //
 
-  function Hunt(name, quarry, type, stand, watchlist){
+  function Hunt(name, id, quarry, type, stand, watchlist){
     // Constructor for Hunt objects
     this.huntName = name;
-    this.huntId = Date.now();
+    this.huntId = id;
     this.quarry = quarry;
     this.huntType = type;
     this.stand = stand;
@@ -65,6 +85,7 @@ function chooseAndShowView(event) {
   function makeNewHunt(){
     //collect inputs including selected animals
     let huntName = document.getElementById("newHuntName").value || "";
+    let huntId = Date.now();
     let quarry = document.getElementById("newHuntQuarry").value || "";
     let huntType = document.getElementById("newHuntType").value || "";
     let stand = document.getElementById("newHuntStand").value || "";
@@ -77,7 +98,7 @@ function chooseAndShowView(event) {
       }
     }
     //make hunt object and add it to the global hunt list
-    let myNewHunt = new Hunt(huntName, quarry, huntType, stand, animals);
+    let myNewHunt = new Hunt(huntName, huntId, quarry, huntType, stand, animals);
     globalHuntsList.push(myNewHunt);
     //get properties of newly added hunt and display them in Hunt Overview
     let huntOnList = globalHuntsList[globalHuntsList.length - 1];
@@ -98,10 +119,11 @@ function chooseAndShowView(event) {
       //hunt properties go in textNode, which goes in a paragraph, which goes into listDiv
       var summaryTxt = document.createTextNode(huntName +sep+ quarry +sep+ huntType + (stand ? sep + stand : ""));
       var newP = document.createElement("p");
-      //newP.classList.add("hunt-summary");
-      //newP.addAttribute("data-hunt", huntId);
+      newP.classList.add("huntSummary");
+      newP.setAttribute("data-hunt", huntId);
       newP.appendChild(summaryTxt);
       listDiv.appendChild(newP);
+      //alert("In updateHuntsList(), huntId = " + newP.getAttribute("data-hunt"));
     }
   }
 
@@ -112,17 +134,40 @@ function chooseAndShowView(event) {
       // this is a hack because "event.currentTarget == huntSummary" is not working
       // it's fine if we know the target is not nested more than one level below huntsListDiv
       // but it's technically wrong and should be modified to respond to all decendants 
-      if (event.target == huntSummary || event.target.parentNode == huntSummary){          
-        //the data-hunt attributes are currently hard-coded and need to be dynamic
+      if (event.target == huntSummary || event.target.parentNode == huntSummary){  
         var huntId = huntSummary.getAttribute("data-hunt");
         if (huntId){
+          alert("looking for hunt #" + huntId);
           let chosenHunt = null;
-          for(let hunt in globalHuntsList){
-            if(hunt.id == huntId){ 
+
+
+
+
+          //trying to get into the global list and find out what's in there
+          let firstHunt = globalHuntsList[0];
+          alert("first element in globalHuntsList is of type " + typeof(firstHunt)); //should be object
+
+          let propsList = "Props:\n";
+          alert("initial propsList: " + propsList);
+          for (var propertyName in firstHunt) {
+            if (object.hasOwnProperty(propertyName)) {
+              propsList = propsList + propertyName + " ";
+            }
+          }
+          alert(propsList); //This alert isn't firing at all
+
+
+
+
+          for(let huntToCheck in globalHuntsList){
+//            alert("comparing " + huntId + " to " + huntToCheck.huntId);
+            if(huntToCheck.huntId == huntId){ 
+//              alert("found " + huntId + " in list");
               chosenHunt = hunt; 
             }
           }
           // if(!chosenHunt){ //error }
+//          alert("hunt #" + chosenHunt.huntId + " " + chosenHunt.huntName);
           changeView("hunt-overview", chosenHunt);
         }
       }
@@ -138,7 +183,6 @@ function chooseAndShowView(event) {
   //  Need ULs or something for these arrays
   //    document.getElementById("currentHuntWatchlist").innerText = chosenHunt.watchlist; //array
   //    document.getElementById("currentHuntEvents").innerText = chosenHunt.events; //object
-
   }
 
 
