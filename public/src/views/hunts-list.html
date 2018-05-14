@@ -1,4 +1,5 @@
 <h5>Hunts List</h5>
+
 <div id="huntsListDiv" class="formComponent centered">
   <div class="huntSummary" data-view="hunt-overview" data-hunt="cool-hunt"><p>Cool Hunt</p></div>
   <div class="huntSummary" data-view="hunt-overview" data-hunt="awesome-hunt"><p>Awesome Hunt</p></div>
@@ -8,34 +9,10 @@
 
 
 <script src="/src/js/app.js"></script><!-- main app script -->
-<script type="text/javascript">
+<script type="text/javascript">  
+
   //listeners
-  var huntsListDiv = document.getElementById("huntsListDiv");
   document.getElementById("backToPortalBtn").addEventListener("click", chooseAndShowView, false);
   huntsListDiv.addEventListener("click", chooseAndShowHunt, false);
-
-  function chooseAndShowHunt(event){
-    var huntSummaries = document.querySelectorAll(".huntSummary");
-    for (var huntSummary of huntSummaries){
-      // this is a hack because "event.currentTarget == huntSummary" is not working
-      // it's fine if we know the target is not nested more than one level below huntsListDiv
-      // but it's technically wrong and should be modified to respond to all decendants 
-      if (event.target == huntSummary || event.target.parentNode == huntSummary){          
-        //the data-hunt attributes are currently hard-coded and need to be dynamic
-        var huntName = huntSummary.getAttribute("data-hunt");
-        if (huntName){
-          changeView("hunt-overview");
-          document.getElementById("currentHuntName").innerText = huntName;
-          document.getElementById("currentHuntDate").innerText = chosenHunt.huntId; //format this
-          document.getElementById("currentHuntQuarry").innerText = chosenHunt.quarry;
-          document.getElementById("currentHuntType").innerText = chosenHunt.huntType;
-          document.getElementById("currentHuntStand").innerText = chosenHunt.stand;
-//          document.getElementById("currentHuntWatchlist").innerText = chosenHunt.watchlist; //array
-//          document.getElementById("currentHuntEvents").innerText = chosenHunt.events; //object
-           
-        }
-      }
-    }
-  }
 
 </script>

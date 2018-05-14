@@ -19,16 +19,14 @@ if ('serviceWorker' in navigator) {
 // Navigation
 //
 
-function changeView(viewName, data){ //data argument would be for hunt or event views
+function changeView(viewName, hunt){ //data argument would be for hunt or event views
 //this should generally happen client-side, though
   var viewContainers = document.querySelectorAll(".viewContainer");
   for (viewContainer of viewContainers){
     if(viewContainer.id == viewName){
       viewContainer.style.display = "block";
-//      if(viewName == "hunt-overview"){
-//        //alert("changing to hunt overview"); //the alert appears before the new view
-//        //populateHuntOverview(data); //if the hunt view were displayed, maybe we could populate it?
-//      }
+      if(viewName == "hunts-list"){ updateHuntsList(); }
+      else if(viewName == "hunt-overview"){ populateHuntOverview(hunt); }
     }
     else{
       viewContainer.style.display = "none";
@@ -57,7 +55,6 @@ function chooseAndShowView(event) {
     // Constructor for Hunt objects
     this.huntName = name;
     this.huntId = Date.now();
-    //alert(this.huntId);
     this.quarry = quarry;
     this.huntType = type;
     this.stand = stand;
@@ -65,17 +62,8 @@ function chooseAndShowView(event) {
     this.huntEvents = [];
   }
 
-  //Global Hunts List (until we start using database)
-  let globalHuntsList = [];
-  let sampleHunt1 = new Hunt("Demo Hunt 1", "Bears", "Stand", "Big Bear Stand", ["Bear", "Other Thing"]);
-  let sampleHunt2 = new Hunt("Demo Hunt 2", "Mushrooms", "Crawling Around", "", ["Mushroom", "UFO"]);
-  globalHuntsList.push(sampleHunt1);
-  globalHuntsList.push(sampleHunt2);
-  //for(let hunt of globalHuntsList){
-  //  alert("On list: " + hunt.huntName);
-  //}
-
   function makeNewHunt(){
+    //collect inputs including selected animals
     let huntName = document.getElementById("newHuntName").value || "";
     let quarry = document.getElementById("newHuntQuarry").value || "";
     let huntType = document.getElementById("newHuntType").value || "";
@@ -88,21 +76,69 @@ function chooseAndShowView(event) {
         animals.push(box.value);
       }
     }
-    let hunt = new Hunt(huntName, quarry, huntType, stand, animals);
-    globalHuntsList.push(hunt);
+    //make hunt object and add it to the global hunt list
+    let myNewHunt = new Hunt(huntName, quarry, huntType, stand, animals);
+    globalHuntsList.push(myNewHunt);
+    //get properties of newly added hunt and display them in Hunt Overview
     let huntOnList = globalHuntsList[globalHuntsList.length - 1];
-    changeView("hunt-overview");
-    document.getElementById("currentHuntName").innerText = huntOnList.huntName;
-    document.getElementById("currentHuntDate").innerText = huntOnList.huntId; //format this
-    document.getElementById("currentHuntQuarry").innerText = huntOnList.quarry;
-    document.getElementById("currentHuntType").innerText = huntOnList.huntType;
-    document.getElementById("currentHuntStand").innerText = huntOnList.stand;
+    changeView("hunt-overview", huntOnList);
   }
 
-  function populateHuntOverview(hunt){ //was going to be called from changeView()...
-    alert("populating hunt: " + hunt.huntName);
-    //document.getElementById("currentHuntName").innerText() = huntOnList.huntName;
-    //alert(document.getElementById("currentHuntName").innerHTML());
+
+  function updateHuntsList(){
+    const sep = ' - ';
+    let listDiv = document.getElementById("huntsListDiv");
+    listDiv.innerHTML = ""; //empty the list before adding all hunts
+    for(let hunt of globalHuntsList){ //
+      let huntName = hunt.huntName;
+      let huntId = hunt.huntId;
+      let quarry = hunt.quarry;
+      let huntType = hunt.huntType;
+      let stand = hunt.stand || "";
+      //hunt properties go in textNode, which goes in a paragraph, which goes into listDiv
+      var summaryTxt = document.createTextNode(huntName +sep+ quarry +sep+ huntType + (stand ? sep + stand : ""));
+      var newP = document.createElement("p");
+      //newP.classList.add("hunt-summary");
+      //newP.addAttribute("data-hunt", huntId);
+      newP.appendChild(summaryTxt);
+      listDiv.appendChild(newP);
+    }
+  }
+
+
+  function chooseAndShowHunt(event){
+    var huntSummaries = document.querySelectorAll(".huntSummary");
+    for (var huntSummary of huntSummaries){
+      // this is a hack because "event.currentTarget == huntSummary" is not working
+      // it's fine if we know the target is not nested more than one level below huntsListDiv
+      // but it's technically wrong and should be modified to respond to all decendants 
+      if (event.target == huntSummary || event.target.parentNode == huntSummary){          
+        //the data-hunt attributes are currently hard-coded and need to be dynamic
+        var huntId = huntSummary.getAttribute("data-hunt");
+        if (huntId){
+          let chosenHunt = null;
+          for(let hunt in globalHuntsList){
+            if(hunt.id == huntId){ 
+              chosenHunt = hunt; 
+            }
+          }
+          // if(!chosenHunt){ //error }
+          changeView("hunt-overview", chosenHunt);
+        }
+      }
+    }
+  }
+
+  function populateHuntOverview(hunt){ 
+    document.getElementById("currentHuntName").innerText = hunt.huntName;
+    document.getElementById("currentHuntDate").innerText = hunt.huntId; //format this
+    document.getElementById("currentHuntQuarry").innerText = hunt.quarry;
+    document.getElementById("currentHuntType").innerText = hunt.huntType;
+    document.getElementById("currentHuntStand").innerText = hunt.stand;
+  //  Need ULs or something for these arrays
+  //    document.getElementById("currentHuntWatchlist").innerText = chosenHunt.watchlist; //array
+  //    document.getElementById("currentHuntEvents").innerText = chosenHunt.events; //object
+
   }
 
 

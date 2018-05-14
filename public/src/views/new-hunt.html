@@ -22,10 +22,18 @@
 
   <!-- text fields -->
     <!-- Demo values are added in script below -->
-  <div class="formComponent"><label><input id="newHuntName" type="text" placeholder="Hunt Name" /></label></div>
-  <div class="formComponent"><label><input id="newHuntQuarry" type="text" placeholder="Quarry" /></label></div>
-  <div class="formComponent"><label><input id="newHuntType" type="text" placeholder="Type (eg 'Stand')" /></label></div>
-  <div class="formComponent"><label><input id="newHuntStand" type="text" placeholder="Stand (if any)" /></label></div>
+  <div class="formComponent">
+    <label><input id="newHuntName" type="text" placeholder="Hunt Name" /></label>
+  </div>
+  <div class="formComponent">
+    <label><input id="newHuntQuarry" type="text" placeholder="Quarry" /></label>
+  </div>
+  <div class="formComponent">
+    <label><input id="newHuntType" type="text" placeholder="Type (eg 'Stand')" /></label>
+  </div>
+  <div class="formComponent">
+    <label><input id="newHuntStand" type="text" placeholder="Stand (if any)" /></label>
+  </div>
 
   <!-- animal list -->
   <div>
@@ -35,7 +43,7 @@
         <div class="optionsHider"></div>
       </div>
       <div id="checkboxList" >
-        <!-- I'd like to populate this dynamically from an array (prolly from the database) -->
+        <!-- Populate this dynamically from an array -->
         <label for="doe"><input type="checkbox" name="newHuntAnimals" id="doe" value="doe" />Doe</label>
         <label for="buck"><input type="checkbox" name="newHuntAnimals" id="buck" value="buck" />Buck</label>
         <label for="sasquatch"><input type="checkbox" name="newHuntAnimals" id="sasquatch" value="sasquatch" />Sasquatch</label>
@@ -53,15 +61,17 @@
 <!-- scripts -->
 <script src="/src/js/app.js"></script><!--main app script -->
 <script type="text/javascript">
+
   // listeners
   document.querySelector('.listExpander').addEventListener("click", toggleBlockDisplayById.bind(null, "checkboxList"), false);
   document.getElementById('submitNewHuntBtn').addEventListener("click", makeNewHunt, false);
   document.getElementById('cancelNewHuntBtn').addEventListener("click", chooseAndShowView, false);
 
+
   //Demo data
-  let demo;
-  demo = true;
-  if(demo){
+  let demoNewHunt;
+  demoNewHunt = true;
+  if(demoNewHunt){
     document.getElementById("newHuntName").value = "Dangerous Hunt";
     document.getElementById("newHuntQuarry").value = "Humans";
     document.getElementById("newHuntType").value = "Stand";
