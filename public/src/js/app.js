@@ -5,6 +5,8 @@
 
 // previously used (in index.html) <script src="/src/js/load-data.js"></script><!-- demo data till persistent storage is up -->
 // it can probably go back there once chooseAndShowHunt() is sorted
+  
+
   let globalHuntsList = [];
 
   //demo data
@@ -16,7 +18,13 @@
   let sampleHunt2 = new Hunt("Demo Hunt 2", id2, "Mushrooms", "Crawling Around", "", ["Mushroom", "UFO"]);
   globalHuntsList.push(sampleHunt2);
 
-
+  //testing globalHuntsList
+/*
+  for (let thisHunt of globalHuntsList){
+    let myData = thisHunt.print();
+    alert(myData);
+  }
+*/
 
 //
 // Client-side stuff 
@@ -80,6 +88,10 @@ function chooseAndShowView(event) {
     this.stand = stand;
     this.watchlist = watchlist || []; //cuz otherwise passing an empty array breaks the code
     this.huntEvents = [];
+  
+    this.print = function(){ 
+      return ("ID = " + this.huntId + "\nName: " + this.huntName + "\nQuarry: " + this.quarry + "\nType: " + this.huntType + "\nStand: " + this.stand); 
+    }
   }
 
   function makeNewHunt(){
@@ -129,6 +141,16 @@ function chooseAndShowView(event) {
 
 
   function chooseAndShowHunt(event){
+    
+/*
+    let huntIdsDisplay = "";
+    for (let thisHunt of globalHuntsList){
+      let id = thisHunt.huntId;
+      huntIdsDisplay += (id + "\n");
+    }
+    alert(huntIdsDisplay);
+*/
+
     var huntSummaries = document.querySelectorAll(".huntSummary");
     for (var huntSummary of huntSummaries){
       // this is a hack because "event.currentTarget == huntSummary" is not working
@@ -144,9 +166,10 @@ function chooseAndShowView(event) {
 
 
           //trying to get into the global list and find out what's in there
-          let firstHunt = globalHuntsList[0];
-          alert("first element in globalHuntsList is of type " + typeof(firstHunt)); //should be object
+//          let firstHunt = globalHuntsList[0];
+//          alert("first element in globalHuntsList is of type " + typeof(firstHunt)); //should be object
 
+/*
           let propsList = "Props:\n";
           alert("initial propsList: " + propsList);
           for (var propertyName in firstHunt) {
@@ -155,12 +178,12 @@ function chooseAndShowView(event) {
             }
           }
           alert(propsList); //This alert isn't firing at all
+*/
 
 
 
-
-          for(let huntToCheck in globalHuntsList){
-//            alert("comparing " + huntId + " to " + huntToCheck.huntId);
+          for(let huntToCheck of globalHuntsList){
+            alert("comparing " + huntId + " to " + huntToCheck.huntId);
             if(huntToCheck.huntId == huntId){ 
 //              alert("found " + huntId + " in list");
               chosenHunt = hunt; 
