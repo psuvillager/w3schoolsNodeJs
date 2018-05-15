@@ -1,8 +1,6 @@
-5/7/18 - Routing works 
-5/8/18 - New Hunt view structure exists
-5/10/18 - From New Hunt, makeNewHunt() populates Hunt Overview
-5/14/18 - Demo data IDs are no longer hard-coded
-5/15/18 - From Hunts List, chooseAndShowHunt() populates Hunt Overview
+Navigation works 
+From New Hunt, makeNewHunt() populates Hunt Overview
+From Hunts List, chooseAndShowHunt() populates Hunt Overview
 
 To do:
 

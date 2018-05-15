@@ -161,9 +161,10 @@ function chooseAndShowView(event) {
     document.getElementById("currentHuntQuarry").innerText = hunt.quarry;
     document.getElementById("currentHuntType").innerText = hunt.huntType;
     document.getElementById("currentHuntStand").innerText = hunt.stand;
-  //  Need ULs or something for these arrays
-  //    document.getElementById("currentHuntWatchlist").innerText = chosenHunt.watchlist; //array
-  //    document.getElementById("currentHuntEvents").innerText = chosenHunt.events; //object
+    document.getElementById("currentHuntEvents").innerHTML = hunt.events;
+    for (let event of hunt.events){
+      //show list of events (FieldNotes, Photo, and Harvest)
+    }
   }
 
 
