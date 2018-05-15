@@ -1,22 +1,16 @@
 5/7/18 - Routing works 
 5/8/18 - New Hunt view structure exists
 5/10/18 - From New Hunt, makeNewHunt() populates Hunt Overview
-5/14/18   But from Hunts List, chooseAndShowHunt() can't find match for huntID in globalHuntsList
-          Demo data IDs are no longer hard-coded
-
+5/14/18 - Demo data IDs are no longer hard-coded
+5/15/18 - From Hunts List, chooseAndShowHunt() populates Hunt Overview
 
 To do:
 
+- Hunt Overview 
+  - needs Watchlist and EventList to be handled properly
+  - needs buttons for Field Notes, Harvest, Take Photo, Animal List, Map, Weather
 
-
-  From Hunts List, __chooseAndShowHunt()__ should populate Hunt Overv
-  (Related: updateHuntsList() and populateHuntOverview()) 
-
-
-- Hunt Overview needs buttons for Field Notes, Harvest, Take Photo, Animal List, Map, Weather
 - Make Field Notes objects and view, w/animal list (w/ increment buttons, etc.)
-
-- Make Hunts List (w/ select details about hunts)
 - Handle creation and display (on Hunt Overview) of Field Notes, Photos, and Harvests
 - Enable editing the animal list from Hunt Overview (and grab list's data in each FieldNotes instance) 
 

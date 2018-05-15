@@ -2,10 +2,8 @@
 //
 // Global Hunts List for development
 //
-
-// previously used (in index.html) <script src="/src/js/load-data.js"></script><!-- demo data till persistent storage is up -->
-// it can probably go back there once chooseAndShowHunt() is sorted
-  
+  // Global list with demo data formerly lived in load-data.js, which was imported into index.html. Maybe return to that setup
+  // All of this will be obsolete once hunts are stored persistently in a database
 
   let globalHuntsList = [];
 
@@ -18,13 +16,7 @@
   let sampleHunt2 = new Hunt("Demo Hunt 2", id2, "Mushrooms", "Crawling Around", "", ["Mushroom", "UFO"]);
   globalHuntsList.push(sampleHunt2);
 
-  //testing globalHuntsList
-/*
-  for (let thisHunt of globalHuntsList){
-    let myData = thisHunt.print();
-    alert(myData);
-  }
-*/
+
 
 //
 // Client-side stuff 
@@ -141,16 +133,6 @@ function chooseAndShowView(event) {
 
 
   function chooseAndShowHunt(event){
-    
-/*
-    let huntIdsDisplay = "";
-    for (let thisHunt of globalHuntsList){
-      let id = thisHunt.huntId;
-      huntIdsDisplay += (id + "\n");
-    }
-    alert(huntIdsDisplay);
-*/
-
     var huntSummaries = document.querySelectorAll(".huntSummary");
     for (var huntSummary of huntSummaries){
       // this is a hack because "event.currentTarget == huntSummary" is not working
@@ -159,38 +141,13 @@ function chooseAndShowView(event) {
       if (event.target == huntSummary || event.target.parentNode == huntSummary){  
         var huntId = huntSummary.getAttribute("data-hunt");
         if (huntId){
-          alert("looking for hunt #" + huntId);
           let chosenHunt = null;
-
-
-
-
-          //trying to get into the global list and find out what's in there
-//          let firstHunt = globalHuntsList[0];
-//          alert("first element in globalHuntsList is of type " + typeof(firstHunt)); //should be object
-
-/*
-          let propsList = "Props:\n";
-          alert("initial propsList: " + propsList);
-          for (var propertyName in firstHunt) {
-            if (object.hasOwnProperty(propertyName)) {
-              propsList = propsList + propertyName + " ";
-            }
-          }
-          alert(propsList); //This alert isn't firing at all
-*/
-
-
-
-          for(let huntToCheck of globalHuntsList){
-            alert("comparing " + huntId + " to " + huntToCheck.huntId);
-            if(huntToCheck.huntId == huntId){ 
-//              alert("found " + huntId + " in list");
+          for(let hunt of globalHuntsList){
+            if(hunt.huntId == huntId){ 
               chosenHunt = hunt; 
             }
           }
-          // if(!chosenHunt){ //error }
-//          alert("hunt #" + chosenHunt.huntId + " " + chosenHunt.huntName);
+          // if(!chosenHunt){ //error... }
           changeView("hunt-overview", chosenHunt);
         }
       }
