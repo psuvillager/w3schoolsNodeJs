@@ -155,8 +155,9 @@ function chooseAndShowView(event) {
   }
 
   function populateHuntOverview(hunt){ 
+    document.getElementById("currentHuntDiv").setAttribute("data-hunt", hunt.huntId)
     document.getElementById("currentHuntName").innerText = hunt.huntName;
-    document.getElementById("currentHuntDate").innerText = hunt.huntId; //format this
+    document.getElementById("currentHuntDate").innerText = formatDateTime(new Date(hunt.huntId));
     document.getElementById("currentHuntQuarry").innerText = hunt.quarry;
     document.getElementById("currentHuntType").innerText = hunt.huntType;
     document.getElementById("currentHuntStand").innerText = hunt.stand;
@@ -175,6 +176,18 @@ function chooseAndShowView(event) {
     let el = document.getElementById(elementId);
     let display = el.style.display || "none";
     el.style.display = (display == "none") ? "block" : "none";
+  }
+
+  function formatDateTime(date){
+    //takes a date object and returns a string
+    let year = date.getFullYear();
+    let month = date.getMonth();
+    let day = date.getDate();
+    let hours = date.getHours();
+    let period = hours < 12 ? "AM" : "PM";
+    let minutes = date.getMinutes();
+    let formatted = month + "/" + day + "/" + year + "  " + hours + ":" + minutes + period;
+    return formatted;
   }
 
   function appendElement(parentId, tag, id, text){ //not used as of 5/11/18
