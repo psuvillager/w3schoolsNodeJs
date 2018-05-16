@@ -1,21 +1,59 @@
 <h5>Hunt Overview</h5>
 <div id="currentHuntDiv" data-hunt="">
+  <p>
+    <button id="watchlistBtn" type="button" class="huntNavBtn" data-view="edit-watchlist">Watchlist</button>
+    <button id="mapBtn" type="button" class="huntNavBtn" data-view="map">Map</button>
+    <button id="weatherBtn" type="button" class="huntNavBtn" data-view="weather">Weather</button>
+    <button id="allHuntsBtn" type="button" class="huntNavBtn" data-view="hunts-list">All Hunts</button>
+  </p>
   <p id="currentHuntName">name</p>
   <p id="currentHuntDate">date</p>
   <p id="currentHuntQuarry">quarry</p>
   <p id="currentHuntType">type</p>
   <p id="currentHuntStand">stand</p>
-  <div id="currentHuntWatchlist">watchlist</div>
-  <div id="eventListDiv">events</div>
+  <p>
+    <button id="newFieldNotesBtn" type="button" class="huntEventBtn" data-view="new-field-notes">Field Notes</button>
+    <button id="newPhotoBtn" type="button" class="huntEventBtn" data-view="new-harvest">Take Photo</button>
+    <button id="newHarvestBtn" type="button" class="huntEventBtn" data-view="new-photo">Harvest</button>
+  </p>
+
+  <div id="eventListDiv">[Events (such as field notes logs) go here]</div>
+
 </div>
-<br />
-<button type="button" id="allHuntsBtn" class="navBtn" data-view="hunts-list">All Hunts</button>
-
-
 
 <script src="/src/js/app.js"></script><!-- main app script -->
-
 <script>
   // listeners
-  document.getElementById("allHuntsBtn").addEventListener("click", chooseAndShowView);
+
+  document.getElementById("allHuntsBtn").addEventListener("click", changeView.bind(null, "hunts-list"), false);
+
+/*
+  document.getElementById("currentHuntDiv").addEventListener("click", huntAction, false);
+
+  function huntAction(event){
+    let huntId = document.getElementById("currentHuntDiv").getAttribute("data-hunt");
+    let btn = event.target;
+    if(btn.classList.contains("huntEventBtn")){ 
+      let eventType = btn.getAttribute("data-view");
+      newHuntEvent(eventType, huntId)
+    }
+    else if(btn.classList.contains("huntNavBtn")){
+
+    }
+    event.stopPropagation(); //don't bother bubbling the event up any further
+  }
+
+  function HuntEvent(){
+
+  }
+
+  function newHuntEvent(eventType, huntId) {
+
+    let huntEventBtns = document.querySelectorAll(".huntEventBtn");
+    let newEvent = new HuntEvent()
+
+    changeView(chosenView);
+  }
+*/
+
 </script>
