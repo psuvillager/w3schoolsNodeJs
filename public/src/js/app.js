@@ -45,8 +45,8 @@ function changeView(viewName, hunt){ //data argument would be for hunt or event 
   for (viewContainer of viewContainers){
     if(viewContainer.id == viewName){
       viewContainer.style.display = "block";
-      if(viewName == "hunts-list"){ updateHuntsList(); }
       else if(viewName == "hunt-overview"){ populateHuntOverview(hunt); }
+      if(viewName == "hunts-list"){ updateHuntsListView(); }
     }
     else{
       viewContainer.style.display = "none";
@@ -110,7 +110,6 @@ function chooseAndShowView(event) {
   }
 
 
-  function updateHuntsList(){
 
   function getHunt(huntId){
     //Not tested
@@ -122,6 +121,8 @@ function chooseAndShowView(event) {
     return null;
   }
 
+
+  function updateHuntsListView(){
     const sep = ' - ';
     let listDiv = document.getElementById("huntsListDiv");
     listDiv.innerHTML = ""; //empty the list before adding all hunts
