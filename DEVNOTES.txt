@@ -5,8 +5,10 @@ From Hunts List, chooseAndShowHunt() populates Hunt Overview
 To do:
 
 - Hunt Overview 
-  - needs Watchlist and EventList to be handled properly
-  - needs buttons for Field Notes, Harvest, Take Photo, Animal List, Map, Weather
+  - needs EventList display
+  - navigation to watchlist and new-field-notes aren't working
+  - needs new-event creation (Field Notes, Harvest, Take Photo)
+  
 
 - Make Field Notes objects and view, w/animal list (w/ increment buttons, etc.)
 - Handle creation and display (on Hunt Overview) of Field Notes, Photos, and Harvests

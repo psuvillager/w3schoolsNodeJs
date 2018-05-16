@@ -46,7 +46,7 @@ function changeView(viewName, hunt){ //data argument would be for hunt or event 
     if(viewContainer.id == viewName){
       viewContainer.style.display = "block";
       if(viewName == "hunts-list"){ updateHuntsListView(); }
-//      else if(viewName == "hunt-overview"){ populateHuntOverview(hunt); }
+      else if(viewName == "hunt-overview"){ populateHuntOverview(hunt); }
       //else if(viewName == "new-field-notes"){ //remember which hunt this is for and eventually append the field-notes to the huntEventsList }
     }
     //hide the rest
