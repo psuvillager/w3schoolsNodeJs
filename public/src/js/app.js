@@ -2,7 +2,6 @@
 //
 // Global Hunts List for development
 //
-  // Global list with demo data formerly lived in load-data.js, which was imported into index.html. Maybe return to that setup
   // All of this will be obsolete once hunts are stored persistently in a database
 
   let globalHuntsList = [];
@@ -12,7 +11,7 @@
   let sampleHunt1 = new Hunt("Demo Hunt 1", id1, "Bears", "Stand", "Big Bear Stand", ["Bear", "Other Thing"]);
   globalHuntsList.push(sampleHunt1); 
   
-  let id2 = id1 + 1;
+  let id2 = id1 + 1; //because in demo code, another Date.now() will generate the same id number
   let sampleHunt2 = new Hunt("Demo Hunt 2", id2, "Mushrooms", "Crawling Around", "", ["Mushroom", "UFO"]);
   globalHuntsList.push(sampleHunt2);
 
@@ -43,11 +42,14 @@ function changeView(viewName, hunt){ //data argument would be for hunt or event 
 //this should generally happen client-side, though
   var viewContainers = document.querySelectorAll(".viewContainer");
   for (viewContainer of viewContainers){
+    //show the selected view
     if(viewContainer.id == viewName){
       viewContainer.style.display = "block";
-      else if(viewName == "hunt-overview"){ populateHuntOverview(hunt); }
       if(viewName == "hunts-list"){ updateHuntsListView(); }
+//      else if(viewName == "hunt-overview"){ populateHuntOverview(hunt); }
+      //else if(viewName == "new-field-notes"){ //remember which hunt this is for and eventually append the field-notes to the huntEventsList }
     }
+    //hide the rest
     else{
       viewContainer.style.display = "none";
     } 
@@ -55,6 +57,7 @@ function changeView(viewName, hunt){ //data argument would be for hunt or event 
 }
 
 function chooseAndShowView(event) {
+  //Portal view has buttons with the navBtn class with the data-view attribute specifying a view name
   var navBtns = document.querySelectorAll(".navBtn");
   for (var btn of navBtns){
     if (event.target == btn){          
@@ -64,6 +67,7 @@ function chooseAndShowView(event) {
   }
   event.stopPropagation(); //don't bother bubbling the event up any further
 }
+
 
 
 
@@ -111,6 +115,7 @@ function chooseAndShowView(event) {
 
 
 
+
   function getHunt(huntId){
     //Not tested
     for(let hunt of globalHuntsList){
@@ -126,7 +131,7 @@ function chooseAndShowView(event) {
     const sep = ' - ';
     let listDiv = document.getElementById("huntsListDiv");
     listDiv.innerHTML = ""; //empty the list before adding all hunts
-    for(let hunt of globalHuntsList){ //
+    for(let hunt of globalHuntsList){
       let huntName = hunt.huntName;
       let huntId = hunt.huntId;
       let quarry = hunt.quarry;
@@ -166,7 +171,8 @@ function chooseAndShowView(event) {
     }
   }
 
-  function populateHuntOverview(hunt){ 
+  function populateHuntOverview(hunt){
+    //takes a Hunt object and fills in Hunt Overview view
     document.getElementById("currentHuntDiv").setAttribute("data-hunt", hunt.huntId)
     document.getElementById("currentHuntName").innerText = hunt.huntName;
     document.getElementById("currentHuntDate").innerText = formatDateTime(new Date(hunt.huntId));
@@ -185,7 +191,8 @@ function chooseAndShowView(event) {
 // Misc helper functions  
 //
 
-  function toggleBlockDisplayById(elementId){ //used to expand/collapse watchlist in new-hunt...
+  function toggleBlockDisplayById(elementId){
+    //used to expand/collapse watchlist in new-hunt
     let el = document.getElementById(elementId);
     let display = el.style.display || "none";
     el.style.display = (display == "none") ? "block" : "none";
@@ -193,6 +200,7 @@ function chooseAndShowView(event) {
 
   function formatDateTime(date){
     //takes a date object and returns a string
+    //for use in displaying Hunt info (and Event info)
     let year = date.getFullYear();
     let month = date.getMonth();
     let day = date.getDate();
