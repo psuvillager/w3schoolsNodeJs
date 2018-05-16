@@ -111,6 +111,17 @@ function chooseAndShowView(event) {
 
 
   function updateHuntsList(){
+
+  function getHunt(huntId){
+    //Not tested
+    for(let hunt of globalHuntsList){
+      if(hunt.huntId == huntId){
+        return hunt;
+      }
+    }
+    return null;
+  }
+
     const sep = ' - ';
     let listDiv = document.getElementById("huntsListDiv");
     listDiv.innerHTML = ""; //empty the list before adding all hunts
