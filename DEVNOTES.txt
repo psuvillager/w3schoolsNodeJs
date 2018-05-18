@@ -1,12 +1,13 @@
 Navigation works 
 From New Hunt, makeNewHunt() populates Hunt Overview
 From Hunts List, chooseAndShowHunt() populates Hunt Overview
+From Hunt Overview, buttons navigate to map, weather, watchlist, fieldNotes, harvest, and photo
 
 To do:
 
 - Hunt Overview 
+  - needs navigation backToHunt after clicking away -- Map has this but fails to hide Map view afterward
   - needs EventList display
-  - navigation to watchlist and new-field-notes aren't working
   - needs new-event creation (Field Notes, Harvest, Take Photo)
   
 

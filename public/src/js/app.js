@@ -38,22 +38,50 @@ if ('serviceWorker' in navigator) {
 // Navigation
 //
 
-function changeView(viewName, hunt){ //data argument would be for hunt or event views
-//this should generally happen client-side, though
-  var viewContainers = document.querySelectorAll(".viewContainer");
+function changeView(viewName, hunt){
+
+  //alert("changing view");
+
+  //Take a viewName (string) and an optional hunt (object)
+  // Changes display to show only the chosen 
+// This should generally happen client-side, though
+  let viewContainers = document.querySelectorAll(".viewContainer");
+
+  alert("first viewContainer: " + viewContainers[0].id);
+  
+  let views = "All views: ";
+  let viewsToShow = "Views to show: ";
+  let viewsToHide = "Views to hide: ";
+  
+
+
   for (viewContainer of viewContainers){
+    viewContainer.style.display = "block";
+    views += "\n" + viewContainer.id;
+
+    alert(viewContainer.id); //This doesn't make it past hunt-overview when navigating back from map, leaving map visible?
     //show the selected view
+
     if(viewContainer.id == viewName){
-      viewContainer.style.display = "block";
+        //alert("viewContainer.id = " + viewContainer.id);
+      viewsToShow += "\n" + viewContainer.id;
+      viewContainer.style.display = "block";      
+
       if(viewName == "hunts-list"){ updateHuntsListView(); }
       else if(viewName == "hunt-overview"){ populateHuntOverview(hunt); }
-      //else if(viewName == "new-field-notes"){ //remember which hunt this is for and eventually append the field-notes to the huntEventsList }
+      else if(["map","weather","watchlist","new-field-notes","new-photo","new-harvest"].includes(viewName)){
+        document.getElementById("backToHuntBtn").setAttribute("data-hunt", hunt.id);
+      }
     }
     //hide the rest
     else{
-      viewContainer.style.display = "none";
+      viewsToHide += "\n" + viewContainer.id;
+      viewContainer.style.display = "none";  
     } 
   }
+  
+  alert(viewsToShow += "\n\n" + viewsToHide);
+  alert(views);
 }
 
 function chooseAndShowView(event) {
@@ -112,7 +140,6 @@ function chooseAndShowView(event) {
     let huntOnList = globalHuntsList[globalHuntsList.length - 1];
     changeView("hunt-overview", huntOnList);
   }
-
 
 
 
@@ -182,6 +209,21 @@ function chooseAndShowView(event) {
     document.getElementById("currentHuntEvents").innerHTML = hunt.events;
     for (let event of hunt.events){
       //show list of events (FieldNotes, Photo, and Harvest)
+    }
+  }
+
+  function huntAction(event){
+    //Respond to button-clicks on Hunt Overview
+    let huntId = document.getElementById("currentHuntDiv").getAttribute("data-hunt");
+    let hunt = getHunt(huntId);
+    let btn = event.target;
+    let view = btn.getAttribute("data-view") || "";
+    
+    if(btn.classList.contains("huntNavBtn")){ 
+      changeView(view, hunt); 
+    }
+    else if(btn.classList.contains("huntEventBtn")){ 
+      changeView(view, hunt); 
     }
   }
 

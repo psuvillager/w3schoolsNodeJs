@@ -27,44 +27,4 @@
   // listeners
   document.getElementById("currentHuntDiv").addEventListener("click", huntAction, false);
 
-
-  function huntAction(event){
-    let huntId = document.getElementById("currentHuntDiv").getAttribute("data-hunt");
-    let hunt = getHunt(huntId);
-    let btn = event.target;
-    let view = btn.getAttribute("data-view") || "";
-    
-    if(btn.classList.contains("huntNavBtn")){ 
-      changeView(view, hunt); 
-    }
-    else if(btn.classList.contains("huntEventBtn")){ 
-      changeView(view, hunt); 
-    }
-    /*
-      if(btn.classList.contains("huntEventBtn")){ 
-        let eventType = btn.getAttribute("data-view");
-        newHuntEvent(eventType, huntId)
-      }
-      else if(btn.classList.contains("huntNavBtn")){
-
-      }
-      event.stopPropagation(); //don't bother bubbling the event up any further
-    */
-  }
-
-
-/*
-  function HuntEvent(){
-
-  }
-
-  function newHuntEvent(eventType, huntId) {
-
-    let huntEventBtns = document.querySelectorAll(".huntEventBtn");
-    let newEvent = new HuntEvent()
-
-    changeView(chosenView);
-  }
-*/
-
 </script>

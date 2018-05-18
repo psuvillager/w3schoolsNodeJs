@@ -1,1 +1,13 @@
-Map goes here
+<p>Map goes here</p>
+<button type="button" id="backToHuntBtn">Back</button>
+
+<script type="text/javascript">
+  document.getElementById("backToHuntBtn").addEventListener("click", backToHunt, false);
+
+  function backToHunt(event){
+    let huntId = event.target.getAttribute("data-hunt");
+    let hunt = getHunt(huntId);
+    changeView("hunt-overview", hunt);
+  }
+  
+</script>

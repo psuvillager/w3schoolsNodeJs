@@ -7,11 +7,12 @@ $('#predictions').load('/src/views/predictions.html');
 
 //hunt-overview and associated views
 $('#hunt-overview').load('/src/views/hunt-overview.html');
-$('#field-notes-entry').load('/src/views/field-notes-entry.html');
+$('#new-field-notes').load('/src/views/new-field-notes.html');
 $('#new-harvest').load('/src/views/new-harvest.html');
 $('#new-photo').load('/src/views/new-photo.html');
 $('#map').load('/src/views/map.html');
 $('#weather').load('/src/views/weather.html');
+$('#watchlist').load('/src/views/watchlist.html');
 
 // note: if offline, browser should typically get the above from cache
 
