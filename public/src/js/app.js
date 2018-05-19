@@ -40,59 +40,35 @@ if ('serviceWorker' in navigator) {
 
 function changeView(viewName, hunt){
 
-  //alert("changing view");
-
-  //Take a viewName (string) and an optional hunt (object)
-  // Changes display to show only the chosen 
-// This should generally happen client-side, though
+  // Take viewName(string) and optional hunt(object), displays only those chosen 
   let viewContainers = document.querySelectorAll(".viewContainer");
-
-  alert("first viewContainer: " + viewContainers[0].id);
-  
-  let views = "All views: ";
-  let viewsToShow = "Views to show: ";
-  let viewsToHide = "Views to hide: ";
-  
-
-
-  for (viewContainer of viewContainers){
+    for (viewContainer of viewContainers){
     viewContainer.style.display = "block";
-    views += "\n" + viewContainer.id;
-
-    alert(viewContainer.id); //This doesn't make it past hunt-overview when navigating back from map, leaving map visible?
-    //show the selected view
-
     if(viewContainer.id == viewName){
-        //alert("viewContainer.id = " + viewContainer.id);
-      viewsToShow += "\n" + viewContainer.id;
       viewContainer.style.display = "block";      
-
       if(viewName == "hunts-list"){ updateHuntsListView(); }
       else if(viewName == "hunt-overview"){ populateHuntOverview(hunt); }
       else if(["map","weather","watchlist","new-field-notes","new-photo","new-harvest"].includes(viewName)){
         document.getElementById("backToHuntBtn").setAttribute("data-hunt", hunt.id);
       }
     }
-    //hide the rest
     else{
-      viewsToHide += "\n" + viewContainer.id;
       viewContainer.style.display = "none";  
     } 
   }
-  
-  alert(viewsToShow += "\n\n" + viewsToHide);
-  alert(views);
 }
 
 function chooseAndShowView(event) {
-  //assumes clicked element has data-view attribute 
-  //if listening element has data-hunt attribute, passes this as well
-  let view = event.target.getAttribute("data-view");
-  let hunt = event.currentTarget.getAttribute("data-hunt");
-  changeView(view, hunt); 
+  //Portal view has buttons with the navBtn class with the data-view attribute specifying a view name
+  var navBtns = document.querySelectorAll(".navBtn");
+  for (var btn of navBtns){
+    if (event.target == btn){          
+      var chosenView = btn.getAttribute("data-view");
+      changeView(chosenView);
+    }
+  }
   event.stopPropagation(); //don't bother bubbling the event up any further
 }
-
 
 
 
