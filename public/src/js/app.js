@@ -85,14 +85,11 @@ function changeView(viewName, hunt){
 }
 
 function chooseAndShowView(event) {
-  //Portal view has buttons with the navBtn class with the data-view attribute specifying a view name
-  var navBtns = document.querySelectorAll(".navBtn");
-  for (var btn of navBtns){
-    if (event.target == btn){          
-      var chosenView = btn.getAttribute("data-view");
-      changeView(chosenView);
-    }
-  }
+  //assumes clicked element has data-view attribute 
+  //if listening element has data-hunt attribute, passes this as well
+  let view = event.target.getAttribute("data-view");
+  let hunt = event.currentTarget.getAttribute("data-hunt");
+  changeView(view, hunt); 
   event.stopPropagation(); //don't bother bubbling the event up any further
 }
 
