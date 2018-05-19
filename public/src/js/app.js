@@ -48,9 +48,10 @@ function changeView(viewName, hunt){
       viewContainer.style.display = "block";      
       if(viewName == "hunts-list"){ updateHuntsListView(); }
       else if(viewName == "hunt-overview"){ populateHuntOverview(hunt); }
-      else if(["map","weather","watchlist","new-field-notes","new-photo","new-harvest"].includes(viewName)){
-        document.getElementById("backToHuntBtn").setAttribute("data-hunt", hunt.id);
-      }
+//      else if(["map","weather","watchlist","new-field-notes","new-photo","new-harvest"].includes(viewName)){
+//        document.getElementById("backToHuntBtn").setAttribute("data-hunt", hunt.id);
+//     }
+      else if(viewName == "map"){ alert("huntId = " + hunt.huntId ); document.getElementById("backToHuntBtn").setAttribute("data-hunt", hunt.huntId); }
     }
     else{
       viewContainer.style.display = "none";  
@@ -59,14 +60,17 @@ function changeView(viewName, hunt){
 }
 
 function chooseAndShowView(event) {
-  //Portal view has buttons with the navBtn class with the data-view attribute specifying a view name
-  var navBtns = document.querySelectorAll(".navBtn");
-  for (var btn of navBtns){
-    if (event.target == btn){          
-      var chosenView = btn.getAttribute("data-view");
-      changeView(chosenView);
-    }
-  }
+  // Assumes clicked element has data-view attribute, passes this to changeView
+  // (If listening element has data-hunt attribute, passese this also)
+  let targ = event.target;
+  let view = targ.getAttribute("data-view");
+  let listener = event.currentTarget;
+  let huntId = listener.getAttribute("data-hunt");
+
+  alert ("target view = " + view + "\n" + "(hunt: " + huntId + ")");
+
+  let hunt = getHunt(huntId);
+  changeView(view, hunt);
   event.stopPropagation(); //don't bother bubbling the event up any further
 }
 
@@ -114,8 +118,6 @@ function chooseAndShowView(event) {
     changeView("hunt-overview", huntOnList);
   }
 
-
-
   function getHunt(huntId){
     //Not tested
     for(let hunt of globalHuntsList){
@@ -125,29 +127,6 @@ function chooseAndShowView(event) {
     }
     return null;
   }
-
-
-  function updateHuntsListView(){
-    const sep = ' - ';
-    let listDiv = document.getElementById("huntsListDiv");
-    listDiv.innerHTML = ""; //empty the list before adding all hunts
-    for(let hunt of globalHuntsList){
-      let huntName = hunt.huntName;
-      let huntId = hunt.huntId;
-      let quarry = hunt.quarry;
-      let huntType = hunt.huntType;
-      let stand = hunt.stand || "";
-      //hunt properties go in textNode, which goes in a paragraph, which goes into listDiv
-      var summaryTxt = document.createTextNode(huntName +sep+ quarry +sep+ huntType + (stand ? sep + stand : ""));
-      var newP = document.createElement("p");
-      newP.classList.add("huntSummary");
-      newP.setAttribute("data-hunt", huntId);
-      newP.appendChild(summaryTxt);
-      listDiv.appendChild(newP);
-      //alert("In updateHuntsList(), huntId = " + newP.getAttribute("data-hunt"));
-    }
-  }
-
 
   function chooseAndShowHunt(event){
     var huntSummaries = document.querySelectorAll(".huntSummary");
@@ -172,31 +151,56 @@ function chooseAndShowView(event) {
   }
 
   function populateHuntOverview(hunt){
-    //takes a Hunt object and fills in Hunt Overview view
-    document.getElementById("currentHuntDiv").setAttribute("data-hunt", hunt.huntId)
-    document.getElementById("currentHuntName").innerText = hunt.huntName;
-    document.getElementById("currentHuntDate").innerText = formatDateTime(new Date(hunt.huntId));
-    document.getElementById("currentHuntQuarry").innerText = hunt.quarry;
-    document.getElementById("currentHuntType").innerText = hunt.huntType;
-    document.getElementById("currentHuntStand").innerText = hunt.stand;
-    document.getElementById("currentHuntEvents").innerHTML = hunt.events;
-    for (let event of hunt.events){
-      //show list of events (FieldNotes, Photo, and Harvest)
+    //takes a Hunt object and fills in Hunt Overview fields
+      let huntEl = document.getElementById("currentHuntDiv");
+      let nameEl = document.getElementById("currentHuntName");
+      let dateEl = document.getElementById("currentHuntDate");
+      let quarryEl = document.getElementById("currentHuntQuarry");
+      let typeEl = document.getElementById("currentHuntType");
+      let standEl = document.getElementById("currentHuntStand");
+      let eventsEl = document.getElementById("currentHuntEvents");
+    if(hunt){
+      huntEl.setAttribute("data-hunt", hunt.huntId);
+      nameEl.innerText = hunt.huntName;
+      dateEl.innerText = formatDateTime(new Date(hunt.huntId));
+      quarryEl.innerText = hunt.quarry;
+      typeEl.innerText = hunt.huntType;
+      standEl.innerText = hunt.stand;
+      eventsEl.innerHTML = hunt.events;
+      for (let event of hunt.events){
+        //show list of events (FieldNotes, Photo, and Harvest)
+      }
+    }
+    else{
+    //this should never happen -- it's for debugging 
+      huntEl.setAttribute("data-hunt", "00000000000");
+      nameEl.innerText = "(No Hunt Info Available)";
+      dateEl.innerText = "";
+      quarryEl.innerText = "";
+      typeEl.innerText = "";
+      standEl.innerText = "";
+      eventsEl.innerHTML = "";
     }
   }
 
-  function huntAction(event){
-    //Respond to button-clicks on Hunt Overview
-    let huntId = document.getElementById("currentHuntDiv").getAttribute("data-hunt");
-    let hunt = getHunt(huntId);
-    let btn = event.target;
-    let view = btn.getAttribute("data-view") || "";
-    
-    if(btn.classList.contains("huntNavBtn")){ 
-      changeView(view, hunt); 
-    }
-    else if(btn.classList.contains("huntEventBtn")){ 
-      changeView(view, hunt); 
+  function updateHuntsListView(){
+    const sep = ' - ';
+    let listDiv = document.getElementById("huntsListDiv");
+    listDiv.innerHTML = ""; //empty the list before adding all hunts
+    for(let hunt of globalHuntsList){
+      let huntName = hunt.huntName;
+      let huntId = hunt.huntId;
+      let quarry = hunt.quarry;
+      let huntType = hunt.huntType;
+      let stand = hunt.stand || "";
+      //hunt properties go in textNode, which goes in a paragraph, which goes into listDiv
+      var summaryTxt = document.createTextNode(huntName +sep+ quarry +sep+ huntType + (stand ? sep + stand : ""));
+      var newP = document.createElement("p");
+      newP.classList.add("huntSummary");
+      newP.setAttribute("data-hunt", huntId);
+      newP.appendChild(summaryTxt);
+      listDiv.appendChild(newP);
+      //alert("In updateHuntsList(), huntId = " + newP.getAttribute("data-hunt"));
     }
   }
 

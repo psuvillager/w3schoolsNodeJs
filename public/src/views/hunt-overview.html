@@ -1,10 +1,10 @@
 <h5>Hunt Overview</h5>
 <div id="currentHuntDiv" data-hunt="">
   <p>
-    <button id="watchlistBtn" type="button" class="huntNavBtn" data-view="watchlist">Watchlist</button>
-    <button id="mapBtn" type="button" class="huntNavBtn" data-view="map">Map</button>
-    <button id="weatherBtn" type="button" class="huntNavBtn" data-view="weather">Weather</button>
-    <button id="allHuntsBtn" type="button" class="huntNavBtn" data-view="hunts-list">All Hunts</button>
+    <button id="watchlistBtn" type="button" class="navBtn" data-view="watchlist">Watchlist</button>
+    <button id="mapBtn" type="button" class="navBtn" data-view="map">Map</button>
+    <button id="weatherBtn" type="button" class="navBtn" data-view="weather">Weather</button>
+    <button id="allHuntsBtn" type="button" class="navBtn" data-view="hunts-list">All Hunts</button>
   </p>
   <p id="currentHuntName">name</p>
   <p id="currentHuntDate">date</p>
@@ -12,9 +12,9 @@
   <p id="currentHuntType">type</p>
   <p id="currentHuntStand">stand</p>
   <p>
-    <button id="newFieldNotesBtn" type="button" class="huntEventBtn" data-view="new-field-notes">Field Notes</button>
-    <button id="newPhotoBtn" type="button" class="huntEventBtn" data-view="new-photo">Take Photo</button>
-    <button id="newHarvestBtn" type="button" class="huntEventBtn" data-view="new-harvest">Harvest</button>
+    <button id="newFieldNotesBtn" type="button" class="navBtn" data-view="new-field-notes">Field Notes</button>
+    <button id="newPhotoBtn" type="button" class="navBtn" data-view="new-photo">Take Photo</button>
+    <button id="newHarvestBtn" type="button" class="navBtn" data-view="new-harvest">Harvest</button>
   </p>
 
   <div id="eventListDiv">[Events (such as field notes logs) go here]</div>
@@ -25,6 +25,17 @@
 <script>
 
   // listeners
-  document.getElementById("currentHuntDiv").addEventListener("click", huntAction, false);
+  document.getElementById("currentHuntDiv").addEventListener("click", chooseAndShowView, false);
 
+/*
+  function huntAction(event){
+    //Respond to button-clicks on Hunt Overview
+    let hunt = getHunt(event.target.getAttribute("data-hunt"));
+    let btn = event.target;
+    let view = btn.getAttribute("data-view") || "";
+    if(btn.classList.contains("navBtn")){ 
+      changeView(view, hunt); 
+    }
+  }
+*/
 </script>

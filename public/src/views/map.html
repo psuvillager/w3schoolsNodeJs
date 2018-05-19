@@ -1,8 +1,8 @@
 <p>Map goes here</p>
-<button type="button" id="backToHuntBtn">Back</button>
+<button type="button" id="backToHuntBtn" data-view="hunt-overview" data-hunt="">Back</button>
 
 <script type="text/javascript">
-  document.getElementById("backToHuntBtn").addEventListener("click", backToHunt, false);
+  document.getElementById("backToHuntBtn").addEventListener("click", chooseAndShowView, false);
 
   function backToHunt(event){
     let huntId = event.target.getAttribute("data-hunt");
