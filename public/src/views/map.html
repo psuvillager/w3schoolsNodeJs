@@ -2,12 +2,5 @@
 <button type="button" id="backToHuntBtn" data-view="hunt-overview" data-hunt="">Back</button>
 
 <script type="text/javascript">
-  document.getElementById("backToHuntBtn").addEventListener("click", chooseAndShowView, false);
-
-  function backToHunt(event){
-    let huntId = event.target.getAttribute("data-hunt");
-    let hunt = getHunt(huntId);
-    changeView("hunt-overview", hunt);
-  }
-  
+  document.getElementById("backToHuntBtn").addEventListener("click", chooseAndShowView, false);  
 </script>

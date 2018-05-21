@@ -5,8 +5,10 @@ From Hunt Overview, buttons navigate to map, weather, watchlist, fieldNotes, har
 
 To do:
 
+- Listeners
+  - need to disregard clicks on uninteresting elements (to avoid showing blank screens)
 - Hunt Overview 
-  - needs navigation backToHunt after clicking away -- Map has this but fails to hide Map view afterward
+  - needs navigation backToHunt after clicking away (Map has this)
   - needs EventList display
   - needs new-event creation (Field Notes, Harvest, Take Photo)
   
