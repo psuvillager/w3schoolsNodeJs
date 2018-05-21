@@ -17,25 +17,11 @@
     <button id="newHarvestBtn" type="button" class="navBtn" data-view="new-harvest">Harvest</button>
   </p>
 
-  <div id="eventListDiv">[Events (such as field notes logs) go here]</div>
+  <div id="eventsListDiv">[Events (such as field notes logs) go here]</div>
 
 </div>
 
 <script src="/src/js/app.js"></script><!-- main app script -->
 <script>
-
-  // listeners
   document.getElementById("currentHuntDiv").addEventListener("click", chooseAndShowView, false);
-
-/*
-  function huntAction(event){
-    //Respond to button-clicks on Hunt Overview
-    let hunt = getHunt(event.target.getAttribute("data-hunt"));
-    let btn = event.target;
-    let view = btn.getAttribute("data-view") || "";
-    if(btn.classList.contains("navBtn")){ 
-      changeView(view, hunt); 
-    }
-  }
-*/
 </script>

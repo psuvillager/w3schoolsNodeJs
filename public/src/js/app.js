@@ -5,16 +5,7 @@
   // All of this will be obsolete once hunts are stored persistently in a database
 
   let globalHuntsList = [];
-
-  //demo data
-  let id1 = Date.now();
-  let sampleHunt1 = new Hunt("Demo Hunt 1", id1, "Bears", "Stand", "Big Bear Stand", ["Bear", "Other Thing"]);
-  globalHuntsList.push(sampleHunt1); 
-  
-  let id2 = id1 + 1; //because in demo code, another Date.now() will generate the same id number
-  let sampleHunt2 = new Hunt("Demo Hunt 2", id2, "Mushrooms", "Crawling Around", "", ["Mushroom", "UFO"]);
-  globalHuntsList.push(sampleHunt2);
-
+  loadDemoHuntsData();
 
 
 //
@@ -42,16 +33,18 @@ function changeView(viewName, hunt){
 
   // Take viewName(string) and optional hunt(object), displays only those chosen 
   let viewContainers = document.querySelectorAll(".viewContainer");
-    for (viewContainer of viewContainers){
+  for (viewContainer of viewContainers){
     viewContainer.style.display = "block";
     if(viewContainer.id == viewName){
-      viewContainer.style.display = "block";      
       if(viewName == "hunts-list"){ updateHuntsListView(); }
       else if(viewName == "hunt-overview"){ populateHuntOverview(hunt); }
 //      else if(["map","weather","watchlist","new-field-notes","new-photo","new-harvest"].includes(viewName)){
 //        document.getElementById("backToHuntBtn").setAttribute("data-hunt", hunt.id);
 //     }
-      else if(viewName == "map"){ alert("huntId = " + hunt.huntId ); document.getElementById("backToHuntBtn").setAttribute("data-hunt", hunt.huntId); }
+      else if(viewName == "map"){ 
+        //alert("huntId = " + hunt.huntId ); 
+        document.getElementById("backToHuntBtn").setAttribute("data-hunt", hunt.huntId); 
+      }
     }
     else{
       viewContainer.style.display = "none";  
@@ -67,7 +60,7 @@ function chooseAndShowView(event) {
   let listener = event.currentTarget;
   let huntId = listener.getAttribute("data-hunt");
 
-  alert ("target view = " + view + "\n" + "(hunt: " + huntId + ")");
+  // alert ("target view = " + view + "\n" + "(hunt: " + huntId + ")");
 
   let hunt = getHunt(huntId);
   changeView(view, hunt);
@@ -157,7 +150,7 @@ function chooseAndShowView(event) {
       let quarryEl = document.getElementById("currentHuntQuarry");
       let typeEl = document.getElementById("currentHuntType");
       let standEl = document.getElementById("currentHuntStand");
-      let eventsEl = document.getElementById("currentHuntEvents");
+      let eventsEl = document.getElementById("eventsListDiv");
     if(hunt.huntId){
       huntEl.setAttribute("data-hunt", hunt.huntId);
       nameEl.innerText = hunt.huntName;
@@ -165,11 +158,10 @@ function chooseAndShowView(event) {
       quarryEl.innerText = hunt.quarry;
       typeEl.innerText = hunt.huntType;
       standEl.innerText = hunt.stand;
-      eventsEl.innerHTML = hunt.events;
-      for (let event of hunt.events){
-        //show list of events (FieldNotes, Photo, and Harvest)
-      }
       //eventsEl.innerHTML = hunt.events; //This line is keeping Map's back button from being hidden 
+      //for (let event of hunt.events){
+        //show list of events (FieldNotes, Photo, and Harvest) in eventsListDiv
+      //}
     }
     else{
     //this should never happen -- it's for debugging 
@@ -228,6 +220,16 @@ function chooseAndShowView(event) {
     let minutes = date.getMinutes();
     let formatted = month + "/" + day + "/" + year + "  " + hours + ":" + minutes + period;
     return formatted;
+  }
+
+  function loadDemoHuntsData(){
+    let id1 = Date.now();
+    let sampleHunt1 = new Hunt("Demo Hunt 1", id1, "Bears", "Stand", "Big Bear Stand", ["Bear", "Other Thing"]);
+    globalHuntsList.push(sampleHunt1); 
+    
+    let id2 = id1 + 1; //because in demo code, another Date.now() will generate the same id number as id1
+    let sampleHunt2 = new Hunt("Demo Hunt 2", id2, "Mushrooms", "Crawling Around", "", ["Mushroom", "UFO"]);
+    globalHuntsList.push(sampleHunt2);
   }
 
   function appendElement(parentId, tag, id, text){ //not used as of 5/11/18
