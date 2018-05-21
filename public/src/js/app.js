@@ -60,8 +60,8 @@ function changeView(viewName, hunt){
 }
 
 function chooseAndShowView(event) {
-  // Assumes clicked element has data-view attribute, passes this to changeView
-  // (If listening element has data-hunt attribute, passese this also)
+  // Assumes CLICKED element has data-view attribute, passes this to changeView
+  // (If LISTENING element has data-hunt attribute, passes this also)
   let targ = event.target;
   let view = targ.getAttribute("data-view");
   let listener = event.currentTarget;
@@ -131,9 +131,8 @@ function chooseAndShowView(event) {
   function chooseAndShowHunt(event){
     var huntSummaries = document.querySelectorAll(".huntSummary");
     for (var huntSummary of huntSummaries){
-      // this is a hack because "event.currentTarget == huntSummary" is not working
-      // it's fine if we know the target is not nested more than one level below huntsListDiv
-      // but it's technically wrong and should be modified to respond to all decendants 
+      // Hack b/c "event.currentTarget == huntSummary" fails, ok if we know the target is huntsListDiv 
+      // or its child, but it's technically wrong and should be modified to respond to all decendants 
       if (event.target == huntSummary || event.target.parentNode == huntSummary){  
         var huntId = huntSummary.getAttribute("data-hunt");
         if (huntId){
@@ -159,7 +158,7 @@ function chooseAndShowView(event) {
       let typeEl = document.getElementById("currentHuntType");
       let standEl = document.getElementById("currentHuntStand");
       let eventsEl = document.getElementById("currentHuntEvents");
-    if(hunt){
+    if(hunt.huntId){
       huntEl.setAttribute("data-hunt", hunt.huntId);
       nameEl.innerText = hunt.huntName;
       dateEl.innerText = formatDateTime(new Date(hunt.huntId));
@@ -173,7 +172,7 @@ function chooseAndShowView(event) {
     }
     else{
     //this should never happen -- it's for debugging 
-      huntEl.setAttribute("data-hunt", "00000000000");
+      huntEl.setAttribute("data-hunt", "Error retrieving hunt ID");
       nameEl.innerText = "(No Hunt Info Available)";
       dateEl.innerText = "";
       quarryEl.innerText = "";
