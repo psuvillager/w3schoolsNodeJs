@@ -8,6 +8,7 @@
   loadDemoHuntsData();
 
 
+
 //
 // Client-side stuff 
 //
@@ -55,16 +56,10 @@ function changeView(viewName, hunt){
 function chooseAndShowView(event) {
   // Assumes CLICKED element has data-view attribute, passes this to changeView
   // (If LISTENING element has data-hunt attribute, passes this also)
-  let targ = event.target;
-  let view = targ.getAttribute("data-view");
-  let listener = event.currentTarget;
-  let huntId = listener.getAttribute("data-hunt");
-
-  // alert ("target view = " + view + "\n" + "(hunt: " + huntId + ")");
-
-  let hunt = getHunt(huntId);
-  changeView(view, hunt);
-  event.stopPropagation(); //don't bother bubbling the event up any further
+  let view = event.target.getAttribute("data-view");
+  let huntId = event.currentTarget.getAttribute("data-hunt");
+  changeView(view, getHunt(huntId));
+  event.stopPropagation(); //don't pass event any further up to other listeners
 }
 
 
@@ -112,45 +107,26 @@ function chooseAndShowView(event) {
   }
 
   function getHunt(huntId){
-    //Not tested
-    for(let hunt of globalHuntsList){
-      if(hunt.huntId == huntId){
-        return hunt;
-      }
+    for(let hunt of globalHuntsList){ 
+      if(hunt.huntId == huntId){ return hunt; }
     }
     return null;
   }
 
-  function chooseAndShowHunt(event){
-    var huntSummaries = document.querySelectorAll(".huntSummary");
-    for (var huntSummary of huntSummaries){
-      // Hack b/c "event.currentTarget == huntSummary" fails, ok if we know the target is huntsListDiv 
-      // or its child, but it's technically wrong and should be modified to respond to all decendants 
-      if (event.target == huntSummary || event.target.parentNode == huntSummary){  
-        var huntId = huntSummary.getAttribute("data-hunt");
-        if (huntId){
-          let chosenHunt = null;
-          for(let hunt of globalHuntsList){
-            if(hunt.huntId == huntId){ 
-              chosenHunt = hunt; 
-            }
-          }
-          // if(!chosenHunt){ //error... }
-          changeView("hunt-overview", chosenHunt);
-        }
-      }
-    }
+  function chooseHuntFromList(event){
+    // Finds HuntID in or above clicked element and chages to Hunt Overview with that Hunt 
+    changeView("hunt-overview", getHunt(findAttributeUp(event.target, "data-hunt")));
   }
 
   function populateHuntOverview(hunt){
-    //takes a Hunt object and fills in Hunt Overview fields
-      let huntEl = document.getElementById("currentHuntDiv");
-      let nameEl = document.getElementById("currentHuntName");
-      let dateEl = document.getElementById("currentHuntDate");
-      let quarryEl = document.getElementById("currentHuntQuarry");
-      let typeEl = document.getElementById("currentHuntType");
-      let standEl = document.getElementById("currentHuntStand");
-      let eventsEl = document.getElementById("eventsListDiv");
+    // Fills in Hunt Overview fields using data from the given Hunt object
+    let huntEl = document.getElementById("currentHuntDiv");
+    let nameEl = document.getElementById("currentHuntName");
+    let dateEl = document.getElementById("currentHuntDate");
+    let quarryEl = document.getElementById("currentHuntQuarry");
+    let typeEl = document.getElementById("currentHuntType");
+    let standEl = document.getElementById("currentHuntStand");
+    let eventsEl = document.getElementById("eventsListDiv");
     if(hunt.huntId){
       huntEl.setAttribute("data-hunt", hunt.huntId);
       nameEl.innerText = hunt.huntName;
@@ -164,7 +140,7 @@ function chooseAndShowView(event) {
       //}
     }
     else{
-    //this should never happen -- it's for debugging 
+    // This should never happen -- it's for debugging 
       huntEl.setAttribute("data-hunt", "Error retrieving hunt ID");
       nameEl.innerText = "(No Hunt Info Available)";
       dateEl.innerText = "";
@@ -176,6 +152,7 @@ function chooseAndShowView(event) {
   }
 
   function updateHuntsListView(){
+    // Populates Hunts List view from globalHuntsList data 
     const sep = ' - ';
     let listDiv = document.getElementById("huntsListDiv");
     listDiv.innerHTML = ""; //empty the list before adding all hunts
@@ -186,13 +163,12 @@ function chooseAndShowView(event) {
       let huntType = hunt.huntType;
       let stand = hunt.stand || "";
       //hunt properties go in textNode, which goes in a paragraph, which goes into listDiv
-      var summaryTxt = document.createTextNode(huntName +sep+ quarry +sep+ huntType + (stand ? sep + stand : ""));
-      var newP = document.createElement("p");
+      let newP = document.createElement("p");
       newP.classList.add("huntSummary");
       newP.setAttribute("data-hunt", huntId);
+      let summaryTxt = document.createTextNode(huntName +sep+ quarry +sep+ huntType + (stand ? sep + stand : ""));
       newP.appendChild(summaryTxt);
       listDiv.appendChild(newP);
-      //alert("In updateHuntsList(), huntId = " + newP.getAttribute("data-hunt"));
     }
   }
 
@@ -203,15 +179,15 @@ function chooseAndShowView(event) {
 //
 
   function toggleBlockDisplayById(elementId){
-    //used to expand/collapse watchlist in new-hunt
+    // Expands/collapses the element (eg watchlist in new-hunt)
     let el = document.getElementById(elementId);
     let display = el.style.display || "none";
     el.style.display = (display == "none") ? "block" : "none";
   }
 
   function formatDateTime(date){
-    //takes a date object and returns a string
-    //for use in displaying Hunt info (and Event info)
+    // Takes a date object and returns a formatted string
+    // For use in displaying Hunt info (and Event info)
     let year = date.getFullYear();
     let month = date.getMonth();
     let day = date.getDate();
@@ -222,7 +198,15 @@ function chooseAndShowView(event) {
     return formatted;
   }
 
+  function findAttributeUp (el, attr) {
+    // Takes an html element and an attribuite name
+    // Returns the attribute value found in the element or its closest ancestor 
+    while (!el.hasAttribute(attr) && (el = el.parentElement)){ /*do nothing*/ }
+    return el.getAttribute(attr);
+  }
+
   function loadDemoHuntsData(){
+    // Development Demo Hunts
     let id1 = Date.now();
     let sampleHunt1 = new Hunt("Demo Hunt 1", id1, "Bears", "Stand", "Big Bear Stand", ["Bear", "Other Thing"]);
     globalHuntsList.push(sampleHunt1); 
@@ -230,14 +214,4 @@ function chooseAndShowView(event) {
     let id2 = id1 + 1; //because in demo code, another Date.now() will generate the same id number as id1
     let sampleHunt2 = new Hunt("Demo Hunt 2", id2, "Mushrooms", "Crawling Around", "", ["Mushroom", "UFO"]);
     globalHuntsList.push(sampleHunt2);
-  }
-
-  function appendElement(parentId, tag, id, text){ //not used as of 5/11/18
-    //create element in parent (works for elements that are not self-closing and can contain text)
-    var parent = document.getElementById(parentId);
-    var el = document.createElement(tag);
-    el.setAttribute("id", id);
-    var textNode = document.createTextNode(text);
-    el.appendChild(textNode);
-    parent.appendChild(el);
   }
