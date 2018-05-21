@@ -37,15 +37,19 @@ function changeView(viewName, hunt){
   for (viewContainer of viewContainers){
     viewContainer.style.display = "block";
     if(viewContainer.id == viewName){
-      if(viewName == "hunts-list"){ updateHuntsListView(); }
-      else if(viewName == "hunt-overview"){ populateHuntOverview(hunt); }
+        switch(viewName){
+          case "hunts-list": updateHuntsListView(); break;
+          case "hunt-overview": populateHuntOverview(hunt); break;
+          case "map": document.getElementById("backToHuntBtn").setAttribute("data-hunt", hunt.huntId); break;
+        }
+
 //      else if(["map","weather","watchlist","new-field-notes","new-photo","new-harvest"].includes(viewName)){
 //        document.getElementById("backToHuntBtn").setAttribute("data-hunt", hunt.id);
 //     }
-      else if(viewName == "map"){ 
-        //alert("huntId = " + hunt.huntId ); 
-        document.getElementById("backToHuntBtn").setAttribute("data-hunt", hunt.huntId); 
-      }
+      //else if(viewName == "map"){ 
+        // 
+      //}
+    
     }
     else{
       viewContainer.style.display = "none";  
