@@ -169,6 +169,7 @@ function chooseAndShowView(event) {
       for (let event of hunt.events){
         //show list of events (FieldNotes, Photo, and Harvest)
       }
+      //eventsEl.innerHTML = hunt.events; //This line is keeping Map's back button from being hidden 
     }
     else{
     //this should never happen -- it's for debugging 
