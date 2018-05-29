@@ -1,14 +1,14 @@
 Navigation works 
 From New Hunt, makeNewHunt() populates Hunt Overview
 From Hunts List, chooseAndShowHunt() populates Hunt Overview
-From Hunt Overview, buttons navigate to map, weather, watchlist, fieldNotes, harvest, and photo
+From Hunt Overview, buttons navigate to map/weather/watchlist/fieldNotes/harvest/photo and back**
 
 To do:
 
 - Listeners
   - need to disregard clicks on uninteresting elements (to avoid showing blank screens)
 - Hunt Overview 
-  - needs navigation backToHunt after clicking away (Map has this)
+  - ** needs to re-hide sub-views (map, etc.) when navigating back to overview (see changeView)
   - needs EventList display
   - needs new-event creation (Field Notes, Harvest, Take Photo)
   

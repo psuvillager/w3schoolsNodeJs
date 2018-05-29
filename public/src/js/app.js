@@ -30,28 +30,28 @@ if ('serviceWorker' in navigator) {
 //
 
 function changeView(viewName, hunt){
-
-  // Take viewName(string) and optional hunt(object), displays only those chosen 
-  let viewContainers = document.querySelectorAll(".viewContainer");
+  let viewContainers = document.querySelectorAll(".viewContainer"); //silly to calc this each time, but..
+  // Take viewName(string) and optional hunt(object), displays only the view chosen 
+  //document.getElementById("map").style.display = "none";
   for (viewContainer of viewContainers){
-    viewContainer.style.display = "block";
-    if(viewContainer.id == viewName){
-        switch(viewName){
-          case "hunts-list": updateHuntsListView(); break;
-          case "hunt-overview": populateHuntOverview(hunt); break;
-          case "map": document.getElementById("backToHuntBtn").setAttribute("data-hunt", hunt.huntId); break;
-        }
-
-//      else if(["map","weather","watchlist","new-field-notes","new-photo","new-harvest"].includes(viewName)){
-//        document.getElementById("backToHuntBtn").setAttribute("data-hunt", hunt.id);
-//     }
-      //else if(viewName == "map"){ 
-        // 
-      //}
-    
+    if(viewContainer.id !== viewName){
+      viewContainer.style.display = "none";
+//      alert("Hiding " + viewContainer.id);
     }
-    else{
-      viewContainer.style.display = "none";  
+    else {
+      viewContainer.style.display = "block";
+
+      alert("Showing " + viewContainer.id + " (" + viewName + ")"); 
+
+      //When  returning to overview from sub-hunt pages (eg map), the loop stops after this?!
+      //Note: no hunt is being passed in b/c sub-hunts don't currently have that info,
+      //  so populateHuntOverview is being called with an undefined hunt argument...
+
+      if(viewName === "hunts-list"){ updateHuntsListView(); }
+      else if(viewName === "hunt-overview") { 
+        populateHuntOverview(hunt); 
+        alert("Populating Hunt Overview with " + hunt.huntId); //...and this isn't getting triggered
+      }
     } 
   }
 }
@@ -110,8 +110,10 @@ function chooseAndShowView(event) {
   }
 
   function getHunt(huntId){
-    for(let hunt of globalHuntsList){ 
-      if(hunt.huntId == huntId){ return hunt; }
+    if(huntId){
+      for(let hunt of globalHuntsList){ 
+        if(hunt.huntId == huntId){ return hunt; }
+      }
     }
     return null;
   }
