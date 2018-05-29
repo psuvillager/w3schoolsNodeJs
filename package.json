@@ -6,8 +6,7 @@
   "scripts": {
     "start": "http-server"
   },
-  "keywords": [
-  ],
+  "keywords": [],
   "author": "Cat Haverback",
   "license": "ISC",
   "devDependencies": {

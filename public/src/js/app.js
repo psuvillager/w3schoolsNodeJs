@@ -2,8 +2,7 @@
 //
 // Global Hunts List for development
 //
-  // All of this will be obsolete once hunts are stored persistently in a database
-
+  // This will be obsolete once hunts are stored persistently in a database
   let globalHuntsList = [];
   loadDemoHuntsData();
 
