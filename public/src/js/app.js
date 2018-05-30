@@ -55,6 +55,7 @@ function changeView(viewName, hunt){
         populateHuntOverview(hunt); 
       }
       else alert("viewName is neither hunts-list nor hunt-overview, but " + viewName);
+      else if(viewName == "watchlist") { showCurrentWatchlist(hunt); }
     }
     else { counter++; }
   }
@@ -182,6 +183,13 @@ function chooseAndShowView(event) {
       newP.appendChild(summaryTxt);
       listDiv.appendChild(newP);
     }
+  }
+
+  function showCurrentWatchlist(hunt){
+    let watchlist = hunt.watchlist;
+    let str = "";
+    for (let animal of watchlist){ str += animal + "<br />"; }
+    document.getElementById("watchlistViewTitle").innerHTML = str;
   }
 
 
