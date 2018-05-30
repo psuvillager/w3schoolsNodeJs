@@ -1,21 +1,17 @@
 Navigation works 
 From New Hunt, makeNewHunt() populates Hunt Overview
 From Hunts List, chooseAndShowHunt() populates Hunt Overview
-From Hunt Overview, buttons navigate to map/weather/watchlist/fieldNotes/harvest/photo and back**
+From Hunt Overview, buttons navigate to map/weather/watchlist/fieldNotes/harvest/photo and back
 
 To do:
 
 - Listeners
   - need to disregard clicks on uninteresting elements (to avoid showing blank screens)
 - Hunt Overview 
-  - ** needs to re-hide sub-views (map, etc.) when navigating back to overview (see changeView)
-  - needs EventList display
+  - needs EventList display (Field Notes, Photos, and Harvests)
+  		- linked field notes have watchlist instance w/ increment buttons, etc
   - needs new-event creation (Field Notes, Harvest, Take Photo)
-  
-
-- Make Field Notes objects and view, w/animal list (w/ increment buttons, etc.)
-- Handle creation and display (on Hunt Overview) of Field Notes, Photos, and Harvests
-- Enable editing the animal list from Hunt Overview (and grab list's data in each FieldNotes instance) 
+ - Enable event creation (Field Notes, Photos (requires service worker), and Harvests)
 
 - Handle database connection and storage
 - Handle retrieval of Weather and Map in their respective views

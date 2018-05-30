@@ -30,37 +30,22 @@ if ('serviceWorker' in navigator) {
 //
 
 function changeView(viewName, hunt){
-
-  alert("in changeView");
-
   // (silly to calc this each time, but okay for now)
   let viewContainers = document.querySelectorAll(".viewContainer");
   // Take viewName(string) and optional hunt(object), display only the view chosen 
   for (viewContainer of viewContainers){
     viewContainer.style.display = "none";
   }
-  alert("finished hiding views");
   //broke this into two loops b/c the "show" loop exits after succeeding for some scary reason
-  counter = 0;
   for (viewContainer of viewContainers){
     if(viewContainer.id === viewName){
       viewContainer.style.display = "block";
-      //alert("viewName = " + viewName);
-      if(viewName == "hunts-list"){ 
-        updateHuntsListView(); 
-        alert("viewName = " + viewName + " (should be hunts-list)");
-      }
-      else if(viewName == "hunt-overview") { 
-        alert("Populating Hunt Overview (viewName = " + viewName + ") with " + hunt.huntId);
-        populateHuntOverview(hunt); 
-      }
-      else alert("viewName is neither hunts-list nor hunt-overview, but " + viewName);
+      if(viewName == "hunts-list"){ updateHuntsListView(); }
+      else if(viewName == "hunt-overview") { populateHuntOverview(hunt); }
       else if(viewName == "watchlist") { showCurrentWatchlist(hunt); }
+
     }
-    else { counter++; }
   }
-  alert("finished showing view (" + counter + " hidden)" );
-  //it seems this is working well
 }
 
 function chooseAndShowView(event) {
@@ -68,7 +53,6 @@ function chooseAndShowView(event) {
   // (If LISTENING element has data-hunt attribute, passes this also)
   let view = event.target.getAttribute("data-view");
   let huntId = event.currentTarget.getAttribute("data-hunt");
-  alert("entering changeView from chooseAndShowView");
   changeView(view, getHunt(huntId));
   //event.stopPropagation(); //don't pass event any further up to other listeners
 }
@@ -208,7 +192,7 @@ function chooseAndShowView(event) {
   }
 
   function formatDateTime(date){
-    // Takes a date object and returns a formatted string
+    // Takes a date object and returns a formatted strings
     // For use in displaying Hunt info (and Event info)
     let year = date.getFullYear();
     let month = date.getMonth();
