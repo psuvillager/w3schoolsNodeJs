@@ -227,6 +227,14 @@ function chooseAndShowView(event) {
     return el.getAttribute(attr);
   }
 
+  function appendElementWithIdToParent (type, id, parent) { 
+    //untested
+    var el = document.createElement(type);
+    el.id = id;
+    parent.appendChild(el);
+    return el;
+  }
+
   function loadDemoHuntsData(){
     // Development Demo Hunts
     let id1 = Date.now();
