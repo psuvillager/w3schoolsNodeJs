@@ -198,6 +198,8 @@ function chooseAndShowView(event) {
 // Misc helper functions  
 //
 
+  function woo(){ alert("woo"); }
+
   function toggleBlockDisplayById(elementId){
     // Expands/collapses the element (eg watchlist in new-hunt)
     let el = document.getElementById(elementId);
