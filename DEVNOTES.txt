@@ -5,13 +5,14 @@ From Hunt Overview, buttons navigate to map/weather/watchlist/fieldNotes/harvest
 
 To do:
 
-- Listeners
-  - need to disregard clicks on uninteresting elements (to avoid showing blank screens)
+
 - Hunt Overview 
   - needs EventList display (Field Notes, Photos, and Harvests)
   		- linked field notes have watchlist instance w/ increment buttons, etc
   - needs new-event creation (Field Notes, Harvest, Take Photo)
  - Enable event creation (Field Notes, Photos (requires service worker), and Harvests)
+- Listeners
+  - need to disregard clicks on uninteresting elements (to avoid showing blank screens)
 
 - Handle database connection and storage
 - Handle retrieval of Weather and Map in their respective views

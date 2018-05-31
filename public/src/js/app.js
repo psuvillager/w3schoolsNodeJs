@@ -229,3 +229,16 @@ function chooseAndShowView(event) {
     let sampleHunt2 = new Hunt("Demo Hunt 2", id2, "Mushrooms", "Crawling Around", "", ["Mushroom", "UFO"]);
     globalHuntsList.push(sampleHunt2);
   }
+/*
+<p>Not gonna use this, just a "details" element demo - no javascript required!</p>
+<details> //details has an open attribute that determines the state (like 'expanded')
+  <summary>Header for spoiler</summary>
+  <div>
+    <p> Awesome secret hidden stuff</p>
+    <details> //details has an open attribute that determines the state (like 'expanded')
+    <summary>Header for inner spoiler</summary>
+    <p>Double secret probation stuff!</p>
+  </details>
+  </d>
+</details>
+*/
