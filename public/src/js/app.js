@@ -30,13 +30,16 @@ if ('serviceWorker' in navigator) {
 //
 
 function changeView(viewName, hunt){
-  // (silly to calc this each time, but okay for now)
+  // Takes a viewName string and an optional hunt object
+  // Hides all views and displays only the chosen one
+  // Depending on the view, calls an additional function (where the hunt argement may be used)
+
+  // (silly to calculate this each time, but not terrible)
   let viewContainers = document.querySelectorAll(".viewContainer");
-  // Take viewName(string) and optional hunt(object), display only the view chosen 
   for (viewContainer of viewContainers){
     viewContainer.style.display = "none";
   }
-  //broke this into two loops b/c the "show" loop exits after succeeding for some scary reason
+  // broke this into two loops b/c the "show" loop exited after succeeding for some scary reason
   for (viewContainer of viewContainers){
     if(viewContainer.id === viewName){
       viewContainer.style.display = "block";
@@ -73,13 +76,16 @@ function chooseAndShowView(event) {
     this.watchlist = watchlist || []; //cuz otherwise passing an empty array breaks the code
     this.huntEvents = [];
   
-    this.print = function(){ 
+    this.toString = function(){ 
       return ("ID = " + this.huntId + "\nName: " + this.huntName + "\nQuarry: " + this.quarry + "\nType: " + this.huntType + "\nStand: " + this.stand); 
     }
   }
 
   function makeNewHunt(){
-    //collect inputs including selected animals
+    // Collects input from user, creates a Hunt object, adds it to the globalHuntsList,
+    //   and changes to Hunt Overview to display the hunt info
+
+    // Collect inputs (including selected animals)
     let huntName = document.getElementById("newHuntName").value || "";
     let huntId = Date.now();
     let quarry = document.getElementById("newHuntQuarry").value || "";
@@ -93,15 +99,17 @@ function chooseAndShowView(event) {
         animals.push(box.value);
       }
     }
-    //make hunt object and add it to the global hunt list
     let myNewHunt = new Hunt(huntName, huntId, quarry, huntType, stand, animals);
     globalHuntsList.push(myNewHunt);
-    //get properties of newly added hunt and display them in Hunt Overview
     let huntOnList = globalHuntsList[globalHuntsList.length - 1];
+    // Make a hunt object and add it to the global hunt list
+    // Get properties of newly added hunt and display them in Hunt Overview
     changeView("hunt-overview", huntOnList);
   }
 
   function getHunt(huntId){
+    // Takes a Hunt ID and returns the corresponding Hunt from the globalHuntsList
+    // (If no Hunt with that ID exists, returns null)
     if(huntId){
       for(let hunt of globalHuntsList){ 
         if(hunt.huntId == huntId){ return hunt; }
@@ -131,13 +139,13 @@ function chooseAndShowView(event) {
       quarryEl.innerText = hunt.quarry;
       typeEl.innerText = hunt.huntType;
       standEl.innerText = hunt.stand;
-      //eventsEl.innerHTML = hunt.events; //This line is keeping Map's back button from being hidden 
+      //eventsEl.innerHTML = hunt.events; //This line was keeping Map's back button from being re-hidden 
       //for (let event of hunt.events){
         //show list of events (FieldNotes, Photo, and Harvest) in eventsListDiv
       //}
     }
     else{
-    // This should never happen -- it's for debugging 
+    // This should never happen -- it's just for debugging 
       huntEl.setAttribute("data-hunt", "Error retrieving hunt ID");
       nameEl.innerText = "(No Hunt Info Available)";
       dateEl.innerText = "";
@@ -206,13 +214,14 @@ function chooseAndShowView(event) {
 
   function findAttributeUp (el, attr) {
     // Takes an html element and an attribuite name
-    // Returns the attribute value found in the element or its closest ancestor 
+    // Looks for the attribute in the given element and each of its acestors
+    // Returns the attribute's value from the first element where it is found
     while (!el.hasAttribute(attr) && (el = el.parentElement)){ /*do nothing*/ }
     return el.getAttribute(attr);
   }
 
   function appendElementWithIdToParent (type, id, parent) { 
-    //untested
+    // untested
     var el = document.createElement(type);
     el.id = id;
     parent.appendChild(el);
@@ -220,15 +229,16 @@ function chooseAndShowView(event) {
   }
 
   function loadDemoHuntsData(){
-    // Development Demo Hunts
+    // Creates Demo Hunts and pushes them to globalHuntsList for development use
     let id1 = Date.now();
     let sampleHunt1 = new Hunt("Demo Hunt 1", id1, "Bears", "Stand", "Big Bear Stand", ["Bear", "Other Thing"]);
     globalHuntsList.push(sampleHunt1); 
     
-    let id2 = id1 + 1; //because in demo code, another Date.now() will generate the same id number as id1
+    let id2 = id1 + 1; //because calling Date.now() again so soon generates the same id number as id1
     let sampleHunt2 = new Hunt("Demo Hunt 2", id2, "Mushrooms", "Crawling Around", "", ["Mushroom", "UFO"]);
     globalHuntsList.push(sampleHunt2);
   }
+
 /*
 <p>Not gonna use this, just a "details" element demo - no javascript required!</p>
 <details> //details has an open attribute that determines the state (like 'expanded')

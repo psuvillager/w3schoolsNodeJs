@@ -58,17 +58,16 @@
 </form>
 
 
-<!-- scripts -->
 <script src="/src/js/app.js"></script><!--main app script -->
 <script type="text/javascript">
 
-  // listeners
+  // Listeners
   document.querySelector('.listExpander').addEventListener("click", toggleBlockDisplayById.bind(null, "checkboxList"), false);
   document.getElementById('submitNewHuntBtn').addEventListener("click", makeNewHunt, false);
   document.getElementById('cancelNewHuntBtn').addEventListener("click", chooseAndShowView, false);
 
 
-  //Demo data
+  // Demo data
   let demoNewHunt;
   demoNewHunt = true;
   if(demoNewHunt){
