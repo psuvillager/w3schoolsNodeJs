@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Watchlist Demo</title>
+</head>
+<body>
+
+<script type="text/javascript">
+
+
+// globalAnimalList is used to provide selections to include in animalsSelector
+// demoWatchlist is only there because I'm not getting user input yet
+
+// newAnimalsSelector includes a boolean "selected" property for each animal in globalAnimalsList
+// newWatchlist returns a list of all selected animals from a particular selector 
+// newAnimalsCounter includes a "count" property for each animal in a particular watchlist
+
+// newAnimalsSelector is what will go into HTML for making/updating watchlists
+// newAnimalsCounter is similar, for use in fieldNotes
+
+
+let globalAnimalsList = ["doe", "buck", "sasquatch"];
+let demoWatchlist = ["doe"];
+
+const addAnimalToList = function(animalName, list){
+  let finalName = animalName.toLowerCase();
+  if(!list.includes(finalName)){ list.push(finalName); } 
+}
+
+const newAnimalsSelector = function(watchlist){
+  //Takes an optional watchlist (array) parameter
+  // Makes an array of animal objects, one for each animal in the global list
+  // Gives each animal a 'name' property and a 'selected' property (initialized to false)
+  // If a watchlist is passed in, sets the 'selected' property for all listed animals to true
+  //  (It would be cool to do this with a constructor that extends array instead)
+  let animalsSelector = [];
+  for(let animalName of globalAnimalsList){
+    let animal = { name: animalName, isSelected: false }; 
+    animalsSelector.push(animal);
+  }
+  if(watchlist){
+    for(let animal of animalsSelector){
+      if(watchlist.includes(animal.name)){
+        animal.isSelected = true;
+      }
+    }
+  }
+  return animalsSelector;
+}
+
+const displaySelections = function(selector){
+//debugging
+  let str = "Selector: \n";
+  for (let animal of selector){
+    str += animal.name + "(" + animal.isSelected + ")\n";
+  }
+  alert(str);
+}
+
+const newAnimalsCounter = function(watchlist){
+  let animalsCounter = [];
+  for(let animalName of watchlist){
+    let animal = { name: animalName, count: 0 };
+    animalsCounter.push(animal);
+  }
+  return animalsCounter;
+}
+
+const displayCounts = function(counter){
+//debugging
+  let str = "Counts: \n";
+  for (let animal of counter){
+    str += animal.name + ": " + animal.count + "\n";
+  }
+  alert(str);
+}
+
+const newWatchlist = function(selector){
+  let newWatchlist = [];
+  for(let animal of selector){
+    if(animal.isSelected){
+      newWatchlist.push(animal.name);
+    }
+  }
+  return newWatchlist;
+}
+
+addAnimalToList("human", globalAnimalsList);
+let mySelector = newAnimalsSelector(demoWatchlist);
+//displaySelections(mySelector);
+let myWatchlist = newWatchlist(mySelector);
+
+addAnimalToList("human", myWatchlist); //demo statement
+
+let myCounter = newAnimalsCounter(myWatchlist);
+displayCounts(myCounter);
+
+/*
+function Hunt(name, id, quarry, type, stand, watchlist){
+// Constructor for Hunt objects
+  this.huntName = name;
+  this.huntId = id;
+  this.quarry = quarry;
+  this.huntType = type;
+  this.stand = stand;
+  this.watchlist = watchlist || []; //cuz otherwise passing an empty array breaks the code
+  this.huntEvents = [];
+
+  this.toString = function(){ 
+    return ("ID = " + this.huntId + "\nName: " + this.huntName + "\nQuarry: " + this.quarry + "\nType: " + this.huntType + "\nStand: " + this.stand); 
+  }
+}
+
+  // Hunt Instances
+  let id1 = Date.now();
+  let sampleHunt1 = new Hunt("Demo Hunt 1", id1, "Bears", "Stand", "Big Bear Stand", ["Bear", "Shia Labeouf"]);
+  
+  let id2 = id1 + 1; //cuz re-calling Date.now() so soon gives the same # as id1
+  let sampleHunt2 = new Hunt("Demo Hunt 2", id2, "Aliens", "Walking", "", ["Alien", "Crop Circle", "UFO"]);
+*/
+</script>
+</body>
+</html>

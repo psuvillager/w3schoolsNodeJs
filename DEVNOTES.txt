@@ -2,8 +2,14 @@ Navigation works
 From New Hunt, makeNewHunt() populates Hunt Overview
 From Hunts List, chooseAndShowHunt() populates Hunt Overview
 From Hunt Overview, buttons navigate to map/weather/watchlist/fieldNotes/harvest/photo and back
+Watchlist Demo has hacky constructors for html-friendly animal selector and animal counter arrays
+
 
 To do:
+
+- Watchlist Demo
+  - make newAnimalsSelector, newAnimalsCounter, and newWatchlist into proper constructors (extending Array)
+  - write the UI for newAnimalsSelector and newAnimalsCounter 
 
 
 - Hunt Overview 
