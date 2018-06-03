@@ -2,10 +2,12 @@
 <html>
 <head>
 	<title>Watchlist Demo</title>
+  <style>#someViewContainer > div{ margin: 10px; }</style>
 </head>
 <body>
   <div id="someViewContainer">
     <div class="animalsSelector"></div>
+    <div class="animalsCounter"></div>
   </div>
 <script type="text/javascript">
 
@@ -50,12 +52,14 @@ const newAnimalsSelector = function(watchlist){
 }
 
 const displaySelections = function(selector){
-//for debugging
-  let str = "Selector: \n";
+  let selectorDiv = document.querySelector("#someViewContainer .animalsSelector");
   for (let animal of selector){
-    str += animal.name + "(" + animal.isSelected + ")\n";
+    let newDiv = document.createElement("div");
+    let newContent = document.createTextNode(animal.name); 
+    newDiv.appendChild(newContent);  
+    selectorDiv.appendChild(newDiv);
+    if(animal.isSelected == true){ newDiv.style.backgroundColor = "#AAFFAA"; }
   }
-  alert(str);
 }
 
 const newAnimalsCounter = function(watchlist){
@@ -68,12 +72,14 @@ const newAnimalsCounter = function(watchlist){
 }
 
 const displayCounts = function(counter){
-//for debugging
-  let str = "Counts: \n";
+  let counterDiv = document.querySelector("#someViewContainer .animalsCounter");
   for (let animal of counter){
-    str += animal.name + ": " + animal.count + "\n";
+    let newDiv = document.createElement("div");
+    newDiv.width = "50%";
+    let newContent = document.createTextNode(animal.name + ": " + animal.count); //move count to new div on same line, add increment buttons 
+    newDiv.appendChild(newContent);
+    counterDiv.appendChild(newDiv);
   }
-  alert(str);
 }
 
 const newWatchlist = function(selector){
@@ -88,30 +94,9 @@ const newWatchlist = function(selector){
 
 
 addAnimalToList("human", globalAnimalsList);
+
 let mySelector = newAnimalsSelector(demoWatchlist);
-
-
-
-
-// Finally got a single div appended to the .animalsSelector div
-// See if I can put in a p tag instead
-// In any case, append all the animals using the loop, then color them based on whether they are "isSelected" or not
-/*
-for (let animal of mySelector){
-  let txt = createTextNode("woo");
-  let newEl = createElement("p");
-  newEl.appendChild(txt);
-  document.querySelector("#someViewContainer .animalsSelector").appendChild(newEl);
-}
-*/
-var newDiv = document.createElement("div"); 
-var newContent = document.createTextNode("Woot!"); 
-newDiv.appendChild(newContent);  
-let selectorDiv = document.querySelector("#someViewContainer .animalsSelector");
-selectorDiv.appendChild(newDiv);
-
-
-//displaySelections(mySelector);
+displaySelections(mySelector);
 
 
 let myWatchlist = newWatchlist(mySelector);
@@ -119,7 +104,7 @@ let myWatchlist = newWatchlist(mySelector);
 addAnimalToList("human", myWatchlist); //demo statement
 
 let myCounter = newAnimalsCounter(myWatchlist);
-//displayCounts(myCounter);
+displayCounts(myCounter);
 
 /*
 function Hunt(name, id, quarry, type, stand, watchlist){
