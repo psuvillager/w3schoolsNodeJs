@@ -65,7 +65,7 @@ const displaySelections = function(selector){
 const newAnimalsCounter = function(watchlist){
   let animalsCounter = [];
   for(let animalName of watchlist){
-    let animal = { name: animalName, count: 0 };
+    let animal = { name: animalName, count: "0" };
     animalsCounter.push(animal);
   }
   return animalsCounter;
@@ -74,12 +74,37 @@ const newAnimalsCounter = function(watchlist){
 const displayCounts = function(counter){
   let counterDiv = document.querySelector("#someViewContainer .animalsCounter");
   for (let animal of counter){
-    let newDiv = document.createElement("div");
-    newDiv.width = "50%";
-    let newContent = document.createTextNode(animal.name + ": " + animal.count); //move count to new div on same line, add increment buttons 
-    newDiv.appendChild(newContent);
-    counterDiv.appendChild(newDiv);
+    appendElement("span", counterDiv, { text: animal.name });    
+    appendElement("span", counterDiv, { text: " " + animal.count + " " });
+    appendElement("span", counterDiv, { text: " + " });
+    appendElement("span", counterDiv, { text: " - " });
+
+    //let nameDiv = document.createElement("div");
+    //let nameText = document.createTextNode(animal.name + ": " + animal.count); //move count to new div on same line, add increment buttons 
+    //nameDiv.appendChild(nameText);
+    //counterDiv.appendChild(nameDiv);
   }
+}
+
+//more versatile element-appending helper functions
+function appendElement(type, parent, options) { 
+  var el = document.createElement(type);
+  if (options.id){ el.id = options.id; }
+  if (options.text){ el.innerText = options.text; }
+  /*
+  if (options.classes){ 
+    for (let class of options.classes){
+      //el.classlist.addClass(class); //get the syntax for this
+    }
+  }
+  if (options.attributes){
+    for (let attribute of options.attributes){
+      //el.setAttribute("key","value"); //get the syntax for this
+    }
+  }
+  */
+  parent.appendChild(el);
+  return el;
 }
 
 const newWatchlist = function(selector){
@@ -92,19 +117,15 @@ const newWatchlist = function(selector){
   return newWatchlist;
 }
 
-
-addAnimalToList("human", globalAnimalsList);
-
+//addAnimalToList("human", globalAnimalsList);
 let mySelector = newAnimalsSelector(demoWatchlist);
 displaySelections(mySelector);
-
-
 let myWatchlist = newWatchlist(mySelector);
-
-addAnimalToList("human", myWatchlist); //demo statement
-
+//addAnimalToList("human", myWatchlist); //demo statement
 let myCounter = newAnimalsCounter(myWatchlist);
 displayCounts(myCounter);
+
+
 
 /*
 function Hunt(name, id, quarry, type, stand, watchlist){
