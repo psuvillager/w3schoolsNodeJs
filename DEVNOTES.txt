@@ -8,8 +8,7 @@ Watchlist Demo has hacky constructors for html-friendly animal selector and anim
 To do:
 
 - Watchlist Demo
-  - make newAnimalsSelector, newAnimalsCounter, and newWatchlist into proper constructors (extending Array)
-  - write the UI for newAnimalsSelector and newAnimalsCounter 
+  - writing the UI for newAnimalsSelector and newAnimalsCounter - left off on line 96 (6/2/18)
 
 
 - Hunt Overview 
