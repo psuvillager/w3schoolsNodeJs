@@ -23,7 +23,7 @@
 
 
 let globalAnimalsList = ["doe", "buck", "sasquatch"];
-let demoWatchlist = ["doe"]; //demo
+let demoWatchlist = ["doe", "sasquatch"]; //demo
 
 const addAnimalToList = function(animalName, list){
   let finalName = animalName.toLowerCase();
@@ -74,35 +74,38 @@ const newAnimalsCounter = function(watchlist){
 const displayCounts = function(counter){
   let counterDiv = document.querySelector("#someViewContainer .animalsCounter");
   for (let animal of counter){
-    appendElement("span", counterDiv, { text: animal.name });    
-    appendElement("span", counterDiv, { text: " " + animal.count + " " });
-    appendElement("span", counterDiv, { text: " + " });
-    appendElement("span", counterDiv, { text: " - " });
-
-    //let nameDiv = document.createElement("div");
-    //let nameText = document.createTextNode(animal.name + ": " + animal.count); //move count to new div on same line, add increment buttons 
-    //nameDiv.appendChild(nameText);
-    //counterDiv.appendChild(nameDiv);
+    appendNewElement("div", counterDiv, { id: animal.name + "-container" }); //use class, not id
+  }
+  // using a second loop assures that the animal container div is already in the DOM
+  for (let animal of counter){
+    let animalDiv = document.getElementById(animal.name + "-container");
+    //these need classes
+    appendNewElement("span", animalDiv, { text: animal.name });    
+    appendNewElement("span", animalDiv, { text: " " + animal.count + " " });
+    appendNewElement("span", animalDiv, { text: " + " });
+    appendNewElement("span", animalDiv, { text: " - " });
   }
 }
 
 //more versatile element-appending helper functions
-function appendElement(type, parent, options) { 
+function appendNewElement(type, parent, options) {
+  // Takes a tag type, a node, and an (optional) array of options
+  // Creates (and returns) an element of the given type and appends it to the parent node
+  // Sets id, text, classes, and attribs according to options
+  // Classes must be an array; attribs must be an array of objects with 'key' and 'val' properties 
   var el = document.createElement(type);
   if (options.id){ el.id = options.id; }
   if (options.text){ el.innerText = options.text; }
-  /*
   if (options.classes){ 
-    for (let class of options.classes){
-      //el.classlist.addClass(class); //get the syntax for this
+    for (let myClass of options.classes){
+      el.classlist.add(myClass);
     }
   }
-  if (options.attributes){
-    for (let attribute of options.attributes){
-      //el.setAttribute("key","value"); //get the syntax for this
+  if (options.attribs){
+    for (let attribute of options.attribs){
+      el.setAttribute(attribute.key, attribute.val);
     }
   }
-  */
   parent.appendChild(el);
   return el;
 }
