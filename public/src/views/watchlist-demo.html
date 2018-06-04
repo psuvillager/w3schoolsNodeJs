@@ -74,16 +74,21 @@ const newAnimalsCounter = function(watchlist){
 const displayCounts = function(counter){
   let counterDiv = document.querySelector("#someView .animalsCounter");
   for (let animal of counter){
+
+    // Classes here are successfully added...
     appendNewElement("div", counterDiv, { classes: [animal.name] });
   }
-  // extra loop assures the container div is already in the DOM when we try to append to it
+  // Extra loop assures the container div is already in the DOM when we try to append to it
   for (let animal of counter){
     let animalDiv = document.querySelector("#someView .animalsCounter ."+animal.name);
-    //these need classes
-    appendNewElement("span", animalDiv, { text: animal.name });    
-    appendNewElement("span", animalDiv, { text: " " + animal.count + " " });
-    appendNewElement("span", animalDiv, { text: " + " });
-    appendNewElement("span", animalDiv, { text: " - " });
+    
+
+    // ...but classes on these spans seem not to be getting added properly - do I need a 3rd loop?!
+    appendNewElement("span", animalDiv, { text: animal.name, classes: ["animalName"] });    
+    appendNewElement("span", animalDiv, { text: " " + animal.count + " ", classes: ["animalCount"] });
+    appendNewElement("span", animalDiv, { text: " + ", classes: ["increment"] });
+    appendNewElement("span", animalDiv, { text: " - ", classes: ["decrement"] });
+
   }
 }
 

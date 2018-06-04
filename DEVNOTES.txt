@@ -8,7 +8,7 @@ Watchlist Demo has hacky constructors for html-friendly animal selector and anim
 To do:
 
 - Watchlist Demo
-  - writing UI for newAnimalsSelector and newAnimalsCounter - add listeners to update lists onClick
+  - writing UI for newAnimalsSelector and newAnimalsCounter - finish displayCounts() and add listeners
 
 
 - Hunt Overview 
