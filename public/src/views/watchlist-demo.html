@@ -2,10 +2,10 @@
 <html>
 <head>
 	<title>Watchlist Demo</title>
-  <style>#someViewContainer > div{ margin: 10px; }</style>
+  <style>#someView > div{ margin: 10px; }</style>
 </head>
 <body>
-  <div id="someViewContainer">
+  <div id="someView">
     <div class="animalsSelector"></div>
     <div class="animalsCounter"></div>
   </div>
@@ -52,7 +52,7 @@ const newAnimalsSelector = function(watchlist){
 }
 
 const displaySelections = function(selector){
-  let selectorDiv = document.querySelector("#someViewContainer .animalsSelector");
+  let selectorDiv = document.querySelector("#someView .animalsSelector");
   for (let animal of selector){
     let newDiv = document.createElement("div");
     let newContent = document.createTextNode(animal.name); 
@@ -72,13 +72,13 @@ const newAnimalsCounter = function(watchlist){
 }
 
 const displayCounts = function(counter){
-  let counterDiv = document.querySelector("#someViewContainer .animalsCounter");
+  let counterDiv = document.querySelector("#someView .animalsCounter");
   for (let animal of counter){
-    appendNewElement("div", counterDiv, { id: animal.name + "-container" }); //use class, not id
+    appendNewElement("div", counterDiv, { classes: [animal.name] });
   }
-  // using a second loop assures that the animal container div is already in the DOM
+  // extra loop assures the container div is already in the DOM when we try to append to it
   for (let animal of counter){
-    let animalDiv = document.getElementById(animal.name + "-container");
+    let animalDiv = document.querySelector("#someView .animalsCounter ."+animal.name);
     //these need classes
     appendNewElement("span", animalDiv, { text: animal.name });    
     appendNewElement("span", animalDiv, { text: " " + animal.count + " " });
@@ -98,7 +98,7 @@ function appendNewElement(type, parent, options) {
   if (options.text){ el.innerText = options.text; }
   if (options.classes){ 
     for (let myClass of options.classes){
-      el.classlist.add(myClass);
+      el.classList.add(myClass);
     }
   }
   if (options.attribs){
@@ -128,7 +128,12 @@ let myWatchlist = newWatchlist(mySelector);
 let myCounter = newAnimalsCounter(myWatchlist);
 displayCounts(myCounter);
 
-
+/*
+let view = document.getElementById("someView");
+let newDiv = appendNewElement("div", view, { id: "appended", text: "appended" });
+newDiv.classList.add("appended");
+alert("classes: " + newDiv.classList);
+*/
 
 /*
 function Hunt(name, id, quarry, type, stand, watchlist){
