@@ -3,12 +3,12 @@ From New Hunt, makeNewHunt() populates Hunt Overview
 From Hunts List, chooseAndShowHunt() populates Hunt Overview
 From Hunt Overview, buttons navigate to map/weather/watchlist/fieldNotes/harvest/photo and back
 Watchlist Demo has hacky constructors for html-friendly animal selector and animal counter arrays
-
+Watchlist Demo has listener for incrementing counts (but doesn't update the Counter object...)
 
 To do:
 
 - Watchlist Demo
-  - writing UI for newAnimalsSelector and newAnimalsCounter - finish displayCounts() and add listeners
+  - writing UI for newAnimalsSelector and newAnimalsCounter - finish listeners
 
 
 - Hunt Overview 

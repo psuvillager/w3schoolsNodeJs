@@ -2,7 +2,11 @@
 <html>
 <head>
 	<title>Watchlist Demo</title>
-  <style>#someView > div{ margin: 10px; }</style>
+  <style>
+    #someView > div { margin: 10px; }
+    #someView .animalsCounter > * { margin-top: 8px; margin-bottom: 8px; }
+    .animalCount, .btn { border: 1px solid lightgrey; margin-left: 3px; padding: 2px; }
+  </style>
 </head>
 <body>
   <div id="someView">
@@ -65,14 +69,17 @@ const displaySelections = function(selector){
 const newAnimalsCounter = function(watchlist){
   let animalsCounter = [];
   for(let animalName of watchlist){
-    let animal = { name: animalName, count: "0" };
+    let animal = { name: animalName, count: 0 };
     animalsCounter.push(animal);
   }
   return animalsCounter;
 }
 
 const displayCounts = function(counter){
+  // Takes a newAnimalCounter 'object', makes a div for each animal and adds spans for content 
+  // (See the related event listener and css styles)
   let counterDiv = document.querySelector("#someView .animalsCounter");
+  // (might need to clear innerHTML from counterDiv before adding content each time)
   for (let animal of counter){
     appendNewElement("div", counterDiv, { classes: [animal.name] });
   }
@@ -80,18 +87,25 @@ const displayCounts = function(counter){
   for (let animal of counter){
     let animalDiv = document.querySelector("#someView .animalsCounter ."+animal.name);
     appendNewElement("span", animalDiv, { text: animal.name, classes: ["animalName"] });    
-    appendNewElement("span", animalDiv, { text: " " + animal.count + " ", classes: ["animalCount"] });
-    appendNewElement("span", animalDiv, { text: " + ", classes: ["increment"] });
-    appendNewElement("span", animalDiv, { text: " - ", classes: ["decrement"] });
+    appendNewElement("span", animalDiv, { text: animal.count.toString(), classes: ["animalCount"] });
+    appendNewElement("span", animalDiv, { text: " + ", classes: ["btn", "increment"] });
+    appendNewElement("span", animalDiv, { text: " - ", classes: ["btn", "decrement"] });
   }
-  /*
-  //proving that we can access the newly created spans via querySelector
-  for (let animal of counter){
-    let countSpan = document.querySelector("#someView .animalsCounter ."+animal.name+" .animalCount");
-    let myCount = countSpan.innerText.parseInt;
-    alert("count: " + myCount);
+}
+
+const updateCounts = function(event){ //this should update the newAnimalCounter instead of just the html 
+  let targ = event.target;
+  if(event.target.classList.contains("btn")){
+    let btn = event.target;
+    let animalName = event.target.parentElement.className;
+    //alert(animal);
+    let countSpan = document.querySelector("#someView .animalsCounter ."+animalName+ " .animalCount");
+    let count = parseInt(countSpan.innerText);
+    //alert(countSpan.innerText);
+    if(btn.classList.contains("decrement") && count > 0){ count--; }
+    else if(btn.classList.contains("increment")){ count++; }
+    countSpan.innerText = count.toString();
   }
-  */
 }
 
 //more versatile element-appending helper functions
@@ -134,6 +148,9 @@ let myWatchlist = newWatchlist(mySelector);
 //addAnimalToList("human", myWatchlist); //demo statement
 let myCounter = newAnimalsCounter(myWatchlist);
 displayCounts(myCounter);
+
+let counterDiv = document.querySelector("#someView .animalsCounter");
+counterDiv.addEventListener("click", updateCounts, false);
 
 /*
 let view = document.getElementById("someView");
