@@ -121,7 +121,10 @@
     }
   }
 
+  
   const updateCountDisplay = function(event){
+    // Respond to increment/decrement buttons for animals in field notes
+    // (Don't bother updating the FieldNotes object until user clicks save)
     let targ = event.target;
     if(event.target.classList.contains("btn")){
       let btn = event.target;
@@ -133,7 +136,6 @@
       countSpan.innerText = count.toString();
     }
   }
-
 
 
   //more versatile element-appending helper functions

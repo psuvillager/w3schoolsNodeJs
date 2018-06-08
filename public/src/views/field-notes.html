@@ -1,5 +1,13 @@
-<p>Field Notes goes here</p>
-<button type="button" id="fromFieldnotesBackToHuntBtn" data-view="hunt-overview" data-hunt="">Back</button>
+<div class="fieldNotesDiv">
+  <h4>Sightings</h4>
+  <div class="animalsCounter">Display Animals Counter Here</div><!-- to be populated by displayCounts() -->
+  <h4>Notes</h4>
+  <div>
+  	<textarea class="fieldNotesTextArea"></textarea>
+  </div>
+  <button type="button" id="saveFieldNotes" data-view="hunt-overview" data-event="">Save</button>
+  <button type="button" id="fromFieldnotesBackToHuntBtn" data-view="hunt-overview">Cancel</button>
+</div>
 
 <script type="text/javascript">
   document.getElementById("fromFieldnotesBackToHuntBtn").addEventListener("click", chooseAndShowView, false);

@@ -1,2 +1,24 @@
 div.viewContainer, .centered { margin-top: 15px; text-align: center; }
 .huntSummary { background-color: lightskyblue; }
+
+
+/* animalsCounter (in fieldNotes) */
+.animalsCounter { margin: 10px; }
+.animalsCounter > div { 
+  height: 20px; padding: 5px 6px; margin: 6px 0; border-radius: 5px;
+  background-color: lightgrey;
+  }
+.animalsCounter > div > span {
+  line-height: 20px; overflow: hidden; 
+  }
+.animalsCounter > div > span.animalName { 
+  display: inline-block; width: 45%;
+  }
+.animalsCounter > div > span.animalCount, .animalsCounter > div > span.btn {
+  display: inline-block; width: 20px; text-align: center;
+  font-weight: bold;
+  }
+.animalsCounter > div > span.animalCount { margin-right: 10%; }
+.animalsCounter > div > span.btn { margin-left: 2%; border-radius: 30%;
+  background-color: lightskyblue; 
+  }

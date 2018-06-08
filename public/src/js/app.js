@@ -46,7 +46,7 @@ function changeView(viewName, hunt){
       if(viewName == "hunts-list"){ updateHuntsListView(); }
       else if(viewName == "hunt-overview") { populateHuntOverview(hunt); }
       else if(viewName == "watchlist") { showCurrentWatchlist(hunt); }
-
+      //if changing to field-notes, will need fieldNotesID (if none, we're starting a new fieldNotes)
     }
   }
 }

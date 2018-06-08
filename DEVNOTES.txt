@@ -8,14 +8,17 @@ Watchlist Demo has listener for incrementing counts (but doesn't update the Coun
 To do:
 
 - Watchlist Demo
-  - writing UI for newAnimalsSelector and newAnimalsCounter - finish listeners
+  - writing UI for newAnimalsSelector and newAnimalsCounter 
+  	- finish listener for selector, and incorporte functions into app
 
+- Field Notes
+  - show this view (and display counter) on click of newFieldNotes button and also on selection from the list of existing fieldNotes (passing fieldNotesID, which will be time-based like huntID)
 
-- Hunt Overview 
+- Hunt Overview
   - needs EventList display (Field Notes, Photos, and Harvests)
   		- linked field notes have watchlist instance w/ increment buttons, etc
   - needs new-event creation (Field Notes, Harvest, Take Photo)
- - Enable event creation (Field Notes, Photos (requires service worker), and Harvests)
+ - enable event creation (Field Notes, Photos (requires service worker), and Harvests)
 - Listeners
   - need to disregard clicks on uninteresting elements (to avoid showing blank screens)
 
