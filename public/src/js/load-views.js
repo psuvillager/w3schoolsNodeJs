@@ -7,7 +7,7 @@ $('#predictions').load('/src/views/predictions.html');
 
 //hunt-overview and associated views
 $('#hunt-overview').load('/src/views/hunt-overview.html');
-$('#new-field-notes').load('/src/views/new-field-notes.html');
+$('#field-notes').load('/src/views/field-notes.html');
 $('#new-harvest').load('/src/views/new-harvest.html');
 $('#new-photo').load('/src/views/new-photo.html');
 $('#map').load('/src/views/map.html');
