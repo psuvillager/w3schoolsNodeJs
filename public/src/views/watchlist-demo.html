@@ -3,185 +3,213 @@
 <head>
 	<title>Watchlist Demo</title>
   <style>
-    #someView > div { margin: 10px; }
-    #someView .animalsCounter > * { margin-top: 8px; margin-bottom: 8px; }
-    .animalCount, .btn { border: 1px solid lightgrey; margin-left: 3px; padding: 2px; }
+
+    h3, hr {margin: 10px; }
+    /* styles for animalsCounter and animalsSelector */
+    #someView .animalsCounter, #someView .animalsSelector { margin: 10px; }
+    #someView .animalsCounter > div, #someView .animalsSelector > div { 
+      height: 20px; padding: 5px 6px; margin: 6px 0; border-radius: 5px;
+      background-color: lightgrey;
+      }
+
+    #someView .animalsCounter > div > span {
+      line-height: 20px; overflow: hidden; 
+      }
+    .animalsCounter > div > span.animalName { 
+      display: inline-block; width: 45%;
+      }
+    .animalsCounter > div > span.animalCount, .animalsCounter > div > span.btn {
+      display: inline-block; width: 20px; text-align: center;
+      font-weight: bold;
+      }
+    .animalsCounter > div > span.animalCount { margin-right: 10%; }
+    .animalsCounter > div > span.btn { margin-left: 2%; border-radius: 30%;
+      background-color: lightskyblue; 
+      }
+
   </style>
 </head>
+
 <body>
-  <div id="someView">
-    <div class="animalsSelector"></div>
-    <div class="animalsCounter"></div>
+  <div id="someView"><!-- allows selectors to target widgets within a particular view -->
+    <h3>Edit watchlist</h3>
+    <div class="animalsSelector"></div><!-- populated by displaySelections() -->
+    <hr />
+    <h3>Count animals</h3>
+    <div class="animalsCounter"></div><!-- populated by displayCounts() -->
   </div>
-<script type="text/javascript">
 
-// globalAnimalList is used to provide selections to include in animalsSelector
-// demoWatchlist is only there because I'm not getting user input yet
+  <script type="text/javascript">
 
-// newAnimalsSelector includes a boolean "selected" property for each animal in globalAnimalsList
-// newWatchlist returns a list of all selected animals from a particular selector 
-// newAnimalsCounter includes a "count" property for each animal in a particular watchlist
+  // globalAnimalList is used to provide selections to include in animalsSelector
+  // demoWatchlist is only there because I'm not getting user input yet
 
-// newAnimalsSelector is what will go into HTML for making/updating watchlists
-// newAnimalsCounter is similar, for use in fieldNotes
+  // newAnimalsSelector includes a boolean "selected" property for each animal in globalAnimalsList
+  // newWatchlist returns a list of all selected animals from a particular selector 
+  // newAnimalsCounter includes a "count" property for each animal in a particular watchlist
+
+  // newAnimalsSelector is what will go into HTML for making/updating watchlists
+  // newAnimalsCounter is similar, for use in fieldNotes
 
 
-let globalAnimalsList = ["doe", "buck", "sasquatch"];
-let demoWatchlist = ["doe", "sasquatch"]; //demo
+  let globalAnimalsList = ["doe", "buck", "sasquatch"];
+  let demoWatchlist = ["doe", "sasquatch"]; //demo
 
-const addAnimalToList = function(animalName, list){
-  let finalName = animalName.toLowerCase();
-  if(!list.includes(finalName)){ list.push(finalName); } 
-}
-
-const newAnimalsSelector = function(watchlist){
-  //Takes an optional watchlist (array) parameter
-  // Makes an array of animal objects, one for each animal in the global list
-  // Gives each animal a 'name' property and a 'selected' property (initialized to false)
-  // If a watchlist is passed in, sets the 'selected' property for all listed animals to true
-  //  (It would be cool to do this with a constructor that extends array instead)
-  let animalsSelector = [];
-  for(let animalName of globalAnimalsList){
-    let animal = { name: animalName, isSelected: false }; 
-    animalsSelector.push(animal);
+  const addAnimalToList = function(animalName, list){
+    let finalName = animalName.toLowerCase();
+    if(!list.includes(finalName)){ list.push(finalName); } 
   }
-  if(watchlist){
-    for(let animal of animalsSelector){
-      if(watchlist.includes(animal.name)){
-        animal.isSelected = true;
+
+  const newAnimalsSelector = function(watchlist){
+    //Takes an optional watchlist (array) parameter
+    // Makes an array of animal objects, one for each animal in the global list
+    // Gives each animal a 'name' property and a 'selected' property (initialized to false)
+    // If a watchlist is passed in, sets the 'selected' property for all listed animals to true
+    //  (It would be cool to do this with a constructor that extends array instead)
+    let animalsSelector = [];
+    for(let animalName of globalAnimalsList){
+      let animal = { name: animalName, isSelected: false }; 
+      animalsSelector.push(animal);
+    }
+    if(watchlist){
+      for(let animal of animalsSelector){
+        if(watchlist.includes(animal.name)){
+          animal.isSelected = true;
+        }
       }
     }
+    return animalsSelector;
   }
-  return animalsSelector;
-}
 
-const displaySelections = function(selector){
-  let selectorDiv = document.querySelector("#someView .animalsSelector");
-  for (let animal of selector){
-    let newDiv = document.createElement("div");
-    let newContent = document.createTextNode(animal.name); 
-    newDiv.appendChild(newContent);  
-    selectorDiv.appendChild(newDiv);
-    if(animal.isSelected == true){ newDiv.style.backgroundColor = "#AAFFAA"; }
+  const displaySelections = function(selector){
+    let selectorDiv = document.querySelector("#someView .animalsSelector");
+    for (let animal of selector){
+      let animalDiv = document.createElement("div");
+      let animalText = document.createTextNode(animal.name); 
+      animalDiv.appendChild(animalText);  
+      selectorDiv.appendChild(animalDiv);
+      if(animal.isSelected == true){ animalDiv.style.backgroundColor = "#AAFFAA"; }
+    }
   }
-}
 
-const newAnimalsCounter = function(watchlist){
-  let animalsCounter = [];
-  for(let animalName of watchlist){
-    let animal = { name: animalName, count: 0 };
-    animalsCounter.push(animal);
+  const newAnimalsCounter = function(watchlist){
+    let animalsCounter = [];
+    for(let animalName of watchlist){
+      let animal = { name: animalName, count: 0 };
+      animalsCounter.push(animal);
+    }
+    return animalsCounter;
   }
-  return animalsCounter;
-}
 
-const displayCounts = function(counter){
-  // Takes a newAnimalCounter 'object', makes a div for each animal and adds spans for content 
-  // (See the related event listener and css styles)
+  const displayCounts = function(counter){
+    // Takes a newAnimalCounter 'object' (Array), makes a div for each animal, and adds spans for content 
+    // (See the related event listener and css styles)
+    let counterDiv = document.querySelector("#someView .animalsCounter");
+    
+    // (might need to clear innerHTML from counterDiv before adding content each time)
+    
+    for (let animal of counter){
+      appendNewElement("div", counterDiv, { classes: [animal.name] }); //animalDiv
+    }
+    // Extra loop assures the containing counterDiv is already in the DOM when we try to append to it
+    for (let animal of counter){
+      let animalDiv = document.querySelector("#someView .animalsCounter ."+animal.name);
+      appendNewElement("span", animalDiv, { text: animal.name, classes: ["animalName"] });    
+      appendNewElement("span", animalDiv, { text: animal.count.toString(), classes: ["animalCount"] });
+      appendNewElement("span", animalDiv, { text: " + ", classes: ["btn", "increment"] });
+      appendNewElement("span", animalDiv, { text: " - ", classes: ["btn", "decrement"] });
+    }
+  }
+
+  const updateCountDisplay = function(event){
+    let targ = event.target;
+    if(event.target.classList.contains("btn")){
+      let btn = event.target;
+      let animalName = event.target.parentElement.className;
+      let countSpan = document.querySelector("#someView .animalsCounter ."+animalName+ " .animalCount");
+      let count = parseInt(countSpan.innerText);
+      if(btn.classList.contains("decrement") && count > 0){ count--; }
+      else if(btn.classList.contains("increment")){ count++; }
+      countSpan.innerText = count.toString();
+    }
+  }
+
+
+
+  //more versatile element-appending helper functions
+  function appendNewElement(type, parent, options) {
+    // Takes a tag type, a node, and an (optional) array of options
+    // Creates (and returns) an element of the given type and appends it to the parent node
+    // Sets id, text, classes, and attribs according to options
+    // Classes must be an array; attribs must be an array of objects with 'key' and 'val' properties 
+    var el = document.createElement(type);
+    if (options.id){ el.id = options.id; }
+    if (options.text){ el.innerText = options.text; }
+    if (options.classes){ 
+      for (let myClass of options.classes){
+        el.classList.add(myClass);
+      }
+    }
+    if (options.attribs){
+      for (let attribute of options.attribs){
+        el.setAttribute(attribute.key, attribute.val);
+      }
+    }
+    parent.appendChild(el);
+    return el;
+  }
+
+  const newWatchlist = function(selector){
+    let newWatchlist = [];
+    for(let animal of selector){
+      if(animal.isSelected){
+        newWatchlist.push(animal.name);
+      }
+    }
+    return newWatchlist;
+  }
+
+  //addAnimalToList("human", globalAnimalsList);
+  let mySelector = newAnimalsSelector(demoWatchlist);
+  displaySelections(mySelector);
+  let myWatchlist = newWatchlist(mySelector);
+  //addAnimalToList("human", myWatchlist); //demo statement
+  let myCounter = newAnimalsCounter(myWatchlist);
+  displayCounts(myCounter);
+
   let counterDiv = document.querySelector("#someView .animalsCounter");
-  // (might need to clear innerHTML from counterDiv before adding content each time)
-  for (let animal of counter){
-    appendNewElement("div", counterDiv, { classes: [animal.name] });
-  }
-  // Extra loop assures the container div is already in the DOM when we try to append to it
-  for (let animal of counter){
-    let animalDiv = document.querySelector("#someView .animalsCounter ."+animal.name);
-    appendNewElement("span", animalDiv, { text: animal.name, classes: ["animalName"] });    
-    appendNewElement("span", animalDiv, { text: animal.count.toString(), classes: ["animalCount"] });
-    appendNewElement("span", animalDiv, { text: " + ", classes: ["btn", "increment"] });
-    appendNewElement("span", animalDiv, { text: " - ", classes: ["btn", "decrement"] });
-  }
-}
+  counterDiv.addEventListener("click", updateCountDisplay, false);
 
-const updateCounts = function(event){ //this should update the newAnimalCounter instead of just the html 
-  let targ = event.target;
-  if(event.target.classList.contains("btn")){
-    let btn = event.target;
-    let animalName = event.target.parentElement.className;
-    //alert(animal);
-    let countSpan = document.querySelector("#someView .animalsCounter ."+animalName+ " .animalCount");
-    let count = parseInt(countSpan.innerText);
-    //alert(countSpan.innerText);
-    if(btn.classList.contains("decrement") && count > 0){ count--; }
-    else if(btn.classList.contains("increment")){ count++; }
-    countSpan.innerText = count.toString();
-  }
-}
+  /*
+  let view = document.getElementById("someView");
+  let newDiv = appendNewElement("div", view, { id: "appended", text: "appended" });
+  newDiv.classList.add("appended");
+  alert("classes: " + newDiv.classList);
+  */
 
-//more versatile element-appending helper functions
-function appendNewElement(type, parent, options) {
-  // Takes a tag type, a node, and an (optional) array of options
-  // Creates (and returns) an element of the given type and appends it to the parent node
-  // Sets id, text, classes, and attribs according to options
-  // Classes must be an array; attribs must be an array of objects with 'key' and 'val' properties 
-  var el = document.createElement(type);
-  if (options.id){ el.id = options.id; }
-  if (options.text){ el.innerText = options.text; }
-  if (options.classes){ 
-    for (let myClass of options.classes){
-      el.classList.add(myClass);
+  /*
+  function Hunt(name, id, quarry, type, stand, watchlist){
+  // Constructor for Hunt objects
+    this.huntName = name;
+    this.huntId = id;
+    this.quarry = quarry;
+    this.huntType = type;
+    this.stand = stand;
+    this.watchlist = watchlist || []; //cuz otherwise passing an empty array breaks the code
+    this.huntEvents = [];
+
+    this.toString = function(){ 
+      return ("ID = " + this.huntId + "\nName: " + this.huntName + "\nQuarry: " + this.quarry + "\nType: " + this.huntType + "\nStand: " + this.stand); 
     }
   }
-  if (options.attribs){
-    for (let attribute of options.attribs){
-      el.setAttribute(attribute.key, attribute.val);
-    }
-  }
-  parent.appendChild(el);
-  return el;
-}
 
-const newWatchlist = function(selector){
-  let newWatchlist = [];
-  for(let animal of selector){
-    if(animal.isSelected){
-      newWatchlist.push(animal.name);
-    }
-  }
-  return newWatchlist;
-}
-
-//addAnimalToList("human", globalAnimalsList);
-let mySelector = newAnimalsSelector(demoWatchlist);
-displaySelections(mySelector);
-let myWatchlist = newWatchlist(mySelector);
-//addAnimalToList("human", myWatchlist); //demo statement
-let myCounter = newAnimalsCounter(myWatchlist);
-displayCounts(myCounter);
-
-let counterDiv = document.querySelector("#someView .animalsCounter");
-counterDiv.addEventListener("click", updateCounts, false);
-
-/*
-let view = document.getElementById("someView");
-let newDiv = appendNewElement("div", view, { id: "appended", text: "appended" });
-newDiv.classList.add("appended");
-alert("classes: " + newDiv.classList);
-*/
-
-/*
-function Hunt(name, id, quarry, type, stand, watchlist){
-// Constructor for Hunt objects
-  this.huntName = name;
-  this.huntId = id;
-  this.quarry = quarry;
-  this.huntType = type;
-  this.stand = stand;
-  this.watchlist = watchlist || []; //cuz otherwise passing an empty array breaks the code
-  this.huntEvents = [];
-
-  this.toString = function(){ 
-    return ("ID = " + this.huntId + "\nName: " + this.huntName + "\nQuarry: " + this.quarry + "\nType: " + this.huntType + "\nStand: " + this.stand); 
-  }
-}
-
-  // Hunt Instances
-  let id1 = Date.now();
-  let sampleHunt1 = new Hunt("Demo Hunt 1", id1, "Bears", "Stand", "Big Bear Stand", ["Bear", "Shia Labeouf"]);
-  
-  let id2 = id1 + 1; //cuz re-calling Date.now() so soon gives the same # as id1
-  let sampleHunt2 = new Hunt("Demo Hunt 2", id2, "Aliens", "Walking", "", ["Alien", "Crop Circle", "UFO"]);
-*/
-</script>
+    // Hunt Instances
+    let id1 = Date.now();
+    let sampleHunt1 = new Hunt("Demo Hunt 1", id1, "Bears", "Stand", "Big Bear Stand", ["Bear", "Shia Labeouf"]);
+    
+    let id2 = id1 + 1; //cuz re-calling Date.now() so soon gives the same # as id1
+    let sampleHunt2 = new Hunt("Demo Hunt 2", id2, "Aliens", "Walking", "", ["Alien", "Crop Circle", "UFO"]);
+  */
+  </script>
 </body>
 </html>
