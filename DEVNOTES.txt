@@ -3,13 +3,14 @@ From New Hunt, makeNewHunt() populates Hunt Overview
 From Hunts List, chooseAndShowHunt() populates Hunt Overview
 From Hunt Overview, buttons navigate to map/weather/watchlist/fieldNotes/harvest/photo and back
 Watchlist Demo has hacky constructors for html-friendly animal selector and animal counter arrays
-Watchlist Demo has listener for incrementing counts (but doesn't update the Counter object...)
+Watchlist Demo has listener for incrementing Counts (but doesn't update the Counter object)
+Watchlist Demo has listener for updating Selections (but doesn't update the Selector object)
+
 
 To do:
 
 - Watchlist Demo
-  - writing UI for newAnimalsSelector and newAnimalsCounter 
-  	- finish listener for selector, and incorporte functions into app
+  - bring this code into the app for newFieldNotes, editFieldNote, and editWatchlist functionality
 
 - Field Notes
   - show this view (and display counter) on click of newFieldNotes button and also on selection from the list of existing fieldNotes (passing fieldNotesID, which will be time-based like huntID)

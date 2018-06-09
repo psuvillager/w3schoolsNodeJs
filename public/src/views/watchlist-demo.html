@@ -6,11 +6,17 @@
 
     h3, hr {margin: 10px; }
     /* styles for animalsCounter and animalsSelector */
-    #someView .animalsCounter, #someView .animalsSelector { margin: 10px; }
-    #someView .animalsCounter > div, #someView .animalsSelector > div { 
+
+    #someView .animalsCounter, 
+    #someView .animalsSelector { 
+      margin: 10px; 
+      }
+    #someView .animalsCounter > div, 
+    #someView .animalsSelector > div { 
       height: 20px; padding: 5px 6px; margin: 6px 0; border-radius: 5px;
       background-color: lightgrey;
       }
+    div#someView div.animalsSelector > div.selected { background-color: #AAFFAA; }
 
     #someView .animalsCounter > div > span {
       line-height: 20px; overflow: hidden; 
@@ -87,8 +93,16 @@
       let animalDiv = document.createElement("div");
       let animalText = document.createTextNode(animal.name); 
       animalDiv.appendChild(animalText);  
+      animalDiv.classList.add("animalDiv");
+      if(animal.isSelected){ animalDiv.classList.add("selected"); }
       selectorDiv.appendChild(animalDiv);
-      if(animal.isSelected == true){ animalDiv.style.backgroundColor = "#AAFFAA"; }
+    }
+  }
+
+  const updateSelectionDisplay = function(event){
+    // (Don't bother updating the FieldNotes object until user clicks save)
+    if(event.target.classList.contains("animalDiv")){
+      event.target.classList.toggle("selected");
     }
   }
 
@@ -120,7 +134,6 @@
       appendNewElement("span", animalDiv, { text: " - ", classes: ["btn", "decrement"] });
     }
   }
-
   
   const updateCountDisplay = function(event){
     // Respond to increment/decrement buttons for animals in field notes
@@ -174,11 +187,14 @@
   //addAnimalToList("human", globalAnimalsList);
   let mySelector = newAnimalsSelector(demoWatchlist);
   displaySelections(mySelector);
+  let selectorDiv = document.querySelector("#someView .animalsSelector");
+  selectorDiv.addEventListener("click", updateSelectionDisplay, false);
+
   let myWatchlist = newWatchlist(mySelector);
   //addAnimalToList("human", myWatchlist); //demo statement
+
   let myCounter = newAnimalsCounter(myWatchlist);
   displayCounts(myCounter);
-
   let counterDiv = document.querySelector("#someView .animalsCounter");
   counterDiv.addEventListener("click", updateCountDisplay, false);
 
