@@ -4,11 +4,13 @@
 //
   // This will be obsolete once hunts are stored persistently in a database
   let globalHuntsList = [];
+  let globalAnimalsList = ["doe", "buck", "sasquatch", "moose", "squirrel", "goblin", "space alien"];
+  let demoWatchlist = ["doe", "sasquatch", "moose"]; //demo list for development use
   let useDemoDataForHuntsList = true;
   if (useDemoDataForHuntsList){ loadDemoHuntsData(); }
-
   let useDemoDataForNewHunts = true;
   
+
 
 //
 // Client-side stuff 
@@ -31,39 +33,45 @@
 // Navigation
 //
 
-function changeView(viewName, hunt){
-  // Takes a viewName string and an optional hunt object
-  // Hides all views and displays only the chosen one
-  // Depending on the view, calls an additional function (where the hunt argement may be used)
+  function changeView(viewName, hunt){
+    // Takes a viewName (string) and an optional hunt (object)
+    // Hides all views and displays only the chosen one
+    // Depending on the view, calls an additional function (where the hunt argement may be used)
 
-  // (silly to calculate this each time, but not terrible)
-  let viewContainers = document.querySelectorAll(".viewContainer");
-  for (viewContainer of viewContainers){
-    viewContainer.style.display = "none";
-  }
-  // broke this into two loops b/c the "show" loop exited after succeeding for some scary reason
-  for (viewContainer of viewContainers){
-    if(viewContainer.id === viewName){
-      viewContainer.style.display = "block";
-      if(viewName == "hunts-list"){ updateHuntsListView(); }
-      else if(viewName == "new-hunt"){ 
-        if(useDemoDataForNewHunts){ fillNewHuntWithDemoData("Dangerous Hunt", "Humans", "Stand", "Helicopter"); }
+    // (silly to calculate this each time, but not terrible)
+    let viewContainers = document.querySelectorAll(".viewContainer");
+    for (viewContainer of viewContainers){
+      viewContainer.style.display = "none";
+    }
+    // broke this into two loops b/c the combined loop exited after finding a match, for some scary reason
+    for (viewContainer of viewContainers){
+      if(viewContainer.id === viewName){
+        viewContainer.style.display = "block";
+        if(viewName == "hunts-list"){ updateHuntsListView(); }
+        else if(viewName == "new-hunt"){ 
+          if(useDemoDataForNewHunts){ fillNewHuntWithDemoData("Dangerous Hunt", "Humans", "Stand", "Helicopter"); }
+          //alert(globalAnimalsList);
+          let mySelector = newAnimalsSelector();
+          //let animal = mySelector[0].name;
+          //alert(animal);
+          displaySelections(); //"new-hunt", mySelector);
+          //let selectorDiv = document.querySelector("#hunt-view .animalsSelector");
+        }
+        else if(viewName == "hunt-overview") { populateHuntOverview(hunt); }
+        else if(viewName == "watchlist") { showCurrentWatchlist(hunt); }
+        //if changing to field-notes, will need fieldNotesID (if none, we're starting a new fieldNotes)
       }
-      else if(viewName == "hunt-overview") { populateHuntOverview(hunt); }
-      else if(viewName == "watchlist") { showCurrentWatchlist(hunt); }
-      //if changing to field-notes, will need fieldNotesID (if none, we're starting a new fieldNotes)
     }
   }
-}
 
-function chooseAndShowView(event) {
-  // Assumes CLICKED element has data-view attribute, passes this to changeView
-  // (If LISTENING element has data-hunt attribute, passes this also)
-  let view = event.target.getAttribute("data-view");
-  let huntId = event.currentTarget.getAttribute("data-hunt");
-  changeView(view, getHunt(huntId));
-  //event.stopPropagation(); //don't pass event any further up to other listeners
-}
+  function chooseAndShowView(event) {
+    // Assumes CLICKED element has data-view attribute, passes this to changeView
+    // (If LISTENING element has data-hunt attribute, passes this also)
+    let view = event.target.getAttribute("data-view");
+    let huntId = event.currentTarget.getAttribute("data-hunt");
+    changeView(view, getHunt(huntId));
+    //event.stopPropagation(); //don't pass event any further up to other listeners
+  }
 
 
 
@@ -195,9 +203,9 @@ function chooseAndShowView(event) {
 // functions brought in from Watchlist Demo
 //
 
-  const addAnimalToList = function(animalName, list){
-    let finalName = animalName.toLowerCase();
-    if(!list.includes(finalName)){ list.push(finalName); } 
+  const addLowercasedThingToList = function(thing, list){
+    let lowercasedThing = thing.toLowerCase();
+    if(!list.includes(lowercasedThing)){ list.push(lowercasedThing); } 
   }
 
   const newAnimalsSelector = function(watchlist){ //
@@ -221,18 +229,24 @@ function chooseAndShowView(event) {
     return animalsSelector;
   }
 
-  const displaySelections = function(selector){
-    let selectorDiv = document.querySelector("#someView .animalsSelector");
-    for (let animal of selector){
-      let animalDiv = document.createElement("div");
-      let animalText = document.createTextNode(animal.name); 
-      animalDiv.appendChild(animalText);  
-      animalDiv.classList.add("animalDiv");
-      if(animal.isSelected){ animalDiv.classList.add("selected"); }
-      selectorDiv.appendChild(animalDiv);
-    }
+  const displaySelections = function(view, selector){
+    //let cssQuery = "#" + view + " .animalsSelector checkboxList";
+    //let selectorChoicesDiv = document.querySelectorAll(".animalsSelector");//("#" + view + " .animalsSelector");
+    //selectorChoicesDiv.innerHTML = "woot";
+    /*
+      for (let animal of selector){
+        let animalDiv = document.createElement("div");
+        let animalText = document.createTextNode(animal.name); 
+        animalDiv.appendChild(animalText);  
+        animalDiv.classList.add("animalDiv");
+        if(animal.isSelected){ animalDiv.classList.add("selected"); }
+        selectorChoicesDiv.appendChild(animalDiv);
+      }
+    */
+    alert("woo");
   }
 
+  //tweak
   const updateSelectionDisplay = function(event){
     // (Don't bother updating the FieldNotes object until user clicks save)
     if(event.target.classList.contains("animalDiv")){
@@ -240,7 +254,12 @@ function chooseAndShowView(event) {
     }
   }
 
+  //rename to "makeCounterFromList()"
   const newAnimalsCounter = function(watchlist){
+    // "Constructor" for a Counter (Array)
+    // Takes an array of strings, returns an array of objects, each with 
+    //   two properties: Name and Count. Names come from the passed-in array,
+    //   and the Count for each is initialized to zero 
     let animalsCounter = [];
     for(let animalName of watchlist){
       let animal = { name: animalName, count: 0 };
@@ -249,6 +268,7 @@ function chooseAndShowView(event) {
     return animalsCounter;
   }
 
+  //tweak
   const displayCounts = function(counter){
     // Takes a newAnimalCounter 'object' (Array), makes a div for each animal, and adds spans for content 
     // (See the related event listener and css styles)
@@ -269,6 +289,7 @@ function chooseAndShowView(event) {
     }
   }
   
+  //tweak
   const updateCountDisplay = function(event){
     // Respond to increment/decrement buttons for animals in field notes
     // (Don't bother updating the FieldNotes object until user clicks save)
@@ -284,6 +305,7 @@ function chooseAndShowView(event) {
     }
   }
 
+  //rename to "getWatchlistFromSelector()"
   const newWatchlist = function(selector){
     let newWatchlist = [];
     for(let animal of selector){
@@ -294,6 +316,17 @@ function chooseAndShowView(event) {
     return newWatchlist;
   }
 
+  // Primary code from WatchlistDemo
+  /*
+    //addAnimalToList("human", globalAnimalsList);
+    let mySelector = newAnimalsSelector(demoWatchlist);
+    displaySelections(mySelector);
+    let selectorDiv = document.querySelector("#someView .animalsSelector");
+    selectorDiv.addEventListener("click", updateSelectionDisplay, false);
+
+    let myWatchlist = newWatchlist(mySelector);
+    //addAnimalToList("human", myWatchlist); //demo statement
+  */
 
 
 //
@@ -323,11 +356,11 @@ function chooseAndShowView(event) {
   }
 
   function findAttributeUp (el, attr) {
-    // Takes an html element and an attribuite name
-    // Looks for the attribute in the given element and each of its acestors
+    // Takes an html element (object) and an attribuite name (string)
+    // Looks for the attribute in the given element and then each of its acestors
     // Returns the attribute's value from the first element where it is found
     while (!el.hasAttribute(attr) && (el = el.parentElement)){ /*do nothing*/ }
-    return el.getAttribute(attr);
+    return el.getAttribute(attr); //TODO: add "|| null" or something here in case we reach the top
   }
 
   function appendNewElement(type, parent, options) {
@@ -336,7 +369,7 @@ function chooseAndShowView(event) {
     // Sets id, text, classes, and attribs according to options
     // Classes must be an array; attribs must be an array of objects with 'key' and 'val' properties 
     let el = document.createElement(type);
-    //if(options){ //   <<-- We might need this check before proceding
+    //if(options){ //   <<-- We might need this check before proceeding
       if (options.id){ el.id = options.id; }
       if (options.text){ el.innerText = options.text; }
       if (options.classes){ 
@@ -374,10 +407,11 @@ function chooseAndShowView(event) {
   }
 
   function fillNewHuntWithDemoData(huntName, quarry, huntType, stand){
+    // Fills inputs on newHunt form with demo data for development use
     document.getElementById("newHuntName").value = huntName;
     document.getElementById("newHuntQuarry").value = quarry;
     document.getElementById("newHuntType").value = huntType;
-    document.getElementById("newHuntStand").value = stand || "";
+    document.getElementById("newHuntStand").value = stand;
   }
 
   /*
