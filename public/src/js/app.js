@@ -243,7 +243,7 @@
         selectorChoicesDiv.appendChild(animalDiv);
       }
     */
-    alert("woo");
+    woo("from displaySelections");
   }
 
   //tweak
@@ -333,7 +333,7 @@
 // Misc helper functions  
 //
 
-  function woo(){ alert("woo"); }
+  function woo(appendString){ alert("woo " + appendString); }
 
   function toggleBlockDisplayById(elementId){
     // Expands/collapses the element (eg watchlist in new-hunt)
