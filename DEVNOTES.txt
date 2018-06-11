@@ -16,9 +16,9 @@ To do:
   - show this view (and display counter) on click of newFieldNotes button and also on selection from the list of existing fieldNotes (passing fieldNotesID, which will be time-based like huntID)
 
 - Hunt Overview
-  - needs EventList display (Field Notes, Photos, and Harvests)
-  		- linked field notes have watchlist instance w/ increment buttons, etc
-  - needs new-event creation (Field Notes, Harvest, Take Photo)
+  - needs EventList display (Field Notes, Photos, and Harvests) 
+  	- huntCode.js has a function for creating event objects, each of which includes a header (indicatiing which of the three types of content is present.)
+  	- each linked field-notes event gets a watchlist instance w/ increment buttons, etc
  - enable event creation (Field Notes, Photos (requires service worker), and Harvests)
 - Listeners
   - need to disregard clicks on uninteresting elements (to avoid showing blank screens)

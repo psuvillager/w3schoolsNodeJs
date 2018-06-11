@@ -1,27 +1,29 @@
 
 //
-// Global Hunts List for development
+// Globals for development
 //
   // This will be obsolete once hunts are stored persistently in a database
   let globalHuntsList = [];
-  loadDemoHuntsData();
+  let useDemoDataForHuntsList = true;
+  if (useDemoDataForHuntsList){ loadDemoHuntsData(); }
 
-
+  let useDemoDataForNewHunts = true;
+  
 
 //
 // Client-side stuff 
 //
 
-//if browser doesn't support promises, use the polyfill (in promise.js)
-if (!window.Promise) { window.Promise = Promise; }
+  //if browser doesn't support promises, use the polyfill (in promise.js)
+  if (!window.Promise) { window.Promise = Promise; }
 
-//if browser supports service workers, register ours (sw.js)
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker
-    .register('/sw.js', {scope: "/"}) //scope object argument is optional (and cannot "scope up")
-    .then(function () { console.log('[App]: Service worker registered'); })
-    .catch(function(err) { console.log(err); });
-}
+  //if browser supports service workers, register ours (sw.js)
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker
+      .register('/sw.js', {scope: "/"}) //scope object argument is optional (and cannot "scope up")
+      .then(function () { console.log('[App]: Service worker registered'); })
+      .catch(function(err) { console.log(err); });
+  }
 
 
 
@@ -44,6 +46,9 @@ function changeView(viewName, hunt){
     if(viewContainer.id === viewName){
       viewContainer.style.display = "block";
       if(viewName == "hunts-list"){ updateHuntsListView(); }
+      else if(viewName == "new-hunt"){ 
+        if(useDemoDataForNewHunts){ fillNewHuntWithDemoData("Dangerous Hunt", "Humans", "Stand", "Helicopter"); }
+      }
       else if(viewName == "hunt-overview") { populateHuntOverview(hunt); }
       else if(viewName == "watchlist") { showCurrentWatchlist(hunt); }
       //if changing to field-notes, will need fieldNotesID (if none, we're starting a new fieldNotes)
@@ -187,6 +192,111 @@ function chooseAndShowView(event) {
 
 
 //
+// functions brought in from Watchlist Demo
+//
+
+  const addAnimalToList = function(animalName, list){
+    let finalName = animalName.toLowerCase();
+    if(!list.includes(finalName)){ list.push(finalName); } 
+  }
+
+  const newAnimalsSelector = function(watchlist){ //
+    //Takes an optional watchlist (array) parameter
+    // Makes an array of animal objects, one for each animal in the global list
+    // Gives each animal a 'name' property and a 'selected' property (initialized to false)
+    // If a watchlist is passed in, sets the 'selected' property for all listed animals to true
+    //  (It would be cool to do this with a constructor that extends array instead)
+    let animalsSelector = [];
+    for(let animalName of globalAnimalsList){
+      let animal = { name: animalName, isSelected: false }; 
+      animalsSelector.push(animal);
+    }
+    if(watchlist){
+      for(let animal of animalsSelector){
+        if(watchlist.includes(animal.name)){
+          animal.isSelected = true;
+        }
+      }
+    }
+    return animalsSelector;
+  }
+
+  const displaySelections = function(selector){
+    let selectorDiv = document.querySelector("#someView .animalsSelector");
+    for (let animal of selector){
+      let animalDiv = document.createElement("div");
+      let animalText = document.createTextNode(animal.name); 
+      animalDiv.appendChild(animalText);  
+      animalDiv.classList.add("animalDiv");
+      if(animal.isSelected){ animalDiv.classList.add("selected"); }
+      selectorDiv.appendChild(animalDiv);
+    }
+  }
+
+  const updateSelectionDisplay = function(event){
+    // (Don't bother updating the FieldNotes object until user clicks save)
+    if(event.target.classList.contains("animalDiv")){
+      event.target.classList.toggle("selected");
+    }
+  }
+
+  const newAnimalsCounter = function(watchlist){
+    let animalsCounter = [];
+    for(let animalName of watchlist){
+      let animal = { name: animalName, count: 0 };
+      animalsCounter.push(animal);
+    }
+    return animalsCounter;
+  }
+
+  const displayCounts = function(counter){
+    // Takes a newAnimalCounter 'object' (Array), makes a div for each animal, and adds spans for content 
+    // (See the related event listener and css styles)
+    let counterDiv = document.querySelector("#someView .animalsCounter");
+    
+    // (might need to clear innerHTML from counterDiv before adding content each time)
+    
+    for (let animal of counter){
+      appendNewElement("div", counterDiv, { classes: [animal.name] }); //animalDiv
+    }
+    // Extra loop assures the containing counterDiv is already in the DOM when we try to append to it
+    for (let animal of counter){
+      let animalDiv = document.querySelector("#someView .animalsCounter ."+animal.name);
+      appendNewElement("span", animalDiv, { text: animal.name, classes: ["animalName"] });    
+      appendNewElement("span", animalDiv, { text: animal.count.toString(), classes: ["animalCount"] });
+      appendNewElement("span", animalDiv, { text: " + ", classes: ["btn", "increment"] });
+      appendNewElement("span", animalDiv, { text: " - ", classes: ["btn", "decrement"] });
+    }
+  }
+  
+  const updateCountDisplay = function(event){
+    // Respond to increment/decrement buttons for animals in field notes
+    // (Don't bother updating the FieldNotes object until user clicks save)
+    let targ = event.target;
+    if(event.target.classList.contains("btn")){
+      let btn = event.target;
+      let animalName = event.target.parentElement.className;
+      let countSpan = document.querySelector("#someView .animalsCounter ."+animalName+ " .animalCount");
+      let count = parseInt(countSpan.innerText);
+      if(btn.classList.contains("decrement") && count > 0){ count--; }
+      else if(btn.classList.contains("increment")){ count++; }
+      countSpan.innerText = count.toString();
+    }
+  }
+
+  const newWatchlist = function(selector){
+    let newWatchlist = [];
+    for(let animal of selector){
+      if(animal.isSelected){
+        newWatchlist.push(animal.name);
+      }
+    }
+    return newWatchlist;
+  }
+
+
+
+//
 // Misc helper functions  
 //
 
@@ -220,8 +330,30 @@ function chooseAndShowView(event) {
     return el.getAttribute(attr);
   }
 
+  function appendNewElement(type, parent, options) {
+    // Takes a tag type, a node, and an (optional) array of options
+    // Creates (and returns) an element of the given type and appends it to the parent node
+    // Sets id, text, classes, and attribs according to options
+    // Classes must be an array; attribs must be an array of objects with 'key' and 'val' properties 
+    var el = document.createElement(type);
+    if (options.id){ el.id = options.id; }
+    if (options.text){ el.innerText = options.text; }
+    if (options.classes){ 
+      for (let myClass of options.classes){
+        el.classList.add(myClass);
+      }
+    }
+    if (options.attribs){
+      for (let attribute of options.attribs){
+        el.setAttribute(attribute.key, attribute.val);
+      }
+    }
+    parent.appendChild(el);
+    return el;
+  }
+
   function appendElementWithIdToParent (type, id, parent) { 
-    // untested
+    // deprecated - replace calls with calls to appendNewElement()
     var el = document.createElement(type);
     el.id = id;
     parent.appendChild(el);
@@ -239,16 +371,23 @@ function chooseAndShowView(event) {
     globalHuntsList.push(sampleHunt2);
   }
 
-/*
-<p>Not gonna use this, just a "details" element demo - no javascript required!</p>
-<details> //details has an open attribute that determines the state (like 'expanded')
-  <summary>Header for spoiler</summary>
-  <div>
-    <p> Awesome secret hidden stuff</p>
-    <details> //details has an open attribute that determines the state (like 'expanded')
-    <summary>Header for inner spoiler</summary>
-    <p>Double secret probation stuff!</p>
+  function fillNewHuntWithDemoData(huntName, quarry, huntType, stand){
+    document.getElementById("newHuntName").value = huntName;
+    document.getElementById("newHuntQuarry").value = quarry;
+    document.getElementById("newHuntType").value = huntType;
+    document.getElementById("newHuntStand").value = stand || "";
+  }
+
+  /*
+  <p>Not gonna use this, just a "details" element demo - no javascript required!</p>
+  <details> //details has an open attribute that determines the state (like 'expanded')
+    <summary>Header for spoiler</summary>
+    <div>
+      <p> Awesome secret hidden stuff</p>
+      <details> //details has an open attribute that determines the state (like 'expanded')
+      <summary>Header for inner spoiler</summary>
+      <p>Double secret probation stuff!</p>
+    </details>
+    </d>
   </details>
-  </d>
-</details>
-*/
+  */
