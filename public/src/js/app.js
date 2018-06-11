@@ -331,23 +331,25 @@ function chooseAndShowView(event) {
   }
 
   function appendNewElement(type, parent, options) {
-    // Takes a tag type, a node, and an (optional) array of options
+    // Takes an html element type, a parent node, and an (optional) array of options
     // Creates (and returns) an element of the given type and appends it to the parent node
     // Sets id, text, classes, and attribs according to options
     // Classes must be an array; attribs must be an array of objects with 'key' and 'val' properties 
-    var el = document.createElement(type);
-    if (options.id){ el.id = options.id; }
-    if (options.text){ el.innerText = options.text; }
-    if (options.classes){ 
-      for (let myClass of options.classes){
-        el.classList.add(myClass);
+    let el = document.createElement(type);
+    //if(options){ //   <<-- We might need this check before proceding
+      if (options.id){ el.id = options.id; }
+      if (options.text){ el.innerText = options.text; }
+      if (options.classes){ 
+        for (let myClass of options.classes){
+          el.classList.add(myClass);
+        }
       }
-    }
-    if (options.attribs){
-      for (let attribute of options.attribs){
-        el.setAttribute(attribute.key, attribute.val);
+      if (options.attribs){
+        for (let attribute of options.attribs){
+          el.setAttribute(attribute.key, attribute.val);
+        }
       }
-    }
+    //}
     parent.appendChild(el);
     return el;
   }
