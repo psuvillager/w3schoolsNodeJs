@@ -33,45 +33,39 @@
 // Navigation
 //
 
-  function changeView(viewName, hunt){
-    // Takes a viewName (string) and an optional hunt (object)
-    // Hides all views and displays only the chosen one
-    // Depending on the view, calls an additional function (where the hunt argement may be used)
+function changeView(viewName, hunt){
+  // Takes a viewName string and an optional hunt object
+  // Hides all views and displays only the chosen one
+  // Depending on the view, calls an additional function (where the hunt argement may be used)
 
-    // (silly to calculate this each time, but not terrible)
-    let viewContainers = document.querySelectorAll(".viewContainer");
-    for (viewContainer of viewContainers){
-      viewContainer.style.display = "none";
-    }
-    // broke this into two loops b/c the combined loop exited after finding a match, for some scary reason
-    for (viewContainer of viewContainers){
-      if(viewContainer.id === viewName){
-        viewContainer.style.display = "block";
-        if(viewName == "hunts-list"){ updateHuntsListView(); }
-        else if(viewName == "new-hunt"){ 
-          if(useDemoDataForNewHunts){ fillNewHuntWithDemoData("Dangerous Hunt", "Humans", "Stand", "Helicopter"); }
-          //alert(globalAnimalsList);
-          let mySelector = newAnimalsSelector();
-          //let animal = mySelector[0].name;
-          //alert(animal);
-          displaySelections(); //"new-hunt", mySelector);
-          //let selectorDiv = document.querySelector("#hunt-view .animalsSelector");
-        }
-        else if(viewName == "hunt-overview") { populateHuntOverview(hunt); }
-        else if(viewName == "watchlist") { showCurrentWatchlist(hunt); }
-        //if changing to field-notes, will need fieldNotesID (if none, we're starting a new fieldNotes)
+  // (silly to calculate this each time, but not terrible)
+  let viewContainers = document.querySelectorAll(".viewContainer");
+  for (viewContainer of viewContainers){
+    viewContainer.style.display = "none";
+  }
+  // broke this into two loops b/c the "show" loop exited after succeeding for some scary reason
+  for (viewContainer of viewContainers){
+    if(viewContainer.id === viewName){
+      viewContainer.style.display = "block";
+      if(viewName == "hunts-list"){ updateHuntsListView(); }
+      else if(viewName == "new-hunt"){ 
+        if(useDemoDataForNewHunts){ fillNewHuntWithDemoData("Dangerous Hunt", "Humans", "Stand", "Helicopter"); }
       }
+      else if(viewName == "hunt-overview") { populateHuntOverview(hunt); }
+      else if(viewName == "watchlist") { showCurrentWatchlist(hunt); }
+      //if changing to field-notes, will need fieldNotesID (if none, we're starting a new fieldNotes)
     }
   }
+}
 
-  function chooseAndShowView(event) {
-    // Assumes CLICKED element has data-view attribute, passes this to changeView
-    // (If LISTENING element has data-hunt attribute, passes this also)
-    let view = event.target.getAttribute("data-view");
-    let huntId = event.currentTarget.getAttribute("data-hunt");
-    changeView(view, getHunt(huntId));
-    //event.stopPropagation(); //don't pass event any further up to other listeners
-  }
+function chooseAndShowView(event) {
+  // Assumes CLICKED element has data-view attribute, passes this to changeView
+  // (If LISTENING element has data-hunt attribute, passes this also)
+  let view = event.target.getAttribute("data-view");
+  let huntId = event.currentTarget.getAttribute("data-hunt");
+  changeView(view, getHunt(huntId));
+  //event.stopPropagation(); //don't pass event any further up to other listeners
+}
 
 
 
