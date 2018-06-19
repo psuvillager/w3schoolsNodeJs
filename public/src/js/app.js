@@ -203,9 +203,9 @@
 // functions brought in from Watchlist Demo
 //
 
-  const addLowercasedThingToList = function(thing, list){
-    let lowercasedThing = thing.toLowerCase();
-    if(!list.includes(lowercasedThing)){ list.push(lowercasedThing); } 
+  const addAnimalToList = function(animalName, list){
+    let finalName = animalName.toLowerCase();
+    if(!list.includes(finalName)){ list.push(finalName); } 
   }
 
   const newAnimalsSelector = function(watchlist){ //
@@ -243,10 +243,9 @@
         selectorChoicesDiv.appendChild(animalDiv);
       }
     */
-    woo("from displaySelections");
+    alert("woo");
   }
 
-  //tweak
   const updateSelectionDisplay = function(event){
     // (Don't bother updating the FieldNotes object until user clicks save)
     if(event.target.classList.contains("animalDiv")){
@@ -316,17 +315,6 @@
     return newWatchlist;
   }
 
-  // Primary code from WatchlistDemo
-  /*
-    //addAnimalToList("human", globalAnimalsList);
-    let mySelector = newAnimalsSelector(demoWatchlist);
-    displaySelections(mySelector);
-    let selectorDiv = document.querySelector("#someView .animalsSelector");
-    selectorDiv.addEventListener("click", updateSelectionDisplay, false);
-
-    let myWatchlist = newWatchlist(mySelector);
-    //addAnimalToList("human", myWatchlist); //demo statement
-  */
 
 
 //

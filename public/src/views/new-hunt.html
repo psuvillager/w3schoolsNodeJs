@@ -4,27 +4,17 @@
 <style type="text/css">
   h5 { margin-bottom: 30px; }
   .formComponent { margin: 15px 0; }
-  .expansionWidget { margin: 0 auto; width: 80%; max-width: 172px; }
+  #expansionWidget { margin: 0 auto; width: 80%; max-width: 172px; }
   .listExpander { position: relative; }
   .listExpander select { width: 100%; font-weight: bold}
   .optionsHider { position: absolute; left: 0; right: 0; top: 0; bottom: 0; }
 
-   /*.checkboxList { display: none; } */
-  .checkboxList label { display: block; width: 200px;}
-  .checkboxList label:hover { background-color: #cccccc; }
+  #checkboxList { display: none; }
+  #checkboxList label { display: block; width: 200px;}
+  #checkboxList label:hover { background-color: #cccccc; }
  
   #submitNewHuntBtn { margin-top: 30px; }
   
-  /* Selector stuff */
-    .animalsSelector { 
-      margin: 10px; 
-      }
-    .animalsSelector > div { 
-      height: 20px; padding: 5px 6px; margin: 6px 0; border-radius: 5px;
-      background-color: lightgrey;
-      }
-    div.viewContainer div.animalsSelector > div.selected { background-color: #AAFFAA; }
-
 </style>
 
 <!-- form -->
@@ -46,21 +36,20 @@
   </div>
 
   <!-- animal list -->
-    <div class="animalsSelector">
-      <!-- 
+  <div>
+    <div id="expansionWidget">
       <div class="listExpander">
         <select><option>Watch List</option></select>    
         <div class="optionsHider"></div>
       </div>
-      <div class="checkboxList" >
-        --><!-- Populate this dynamically from an array
+      <div id="checkboxList" >
+        <!-- Populate this dynamically from an array -->
         <label for="doe"><input type="checkbox" name="newHuntAnimals" id="doe" value="doe" />Doe</label>
         <label for="buck"><input type="checkbox" name="newHuntAnimals" id="buck" value="buck" />Buck</label>
         <label for="sasquatch"><input type="checkbox" name="newHuntAnimals" id="sasquatch" value="sasquatch" />Sasquatch</label>
-      --><!--
       </div>
-      -->
     </div>
+  </div>
 
   <!-- buttons -->
   <div class="formComponent"><button type="button" id="submitNewHuntBtn">Start!</button></div>
