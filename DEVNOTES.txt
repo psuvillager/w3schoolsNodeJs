@@ -10,15 +10,7 @@ Watchlist Demo has listener for updating Selections (but doesn't update the Sele
 To do:
 
 - Watchlist Demo
-  - continue bringing this code into the app for newFieldNotes, editFieldNote, and editWatchlist functionality
-
-
-
-
-- New Hunt
-  - working on using displaySelections() in this view
-
-
+  - bring this code into the app for newFieldNotes, editFieldNote, and editWatchlist functionality
 
 - Field Notes
   - show this view (and display counter) on click of newFieldNotes button and also on selection from the list of existing fieldNotes (passing fieldNotesID, which will be time-based like huntID)

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Objects Test</title>
+  <script defer src="/src/js/material.min.js"></script>
+  <script src="/src/js/promise.js"></script>
+  <script src="/src/js/fetch.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+	
+	<div id="display"></div>
+
+  <script src="/src/js/app.js"></script>
+  <script type="text/javascript">
+
+
+		class Activity {  
+			constructor(hunt, category, isoDate) { 
+				// Takes a Hunt object, a category string, and an optional isoDate string
+				this.huntId = hunt.huntId; 
+				this.category = Activiity.categories.includes(category) ? category : "unknown category";
+				this.activityId = isoDate ? Date.parse(isoDate) : Date.now();
+			}
+		}
+		Activity.categories = ["Note", "Observation", "Picture", "Harvest"]
+
+		class Note extends Activity {
+			constructor(hunt, category, isoDate){
+				super(hunt, "Note", isoDate);
+				this.noteText = "";
+				if (isoDate) {
+					this.
+				}
+			}
+		}
+
+		class Observation extends Activity {
+			constructor(hunt, category, isoDate){
+				super(hunt, "Observation");
+				this.noteText = "";
+				this.counts = new Map();
+				for (let animal of hunt.watchlist){
+					counts.set(animal, 0);
+				} 
+			}
+		}
+
+		class Picture extends Activity {
+			constructor(hunt, category, isoDate){
+				super(hunt, "Picture");
+				this.noteText = "";
+				this.source =  
+			}
+		}
+
+
+
+		let User = function(){
+			id = Date.now();
+
+
+		} 
+
+		/*
+		Use
+		ID (string) *PK*
+		First (string)
+		Last (string)
+		Hunts (object)
+		*/	
+	</script>
+
+</body>
+</html>
+
+
+
