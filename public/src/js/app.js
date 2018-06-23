@@ -33,39 +33,39 @@
 // Navigation
 //
 
-function changeView(viewName, hunt){
-  // Takes a viewName string and an optional hunt object
-  // Hides all views and displays only the chosen one
-  // Depending on the view, calls an additional function (where the hunt argement may be used)
+  function changeView(viewName, hunt){
+    // Takes a viewName string and an optional hunt object
+    // Hides all views and displays only the chosen one
+    // Depending on the view, calls an additional function (where the hunt argement may be used)
 
-  // (silly to calculate this each time, but not terrible)
-  let viewContainers = document.querySelectorAll(".viewContainer");
-  for (viewContainer of viewContainers){
-    viewContainer.style.display = "none";
-  }
-  // broke this into two loops b/c the "show" loop exited after succeeding for some scary reason
-  for (viewContainer of viewContainers){
-    if(viewContainer.id === viewName){
-      viewContainer.style.display = "block";
-      if(viewName == "hunts-list"){ updateHuntsListView(); }
-      else if(viewName == "new-hunt"){ 
-        if(useDemoDataForNewHunts){ fillNewHuntWithDemoData("Dangerous Hunt", "Humans", "Stand", "Helicopter"); }
+    // (silly to calculate this each time, but not terrible)
+    let viewContainers = document.querySelectorAll(".viewContainer");
+    for (viewContainer of viewContainers){
+      viewContainer.style.display = "none";
+    }
+    // broke this into two loops b/c the "show" loop exited after succeeding for some scary reason
+    for (viewContainer of viewContainers){
+      if(viewContainer.id === viewName){
+        viewContainer.style.display = "block";
+        if(viewName == "hunts-list"){ updateHuntsListView(); }
+        else if(viewName == "new-hunt"){ 
+          if(useDemoDataForNewHunts){ fillNewHuntWithDemoData("Dangerous Hunt", "Humans", "Stand", "Helicopter"); }
+        }
+        else if(viewName == "hunt-overview") { populateHuntOverview(hunt); }
+        else if(viewName == "watchlist") { showCurrentWatchlist(hunt); }
+        //if changing to field-notes, will need fieldNotesID (if none, we're starting a new fieldNotes)
       }
-      else if(viewName == "hunt-overview") { populateHuntOverview(hunt); }
-      else if(viewName == "watchlist") { showCurrentWatchlist(hunt); }
-      //if changing to field-notes, will need fieldNotesID (if none, we're starting a new fieldNotes)
     }
   }
-}
 
-function chooseAndShowView(event) {
-  // Assumes CLICKED element has data-view attribute, passes this to changeView
-  // (If LISTENING element has data-hunt attribute, passes this also)
-  let view = event.target.getAttribute("data-view");
-  let huntId = event.currentTarget.getAttribute("data-hunt");
-  changeView(view, getHunt(huntId));
-  //event.stopPropagation(); //don't pass event any further up to other listeners
-}
+  function chooseAndShowView(event) {
+    // Assumes CLICKED element has data-view attribute, passes this to changeView
+    // (If LISTENING element has data-hunt attribute, passes this also)
+    let view = event.target.getAttribute("data-view");
+    let huntId = event.currentTarget.getAttribute("data-hunt");
+    changeView(view, getHunt(huntId));
+    //event.stopPropagation(); //don't pass event any further up to other listeners
+  }
 
 
 
@@ -87,6 +87,91 @@ function chooseAndShowView(event) {
       return ("ID = " + this.huntId + "\nName: " + this.huntName + "\nQuarry: " + this.quarry + "\nType: " + this.huntType + "\nStand: " + this.stand); 
     }
   }
+
+//
+// Hunt Events (aka Activities)
+//
+
+      // Working on this
+
+
+  var HuntEvent = function(hunt, huntEventType, huntEventId) {
+    // Constructor for superclass from which all Hunt Event subclasses inherit
+    this.huntEventType = huntEventType; //note, photo, observation, or harvest
+    this.huntEventId = huntEventId || Date.now(); //Take datetime (id) from user, or make one
+  };
+  HuntEvent.prototype.exampleMethod = function() { alert("Superclass method activate!"); };
+  
+  var HuntNoteEvent = function(noteText) {  
+    HuntEvent.call(this, hunt, "note", huntEventId);
+  };
+  HuntNoteEvent.prototype = Object.create(HuntEvent.prototype);  
+  HuntNoteEvent.prototype.constructor = HuntNoteEvent;  
+  HuntNoteEvent.prototype.exampleOverriddenMethod = function() {  
+    alert("Superclass method override in subclass");
+  };
+  HuntNoteEvent.prototype.exampleSubclassMethod = function() {  
+    alert("Subclass method activate!");
+  };
+
+  var eventParent = new HuntEvent(1111, "note");  
+  var subObj = new SubClass(30);  
+  console.log(superObj.prop1); // logs 50  
+  superObj.superMethod(); // logs 'This is a super method.'  
+  console.log(subObj.prop1); // logs 60  
+  console.log(subObj.prop2); // logs 100  
+  subObj.superMethod(); // logs 'This is a super method on sub.'  
+  subObj.subMethod(); // logs 'This is a sub method.'  
+
+/*
+  var SubClass = function(value) {  
+    HuntEvent.call(this, value);
+    this.prop2 = 100;
+  };
+  SubClass.prototype = Object.create(HuntEvent.prototype);  
+  SubClass.prototype.constructor = SubClass;  
+  SubClass.prototype.superMethod = function() {  
+    console.log('This is a super method on sub.');
+  };
+  SubClass.prototype.subMethod = function() {  
+    console.log('This is a sub method.');
+  };
+
+    var SubClass = function(value) {  
+    HuntEvent.call(this, value);
+    this.prop2 = 100;
+  };
+  SubClass.prototype = Object.create(HuntEvent.prototype);  
+  SubClass.prototype.constructor = SubClass;  
+  SubClass.prototype.superMethod = function() {  
+    console.log('This is a super method on sub.');
+  };
+  SubClass.prototype.subMethod = function() {  
+    console.log('This is a sub method.');
+  };
+
+    var SubClass = function(value) {  
+    HuntEvent.call(this, value);
+    this.prop2 = 100;
+  };
+  SubClass.prototype = Object.create(HuntEvent.prototype);  
+  SubClass.prototype.constructor = SubClass;  
+  SubClass.prototype.superMethod = function() {  
+    console.log('This is a super method on sub.');
+  };
+  SubClass.prototype.subMethod = function() {  
+    console.log('This is a sub method.');
+  };
+
+  var superObj = new HuntEvent(25);  
+  var subObj = new SubClass(30);  
+  console.log(superObj.prop1); // logs 50  
+  superObj.superMethod(); // logs 'This is a super method.'  
+  console.log(subObj.prop1); // logs 60  
+  console.log(subObj.prop2); // logs 100  
+  subObj.superMethod(); // logs 'This is a super method on sub.'  
+  subObj.subMethod(); // logs 'This is a sub method.'  
+*/
 
   function makeNewHunt(){
     // Collects input from user, creates a Hunt object, adds it to the globalHuntsList,
