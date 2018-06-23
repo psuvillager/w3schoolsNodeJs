@@ -95,33 +95,31 @@
       // Working on this
 
 
-  var HuntEvent = function(hunt, huntEventType, huntEventId) {
+  var HuntEvent = function(huntEventType){ //hunt, huntEventType, huntEventId) {
     // Constructor for superclass from which all Hunt Event subclasses inherit
     this.huntEventType = huntEventType; //note, photo, observation, or harvest
-    this.huntEventId = huntEventId || Date.now(); //Take datetime (id) from user, or make one
+    this.huntEventId = /* huntEventId || */ Date.now(); //Take datetime (id) from user, or make one
   };
-  HuntEvent.prototype.exampleMethod = function() { alert("Superclass method activate!"); };
-  
+  //HuntEvent.prototype.exampleSuperMethod = function() { alert("Superclass method activate!"); };
+
   var HuntNoteEvent = function(noteText) {  
-    HuntEvent.call(this, hunt, "note", huntEventId);
+    HuntEvent.call(this, /*hunt, */ "note", /* huntEventId */);
+    this.noteText = noteText;
   };
   HuntNoteEvent.prototype = Object.create(HuntEvent.prototype);  
   HuntNoteEvent.prototype.constructor = HuntNoteEvent;  
-  HuntNoteEvent.prototype.exampleOverriddenMethod = function() {  
-    alert("Superclass method override in subclass");
+
+  /*
+  HuntNoteEvent.prototype.exampleSuperMethod = function() {  
+    alert("Superclass method overridden in subclass");
   };
   HuntNoteEvent.prototype.exampleSubclassMethod = function() {  
     alert("Subclass method activate!");
   };
-
-  var eventParent = new HuntEvent(1111, "note");  
-  var subObj = new SubClass(30);  
-  console.log(superObj.prop1); // logs 50  
-  superObj.superMethod(); // logs 'This is a super method.'  
-  console.log(subObj.prop1); // logs 60  
-  console.log(subObj.prop2); // logs 100  
-  subObj.superMethod(); // logs 'This is a super method on sub.'  
-  subObj.subMethod(); // logs 'This is a sub method.'  
+  */
+  var huntNoteEvent = new HuntNoteEvent("A note");
+  console.log(huntNoteEvent.noteText); // logs "A note"  
+  console.log(huntNoteEvent.huntEventType); // logs "note"
 
 /*
   var SubClass = function(value) {  
