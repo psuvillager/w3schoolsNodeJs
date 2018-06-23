@@ -88,89 +88,6 @@
     }
   }
 
-//
-// Hunt Events (aka Activities)
-//
-
-      // Working on this
-
-
-  var HuntEvent = function(huntEventType){ //hunt, huntEventType, huntEventId) {
-    // Constructor for superclass from which all Hunt Event subclasses inherit
-    this.huntEventType = huntEventType; //note, photo, observation, or harvest
-    this.huntEventId = /* huntEventId || */ Date.now(); //Take datetime (id) from user, or make one
-  };
-  //HuntEvent.prototype.exampleSuperMethod = function() { alert("Superclass method activate!"); };
-
-  var HuntNoteEvent = function(noteText) {  
-    HuntEvent.call(this, /*hunt, */ "note", /* huntEventId */);
-    this.noteText = noteText;
-  };
-  HuntNoteEvent.prototype = Object.create(HuntEvent.prototype);  
-  HuntNoteEvent.prototype.constructor = HuntNoteEvent;  
-
-  /*
-  HuntNoteEvent.prototype.exampleSuperMethod = function() {  
-    alert("Superclass method overridden in subclass");
-  };
-  HuntNoteEvent.prototype.exampleSubclassMethod = function() {  
-    alert("Subclass method activate!");
-  };
-  */
-  var huntNoteEvent = new HuntNoteEvent("A note");
-  console.log(huntNoteEvent.noteText); // logs "A note"  
-  console.log(huntNoteEvent.huntEventType); // logs "note"
-
-/*
-  var SubClass = function(value) {  
-    HuntEvent.call(this, value);
-    this.prop2 = 100;
-  };
-  SubClass.prototype = Object.create(HuntEvent.prototype);  
-  SubClass.prototype.constructor = SubClass;  
-  SubClass.prototype.superMethod = function() {  
-    console.log('This is a super method on sub.');
-  };
-  SubClass.prototype.subMethod = function() {  
-    console.log('This is a sub method.');
-  };
-
-    var SubClass = function(value) {  
-    HuntEvent.call(this, value);
-    this.prop2 = 100;
-  };
-  SubClass.prototype = Object.create(HuntEvent.prototype);  
-  SubClass.prototype.constructor = SubClass;  
-  SubClass.prototype.superMethod = function() {  
-    console.log('This is a super method on sub.');
-  };
-  SubClass.prototype.subMethod = function() {  
-    console.log('This is a sub method.');
-  };
-
-    var SubClass = function(value) {  
-    HuntEvent.call(this, value);
-    this.prop2 = 100;
-  };
-  SubClass.prototype = Object.create(HuntEvent.prototype);  
-  SubClass.prototype.constructor = SubClass;  
-  SubClass.prototype.superMethod = function() {  
-    console.log('This is a super method on sub.');
-  };
-  SubClass.prototype.subMethod = function() {  
-    console.log('This is a sub method.');
-  };
-
-  var superObj = new HuntEvent(25);  
-  var subObj = new SubClass(30);  
-  console.log(superObj.prop1); // logs 50  
-  superObj.superMethod(); // logs 'This is a super method.'  
-  console.log(subObj.prop1); // logs 60  
-  console.log(subObj.prop2); // logs 100  
-  subObj.superMethod(); // logs 'This is a super method on sub.'  
-  subObj.subMethod(); // logs 'This is a sub method.'  
-*/
-
   function makeNewHunt(){
     // Collects input from user, creates a Hunt object, adds it to the globalHuntsList,
     //   and changes to Hunt Overview to display the hunt info
@@ -273,6 +190,68 @@
     for (let animal of watchlist){ str += animal + "<br />"; }
     document.getElementById("watchlistViewTitle").innerHTML = str;
   }
+
+
+
+//
+// Hunt Events (aka Activities)
+//
+
+  function HuntEvent(huntEventType){
+    // Constructor for superclass from which all Hunt Event subclasses inherit
+    this.huntEventType = huntEventType; //note, photo, observation, or harvest
+    this.huntEventId = Date.now(); //Take datetime (id) from user, or make one
+  };
+  //HuntEvent.prototype.exampleSuperMethod = function() { alert("Superclass method activate!"); };
+
+  function HuntNoteEvent(noteText) {  
+    // Constructor for the Note-type subclass
+    HuntEvent.call(this, "note"); // call superclass constructor
+    this.noteText = noteText;
+  };
+  // Use the superclass' prototype (but for object construction, use the subclass)
+  HuntNoteEvent.prototype = Object.create(HuntEvent.prototype);
+  HuntNoteEvent.prototype.constructor = HuntNoteEvent;
+  // To add methods to subclass (including overriding superclass' methods):
+    //HuntNoteEvent.prototype.exampleSuperMethod = function() { alert("Superclass method overridden in subclass"); };
+    //HuntNoteEvent.prototype.exampleSubclassMethod = function() { alert("Subclass method activate!"); };
+
+  // HuntNoteEvent Test 
+    var hne = new HuntNoteEvent("A note");
+    console.log("New " + hne.huntEventType + "-type hunt event (ID#" + hne.huntEventId +"): '" + hne.noteText + "'"); 
+    // logs "New note hunt event (ID#[someDateTime]: 'A note')"
+
+
+  //The remaining subclasses are untested as of 6/23/18
+
+  function HuntObservationEvent(noteText, hunt) {  
+    // Constructor for the Observation-type subclass
+    // Takes a noteText string and a Hunt object
+    HuntEvent.call(this, "observation"); // call superclass constructor
+    //this.animalsCounter = newAnimalsCounter(hunt.watchlist);
+    this.noteText = noteText || "";
+  };
+  HuntObservationEvent.prototype = Object.create(HuntEvent.prototype);
+  HuntObservationEvent.prototype.constructor = HuntObservationEvent;
+
+  function HuntPhotoEvent(noteText, imageFile) {
+    // Constructor for the Photo-type subclass
+    // Takes a noteText string and an imageFile file
+    HuntEvent.call(this, "photo"); // call superclass constructor
+    //this.imageFile = imageFile;
+    this.noteText = noteText || "";    
+  };
+  HuntPhotoEvent.prototype = Object.create(HuntEvent.prototype);
+  HuntPhotoEvent.prototype.constructor = HuntPhotoEvent;
+
+  function HuntHarvestEvent(harvestDetailsObject) {
+    // Constructor for the Harvest-type subclass
+    // (Tentatively) takes a harvestDetailsObject object
+    HuntEvent.call(this, "harvest"); // call superclass constructor
+    //set properties here according to the provided harvestDetailsObject
+  };
+  HuntHarvestEvent.prototype = Object.create(HuntEvent.prototype);
+  HuntHarvestEvent.prototype.constructor = HuntHarvestEvent;
 
 
 
