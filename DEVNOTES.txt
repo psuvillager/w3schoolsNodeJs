@@ -9,12 +9,10 @@ Watchlist Demo has listener for updating Selections (but doesn't update the Sele
 
 HuntEvent constructor is called by its subclasses (Observation, Photo, etc.)
 
+Listeners for chooseAndShowView and chooseHuntFromList only care about clicks on elements with the "navBtn" class 
 
 
 To do:
-
-- Listeners
-  - need to disregard clicks on uninteresting elements (to avoid showing blank screens)
 
 - Hunt Events
 	- call the appropriate subclass constructors at the appropriate time, and let user modify the objects as desired
@@ -25,7 +23,7 @@ To do:
 
 - Hunt Overview
   - needs EventList display (Field Notes, Photos, and Harvests) 
-  	- huntCode.js has a function for creating event objects, each of which includes a header (indicatiing which of the three types of content is present.)
+  	- huntCode.js has a function for creating event objects, each of which includes a header (indicating which of the three types of content is present)
   	- each linked field-notes event gets a watchlist instance w/ increment buttons, etc
  - enable event creation (Field Notes, Photos (requires service worker), and Harvests)
 

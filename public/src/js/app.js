@@ -61,9 +61,11 @@
   function chooseAndShowView(event) {
     // Assumes CLICKED element has data-view attribute, passes this to changeView
     // (If LISTENING element has data-hunt attribute, passes this also)
-    let view = event.target.getAttribute("data-view");
-    let huntId = event.currentTarget.getAttribute("data-hunt");
-    changeView(view, getHunt(huntId));
+    if(event.target.classList.contains("navBtn")){
+      let view = event.target.getAttribute("data-view");
+      let huntId = event.currentTarget.getAttribute("data-hunt");
+      changeView(view, getHunt(huntId));
+    }
     //event.stopPropagation(); //don't pass event any further up to other listeners
   }
 
@@ -127,7 +129,9 @@
 
   function chooseHuntFromList(event){
     // Finds HuntID in or above clicked element and chages to Hunt Overview with that Hunt 
-    changeView("hunt-overview", getHunt(findAttributeUp(event.target, "data-hunt")));
+    if(event.target.classList.contains("navBtn")){
+      changeView("hunt-overview", getHunt(findAttributeUp(event.target, "data-hunt")));
+    }
   }
 
   function populateHuntOverview(hunt){
@@ -177,6 +181,7 @@
       //hunt properties go in textNode, which goes in a paragraph, which goes into listDiv
       let newP = document.createElement("p");
       newP.classList.add("huntSummary");
+      newP.classList.add("navBtn");
       newP.setAttribute("data-hunt", huntId);
       let summaryTxt = document.createTextNode(huntName +sep+ quarry +sep+ huntType + (stand ? sep + stand : ""));
       newP.appendChild(summaryTxt);
@@ -377,7 +382,7 @@
 // Misc helper functions  
 //
 
-  function woo(appendString){ alert("woo " + appendString); }
+  function woo(appendString){ s = appendString || ""; alert("woo " + s); }
 
   function toggleBlockDisplayById(elementId){
     // Expands/collapses the element (eg watchlist in new-hunt)
@@ -395,6 +400,7 @@
     let hours = date.getHours();
     let period = hours < 12 ? "AM" : "PM";
     let minutes = date.getMinutes();
+    //if(minutes < 10){ minutes = "0" + minutes} // Untested; without this, 12:06AM shows as "12:6 AM"
     let formatted = month + "/" + day + "/" + year + "  " + hours + ":" + minutes + period;
     return formatted;
   }
