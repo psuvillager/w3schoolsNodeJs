@@ -14,6 +14,9 @@ Listeners for chooseAndShowView and chooseHuntFromList only care about clicks on
 
 To do:
 
+-Selector - working on displaySelector(). See notes there.
+
+
 - Hunt Events
 	- call the appropriate subclass constructors at the appropriate time, and let user modify the objects as desired
 

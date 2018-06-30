@@ -1,6 +1,8 @@
 div.viewContainer, .centered { margin-top: 15px; text-align: center; }
 .huntSummary { background-color: lightskyblue; }
 
+.selected{ background-color: #BBFFBB; }
+
 
 /* animalsCounter (in fieldNotes) */
 .animalsCounter { margin: 10px; }
