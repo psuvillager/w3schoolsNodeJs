@@ -10,11 +10,11 @@ Watchlist Demo has listener for updating Selections (but doesn't update the Sele
 HuntEvent constructor is called by its subclasses (Observation, Photo, etc.)
 
 Listeners for chooseAndShowView and chooseHuntFromList only care about clicks on elements with the "navBtn" class 
-
+displaySelector() works in new-hunt view as well as watchlist view
 
 To do:
 
--Selector - working on displaySelector(). See notes there.
+-Selector - make these interactive (toggle Animal.isSelected on click)
 
 
 - Hunt Events

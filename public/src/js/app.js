@@ -50,10 +50,11 @@
         if(viewName == "hunts-list"){ updateHuntsListView(); }
         else if(viewName == "new-hunt"){ 
           if(useDemoDataForNewHunts){ fillNewHuntWithDemoData("Dangerous Hunt", "Humans", "Stand", "Helicopter"); }
+          displaySelector(viewName);
         }
         else if(viewName == "hunt-overview") { populateHuntOverview(hunt); }
         else if(viewName == "watchlist") { 
-          displaySelector(hunt);
+          displaySelector(viewName, hunt);
           //showCurrentWatchlist(hunt); 
         }
         //if changing to field-notes, will need fieldNotesID (if none, we're starting a new fieldNotes)
@@ -295,39 +296,30 @@
     return animalsSelector;
   }
 
-  const displaySelector = function(hunt){
-    //let cssQuery = "#" + view + " .animalsSelector checkboxList";
-    //let selectorChoicesDiv = document.querySelectorAll(".animalsSelector");//("#" + view + " .animalsSelector");
-    //selectorChoicesDiv.innerHTML = "woot";
-    let watchlistDiv = document.querySelector("#watchlist .animalsSelector"); // For now
-        //the querySelector property has no relation to our custom newAnimalsSelector object
+  const displaySelector = function(viewName, hunt){
+    let queryString = "#" + viewName + " .animalsSelector";
+    let watchlistDiv = document.querySelector(queryString);
+        // Note: the querySelector property has no relation to our custom newAnimalsSelector object
     watchlistDiv.innerHTML = "";
-    //alert("displaySelector:\n " + hunt.watchlist);
-    let watchlist = hunt.watchlist;
-    selector = newAnimalsSelector(watchlist);
-    for (let animal of selector){
+    if(viewName == "new-hunt"){ watchlistDiv.innerHTML = "<strong>Watch for which animals?</strong>"; }
+
+    let selector;
+    if(hunt){ selector = newAnimalsSelector(hunt.watchlist); }
+    else{ selector = newAnimalsSelector(); }
+
+    for(let animal of selector){
       let animalDiv = document.createElement("div");
       let animalText = document.createTextNode(animal.name); 
       animalDiv.appendChild(animalText);  
       animalDiv.classList.add("animalDiv");
       if(animal.isSelected == true){
-        //alert(animal.name + " isSelected in display");
-
-
-
-
 
 
         // Now we need to:
-        // - Show the proper list during hunt creation
-        // - Get this to work with watchlists made during hunt creation!
-        // - Toggle .selected on click (listener callbacks may need to care about .animalDiv as well as .navBtn)
+        // - Toggle .isSelected on click (listener callbacks may need to care about .animalDiv as well as .navBtn)
+        
+
         animalDiv.classList.add("selected");
-
-
-
-
-
       }
       watchlistDiv.appendChild(animalDiv);
     }
