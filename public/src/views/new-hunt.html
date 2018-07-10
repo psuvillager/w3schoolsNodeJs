@@ -2,8 +2,11 @@
 
 <!-- CSS: move this to a stylesheet -->
 <style type="text/css">
+
   h5 { margin-bottom: 30px; }
   .formComponent { margin: 15px 0; }
+  #submitNewHuntBtn { margin-top: 30px; }
+  /*
   #expansionWidget { margin: 0 auto; width: 80%; max-width: 172px; }
   .listExpander { position: relative; }
   .listExpander select { width: 100%; font-weight: bold}
@@ -12,8 +15,7 @@
   #checkboxList { display: none; }
   #checkboxList label { display: block; width: 200px;}
   #checkboxList label:hover { background-color: #cccccc; }
- 
-  #submitNewHuntBtn { margin-top: 30px; }
+  */
   
 </style>
 
@@ -34,25 +36,16 @@
   <div class="formComponent">
     <label><input id="newHuntStand" type="text" placeholder="Stand (if any)" /></label>
   </div>
-
-  <!-- animal list -->
-  <div>
-    <div id="expansionWidget">
-      <div class="listExpander">
-        <select><option>Watch List</option></select>    
-        <div class="optionsHider"></div>
-      </div>
-      <div id="checkboxList" >
-        <!-- Populate this dynamically from an array -->
+    <div class="formComponent animalsSelector">
+      <!--id="checkboxList" >
         <label for="doe"><input type="checkbox" name="newHuntAnimals" id="doe" value="doe" />Doe</label>
         <label for="buck"><input type="checkbox" name="newHuntAnimals" id="buck" value="buck" />Buck</label>
         <label for="sasquatch"><input type="checkbox" name="newHuntAnimals" id="sasquatch" value="sasquatch" />Sasquatch</label>
-      </div>
+      -->
     </div>
-  </div>
 
   <!-- buttons -->
-  <div class="formComponent"><button type="button" class="navBtn" id="submitNewHuntBtn">Start!</button></div>
+  <div class="formComponent"><button type="button" id="submitNewHuntBtn" class="navBtn">Start!</button></div>
   <div class="formComponent"><button type="button" id="cancelNewHuntBtn" class="navBtn" data-view="portal">Cancel</button></div>
 
 </form>
@@ -62,7 +55,7 @@
 <script type="text/javascript">
 
   // Listeners
-  document.querySelector('.listExpander').addEventListener("click", toggleBlockDisplayById.bind(null, "checkboxList"), false);
+  //document.querySelector('.listExpander').addEventListener("click", toggleBlockDisplayById.bind(null, "checkboxList"), false);
   document.getElementById('submitNewHuntBtn').addEventListener("click", makeNewHunt, false);
   document.getElementById('cancelNewHuntBtn').addEventListener("click", chooseAndShowView, false);
 
